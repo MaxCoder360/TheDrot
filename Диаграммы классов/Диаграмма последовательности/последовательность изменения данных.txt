@@ -1,0 +1,29 @@
+@startuml
+autonumber
+
+
+actor User
+actor Admin
+User --> Admin : AccountRecoveryRequest
+Admin --> class_Admin : AccountRecoveryRequest
+class_Admin --> IApp : AccountRecovery(string) : string
+IApp --> DBControl : StartApp() : Status
+database DataBase
+autonumber 5 0
+alt correct data
+  DBControl --> DataBase : Update(object) : Status
+else error data
+  IApp <-- DBControl : StartApp() : Status
+end
+autonumber 5 0
+DBControl <-- DataBase : UpdateDataUsers(object) : Status
+IApp <-- DBControl : Update(object) : Status
+autonumber 6 1
+class_Admin <-- IApp : CheckStatus(Login : string, Password : string) : Status
+Admin <-- class_Admin : AccountRecoveryResponse
+User <-- Admin : AccountRecoveryResponse
+
+
+
+@enduml
+

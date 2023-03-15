@@ -1,0 +1,22 @@
+@startuml
+autonumber
+
+
+actor User
+User -> IApp : LoginToYourPersonalAccount(computerId : int) : Status
+IApp --> DBControl : CheckStatus(stringLogin, stringPassword) : Status
+database DataBase
+DBControl --> DataBase : getData() : Data
+alt successful case
+autonumber 4 0
+  DBControl <-- DataBase : SelectDataUsers(object) : Status
+else error
+  DBControl <-- DataBase : SelectDataUsers(object) : Status
+end
+autonumber 5 1
+IApp <-- DBControl : getData() : Data
+User <-- IApp : CheckStatus(stringLogin, stringPassword) : Status
+
+
+
+@enduml

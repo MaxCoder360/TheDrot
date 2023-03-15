@@ -1,0 +1,33 @@
+@startuml
+
+
+
+
+actor User
+actor Admin
+User --> Admin : payment request
+Admin  -> Payment : SendTransaction(start : DateTime, finish : DateTime) : Status
+alt succesful case
+
+  Payment --> Terminal: checkStatus(Data) : Status(okey)
+else error
+  Payment <-- Terminal: checkStatus(Data) : Status(error)
+end
+database Bank
+Terminal --> Bank: getData(): Data
+
+alt successful case
+
+  Terminal <-- Bank : payment accepted
+else lack of money
+  Terminal <-- Bank : payment failure
+else another type of failure
+  Terminal <-- Bank : please repeat
+end
+
+Payment <- Terminal : getStatusPayment() : Status
+Admin <- Payment : SendTransaction(start : DateTime, finish : DateTime) : Status
+User <-- Admin : payment response
+
+
+@enduml

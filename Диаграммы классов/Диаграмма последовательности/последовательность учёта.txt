@@ -1,0 +1,109 @@
+@startuml
+autonumber
+
+
+
+
+actor Admin
+
+
+Admin -> IApp : EquipmentAccounting(List<String>) : Status
+
+alt ApplicationForDefectiveEquipment
+autonumber 2 0
+
+    Admin -> IApp: ApplicationForDefectiveEquipment(computerId : int) : Status
+  autonumber 3 0
+    Admin <- IApp: Status 
+
+else AccountingOfTheEquipmentUsed
+
+  autonumber 2 0
+    Admin -> IApp: AccountingOfTheEquipmentUsed(vomputerId : int) : Status
+  autonumber 3 0
+    Admin <- IApp : Status
+
+else проверка качества нового оборудования
+
+  autonumber 2 0
+    Admin -> IApp: QualityControlOfNewEquipment(computerId: int) : Status
+  autonumber 3 0
+    Admin <- IApp: Status
+
+
+else заявка на новое оборудование
+  autonumber 2 0
+    Admin -> IApp: ApplicationForNewEquipment(computerId : int) : Status
+  autonumber 3 0
+    Admin <- IApp: Status
+  
+else проверка количества нового оборудования
+  autonumber 2 0
+    Admin -> IApp: CheckingTheQuantityOfNewEquipment(computerId : int ) : Status
+  autonumber 3 0
+    Admin <- IApp: Status
+
+  
+else регистрация нового оборудования
+
+  autonumber 2 0
+    Admin -> IApp: RegistrationOfNewEquipment(computerId : int) : Status
+  autonumber 3 0
+    Admin <- IApp: Status
+
+end
+
+autonumber 3 1
+IApp --> DBControl : StartApp() : Status
+alt ApplicationForDefectiveEquipment
+autonumber 3 0
+
+    IApp -> DBControl: CheckStatus
+  autonumber 4 0
+    IApp <- DBControl: Status 
+
+else AccountingOfTheEquipmentUsed
+
+  autonumber 3 0
+    IApp -> DBControl: CheckStatus
+  autonumber 4 0
+    IApp <- DBControl : Status
+
+else проверка качества нового оборудования
+
+  autonumber 3 0
+    IApp -> DBControl: CheckStatus
+  autonumber 4 0
+    IApp <- DBControl: Status
+
+
+else заявка на новое оборудование
+  autonumber 3 0
+    IApp -> DBControl: CheckStatus
+  autonumber 4 0
+    IApp <- DBControl: Status
+  
+else проверка количества нового оборудования
+  autonumber 3 0
+    IApp -> DBControl: CheckStatus
+  autonumber 4 0
+    IApp <- DBControl: Status
+
+  
+else регистрация нового оборудования
+
+  autonumber 3 0
+    IApp -> DBControl: CheckStatus
+  autonumber 4 0
+    IApp <- DBControl: Status
+
+end
+
+autonumber 4 1
+DBControl --> DataBase : getData() : Data
+
+DBControl <-- DataBase : SelectDataComputers(object) : Status
+IApp <-- DBControl : getData() : Data
+Admin <-- IApp : EquipmentAccunting(List<String>) : Status
+
+@enduml

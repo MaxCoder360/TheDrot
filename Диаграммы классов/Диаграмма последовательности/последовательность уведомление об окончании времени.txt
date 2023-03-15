@@ -1,0 +1,19 @@
+@startuml
+autonumber
+
+
+
+actor Admin
+
+
+Admin --> IApp : EndNotification(computerId : int)
+IApp -->class_User : CheckStatus(Login : string, passsword : string) : Status
+actor User
+class_User --> User : EndOfTimeRequest
+class_User <-- User : EndOfTimeResponse
+IApp <-- class_User : LogOutOfYourPersonalAccount(computerId : int) : Status
+Admin <-- IApp : EndNotification(computerId : int)
+
+
+@enduml
+
