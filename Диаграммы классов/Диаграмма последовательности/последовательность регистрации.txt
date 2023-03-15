@@ -1,0 +1,26 @@
+@startuml
+autonumber
+
+
+
+actor User
+actor Admin
+User --> Admin : registration request
+Admin  -> IApp : AccountRegestration(List<String>) : Status
+IApp --> DBControl : StartApp() : Status
+database DataBase
+alt succesful case
+autonumber 3 0
+  DBControl  -> DataBase : Insert(object) : Status
+  DBControl <- DataBase : SaveDataUsers(object) : Status
+else some kind of failure
+  DBControl  -> DataBase : Insert(object) : Status
+  DBControl <- DataBase : please repeat
+end
+autonumber 4 1
+IApp <- DBControl : getData() : Data
+Admin <-- IApp : CheckStatus(stringLogin, stringPassword) : Status
+User <-- Admin : registration response
+
+
+@enduml
