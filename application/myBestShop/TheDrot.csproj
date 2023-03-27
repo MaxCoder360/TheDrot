@@ -123,33 +123,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DATA.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Domain\Database\DatabaseManager.cs" />
+    <Compile Include="Domain\Repository\LoginRepository.cs" />
+    <Compile Include="Domain\UserEntity.cs" />
+    <Compile Include="Domain\WebService\WebService.cs" />
+    <Compile Include="Presentation\LoginScreen\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Presentation\LoginScreen\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainAdmin.cs">
+    <Compile Include="Presentation\MainAdmin\MainAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainAdmin.Designer.cs">
+    <Compile Include="Presentation\MainAdmin\MainAdmin.Designer.cs">
       <DependentUpon>MainAdmin.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainClient.cs">
+    <Compile Include="Presentation\MainClient\MainClient.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainClient.Designer.cs">
+    <Compile Include="Presentation\MainClient\MainClient.Designer.cs">
       <DependentUpon>MainClient.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Presentation\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Utils\Result.cs" />
+    <Compile Include="Utils\SessionManager.cs" />
+    <Compile Include="Utils\LoginHolder.cs" />
+    <EmbeddedResource Include="Presentation\LoginScreen\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainAdmin.resx">
+    <EmbeddedResource Include="Presentation\MainAdmin\MainAdmin.resx">
       <DependentUpon>MainAdmin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainClient.resx">
+    <EmbeddedResource Include="Presentation\MainClient\MainClient.resx">
       <DependentUpon>MainClient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -178,5 +185,6 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
