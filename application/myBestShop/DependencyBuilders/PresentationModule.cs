@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace myBestShop.Utils
+namespace myBestShop.DependencyBuilders
 {
-    public enum ComputerStatus
+    public static class PresentationModule
     {
-        AVAILABLE,
-        IN_DANGER,
-        IS_USED,
-        UNAVAILABLE
+        
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Domain.WebService
 {
-    class UserWebService
+    public class UserWebService
     {
         public UserWebService()
         {

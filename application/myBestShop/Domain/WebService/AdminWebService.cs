@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Domain.WebService
 {
-    class AdminWebService
+    public class AdminWebService: IAdminWebService
     {
-        public AdminWebService()
+        private string baseUrl;
+        public AdminWebService(string baseUrl)
         {
-
+            this.baseUrl = baseUrl;
         }
 
         public Task<ComputerStatus> fetchUserStatus(int userId)
