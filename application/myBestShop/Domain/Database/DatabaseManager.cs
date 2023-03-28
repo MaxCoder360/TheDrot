@@ -16,7 +16,7 @@ namespace myBestShop.Domain.Database
             if (instance == null)
             {
                 instance = new DatabaseManager();
-            } 
+            }
             else
             {
                 throw new Exception("Database is already initialized");
@@ -25,17 +25,17 @@ namespace myBestShop.Domain.Database
 
         private DatabaseManager() { }
 
-        public async Task<int> getSessionKey()
+        public Task<int> getSessionKey()
         {
             throw new NotImplementedException();
         }
 
-        public async void addUser()
+        public void addUser()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<LoginHolder> getLogin()
+        public Task<LoginHolder> getLogin()
         {
             throw new NotImplementedException();
         }
