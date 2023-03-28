@@ -37,6 +37,21 @@ namespace myBestShop.Utils
                 this.baseUrl = baseUrl;
             }
         }
+
+        public class RepositoryConfig
+        {
+            public int type { get; private set; }
+            public static RepositoryConfig createConfig(ConfigType configType, UserTypeExt.UserType userType)
+            {
+                int repositoryType = ((int)configType << 1) | (int)userType;
+                return new RepositoryConfig(repositoryType);
+            }
+
+            private RepositoryConfig(int type)
+            {
+                this.type = type;
+            }
+        }
     }
 
     public static class Consts

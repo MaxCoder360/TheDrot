@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using myBestShop.Domain.Repository;
+using static myBestShop.Utils.AppConfig;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,20 +13,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using myBestShop.Utils;
 
 namespace myBestShop
 {
     public partial class MainAdmin : Form
     {
-
+        private IRepository repository;
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
         }
 
-
         public MainAdmin()
         {
-
+            var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
+            repository = DependencyBuilders.DomainModule.createRepository(repositoryConfig);
+            repository.
         }
 
         private void initComputerStatusGrid()

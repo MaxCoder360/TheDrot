@@ -8,7 +8,7 @@ using static myBestShop.Utils.AppConfig;
 
 namespace myBestShop.Domain.WebService
 {
-    public class UserWebService : IUserWebService
+    public class UserWebServiceMock : IUserWebService
     {
         public string baseUrl;
 
@@ -22,7 +22,7 @@ namespace myBestShop.Domain.WebService
             throw new NotImplementedException();
         }
 
-        public UserWebService(WebServiceConfig config)
+        public UserWebServiceMock(WebServiceConfig config)
         {
             baseUrl = config.baseUrl;
         }

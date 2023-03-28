@@ -13,4 +13,23 @@ namespace myBestShop.Utils
         IS_USED,
         UNAVAILABLE
     }
+
+    public class UserTypeExt
+    {
+        public enum UserType
+        {
+            ADMIN = 0,
+            USER = 1,
+        }
+
+        public static UserType fromInteger(int userType)
+        {
+            if (userType == 0)
+            {
+                return UserType.ADMIN;
+            }
+
+            return UserType.USER;
+        }
+    }
 }

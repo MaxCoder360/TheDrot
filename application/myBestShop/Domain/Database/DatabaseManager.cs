@@ -10,11 +10,12 @@ using System.Windows;
 
 namespace myBestShop.Domain.Database
 {
-    class DatabaseManager
+    public class DatabaseManager
     {
         public static DatabaseManager instance { get; private set; }
 
-        public LoginDelegate Login = new LoginDelegate();
+        public LoginDbDelegate Login = new LoginDbDelegate();
+        public MainDbDelegate Main = new MainDbDelegate();
 
         public static void createInstance()
         {
@@ -52,21 +53,6 @@ namespace myBestShop.Domain.Database
                 }
 
             }
-        }
-
-        public Task<int> getSessionKey()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void addUser()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<LoginHolder> getLogin()
-        {
-            throw new NotImplementedException();
         }
     }
 }

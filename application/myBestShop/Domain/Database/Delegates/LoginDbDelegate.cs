@@ -8,21 +8,23 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Domain.Database.Delegates
 {
-    public class LoginDelegate
+    public class LoginDbDelegate
     {
-        public LoginDelegate()
+        public LoginDbDelegate()
         {
 
         }
 
         private MainAdmin mainAdmin = null;
         private MainClient mainClient = null;
-        public void findUserIdByLogin(LoginHolder holder)
+
+        public async Task<int> getUserSessionKeyByLogin(LoginHolder holder)
         {
             string userLogin = holder.userName;
             string userPass = holder.password;
+            return 0;
 
-            if (userLogin != "" && userPass != "")
+            /*if (userLogin != "" && userPass != "")
             {
                 bool isEmployee = true;
                 try
@@ -41,9 +43,9 @@ namespace myBestShop.Domain.Database.Delegates
                             myReader.Close();
                             DATA.mySqlConnection.Close();
                             mainClient = new MainClient();
-                            /*mainClient.Closed += (s, args) => this.Close();
+                            *//*mainClient.Closed += (s, args) => this.Close();
                             mainClient.Show();
-                            this.Visible = false;*/
+                            this.Visible = false;*//*
                         }
                         isEmployee = false;
                     }
@@ -81,9 +83,9 @@ namespace myBestShop.Domain.Database.Delegates
                                 myReader.Close();
                                 DATA.mySqlConnection.Close();
                                 mainAdmin = new MainAdmin();
-                                /*mainAdmin.Closed += (s, args) => this.Close();
+                                *//*mainAdmin.Closed += (s, args) => this.Close();
                                 mainAdmin.Show();
-                                this.Visible = false;*/
+                                this.Visible = false;*//*
                             }
                         }
                         else
@@ -106,7 +108,7 @@ namespace myBestShop.Domain.Database.Delegates
                     }
 
                 }
-            }
+            }*/
 
         }
 

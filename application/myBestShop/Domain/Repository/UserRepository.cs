@@ -8,10 +8,10 @@ using myBestShop.Utils;
 
 namespace myBestShop.Domain.Repository
 {
-    class LoginRepository
+    public class UserRepository : IRepository
     {
-        private UserWebService webService;
-        public LoginRepository(UserWebService webService)
+        private IUserWebService webService;
+        public UserRepository(IUserWebService webService)
         {
             this.webService = webService;
         }
@@ -27,9 +27,9 @@ namespace myBestShop.Domain.Repository
             return new Result<int> { data = sessionKey };
         }
 
-        public async Task<Result<DateTime>> getServerTime()
+        public async Task<Result<DateTime>> getServerTime(int userSessionKey)
         {
-            string serverTimeStr = await webService.fetchServerTime();
+            string serverTimeStr = await webService.fetchServerTime(userSessionKey);
             if (serverTimeStr == null)
             {
                 return new Result<DateTime> { data = default, exception = new Exception("Server side exception"), isLoading = false };
