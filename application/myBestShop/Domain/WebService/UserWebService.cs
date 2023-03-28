@@ -19,7 +19,7 @@ namespace myBestShop.Domain.WebService
             throw new NotImplementedException();
         }
 
-        public Task<bool> fetchServerTime()
+        public Task<string> fetchServerTime()
         {
             throw new NotImplementedException();
         }

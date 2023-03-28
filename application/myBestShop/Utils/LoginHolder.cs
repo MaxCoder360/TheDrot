@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Utils
 {
-    class LoginHolder
+    public class LoginHolder
     {
         public string userName { get;  private set; }
         public string password { get; private set; }

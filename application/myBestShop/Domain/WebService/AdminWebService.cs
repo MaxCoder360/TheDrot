@@ -24,7 +24,7 @@ namespace myBestShop.Domain.WebService
             throw new NotImplementedException();
         }
 
-        public void blockRemoteComputer(int userId)
+        public Task blockRemoteComputer(int userId)
         {
             throw new NotImplementedException();
         }

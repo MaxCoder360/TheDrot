@@ -6,24 +6,30 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Utils
 {
-    class Result<T>
+    public class Result<T>
     {
         public T data = default;
-        public bool isError = false;
+        public Exception exception = null;
         public bool isLoading = false;
 
-        public Result(T data, bool isError, bool isLoading)
+        public bool isError
+        {
+            get { return exception != null; }
+            private set { }
+        }
+
+        public Result(T data, Exception exception, bool isLoading)
         {
             this.data = data;
-            this.isError = isError;
+            this.exception = exception;
             this.isLoading = isLoading;
         }
        
         public Result() {}
 
-        public Result<T> copy(T anotherData, bool isError, bool isLoading)
+        public Result<T> copy(T anotherData, Exception exception, bool isLoading)
         {
-            return new Result<T> { data = anotherData, isError = isError, isLoading = isLoading };
+            return new Result<T> { data = anotherData, exception = exception, isLoading = isLoading };
         }
     }
 }

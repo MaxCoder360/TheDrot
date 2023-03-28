@@ -10,21 +10,24 @@ namespace myBestShop.Utils
     {
         public int sessionKey { get; private set; }
 
-        private static SessionManager inst = null;
+        public static SessionManager instance = null;
 
-        public static SessionManager createInstance(LoginHolder holder)
+        public static void createSession(int sessionKey)
         {
-            if (inst != null) {
+            if (instance != null) {
                 throw new ArgumentException("Session is already initialized");
             }
-            inst = new SessionManager(holder);
-
-            return inst;
+            instance = new SessionManager(sessionKey);
         }
 
-        private SessionManager(LoginHolder holder)
+        public static void destroySession()
         {
+            instance = null;
+        }
 
+        private SessionManager(int sessionKey)
+        {
+            this.sessionKey = sessionKey;
         }
     }
 }

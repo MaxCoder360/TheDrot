@@ -1,4 +1,5 @@
-﻿using System;
+﻿using myBestShop.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace myBestShop
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // initialize observable storage to keep info about observables
+            ObservableStorage.initialize();
             try
             {
                 //new Form1()

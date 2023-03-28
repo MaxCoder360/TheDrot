@@ -104,7 +104,7 @@ namespace myBestShop
 
         private void tables_box_TextChanged(object sender, EventArgs e)
         {
-            dataTable = new DataTable();
+            /*dataTable = new DataTable();
             try
             {
                 myAdapter = new MySqlDataAdapter("SELECT * FROM "+ tables_box.Text +";", DATA.mySqlConnection);
@@ -120,7 +120,7 @@ namespace myBestShop
             catch (MySqlException ex)
             {
                 Console.WriteLine(ex.ToString());
-            }
+            }*/
         }
     }
 }
