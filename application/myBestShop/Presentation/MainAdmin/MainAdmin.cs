@@ -19,7 +19,7 @@ namespace myBestShop
 {
     public partial class MainAdmin : Form
     {
-        private IRepository repository;
+        private AdminRepository repository;
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
         }
@@ -27,14 +27,13 @@ namespace myBestShop
         public MainAdmin()
         {
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
-            repository = DependencyBuilders.DomainModule.createRepository(repositoryConfig);
-            repository.
+            repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
+            
         }
 
         private void initComputerStatusGrid()
         {
 
-            this.initComputerStatusGrid;
         }
 
         private void deliveryInWork_Click(object sender, EventArgs e)

@@ -29,5 +29,10 @@ namespace myBestShop.Domain.WebService
         {
             throw new NotImplementedException();
         }
+
+        public Task<int> fetchUserCount(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

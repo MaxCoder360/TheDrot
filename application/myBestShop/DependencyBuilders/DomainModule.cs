@@ -31,16 +31,17 @@ namespace myBestShop.DependencyBuilders
 
         public static IUserWebService createUserWebService(WebServiceConfig config)
         {
-            if (AppConfig.BUILD_CONFIG == AppConfig.ConfigType.DEBUG_CONFIG)
+            if (BUILD_CONFIG == ConfigType.DEBUG_CONFIG)
             {
                 return new UserWebServiceMock(config);
-            } else
+            } 
+            else
             {
                 return new UserWebService(config);
             }
         }
 
-        public static Domain.Repository.IRepository createRepository(RepositoryConfig config)
+        public static IRepository createRepository(RepositoryConfig config)
         {
             if (config == null)
             {
@@ -51,7 +52,7 @@ namespace myBestShop.DependencyBuilders
             var userWebService = createUserWebService(webServiceConfig);
             var adminWebService = createAdminWebService(webServiceConfig);
             var dbManager = DatabaseManager.instance;
-            if ((config.type & (int)UserType.USER) == 1)
+            if ((config.type & (int)UserType.USER) == (int)UserType.USER)
             {
                 return new UserRepository(userWebService);
             } else

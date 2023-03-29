@@ -12,14 +12,26 @@ namespace myBestShop.Domain.WebService
     {
         public string baseUrl;
 
-        Task<int> IUserWebService.fetchSessionKey(LoginHolder holder)
+        async Task<int> IUserWebService.fetchSessionKey(LoginHolder holder)
         {
-            throw new NotImplementedException();
+            int result = -1;
+            if (holder.userName == "")
+            {
+                await Task.Run(() => result = 0);
+            } else if (holder.userName == "MaxCode360")
+            {
+                await Task.Run(() => result = 1);
+            }
+            else
+            {
+                await Task.Run(() => result = 2);
+            }
+            return result;
         }
 
         Task<string> IUserWebService.fetchServerTime(int userSessionKey)
         {
-            throw new NotImplementedException();
+            return new Task<string>(() => DateTime.Now.ToString());
         }
 
         public UserWebServiceMock(WebServiceConfig config)

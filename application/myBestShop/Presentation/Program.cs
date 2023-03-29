@@ -23,7 +23,7 @@ namespace myBestShop
             try
             {
                 //new Form1()
-                Application.Run();
+                Application.Run(new LoginScreen());
             }
             catch
             {

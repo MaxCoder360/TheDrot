@@ -8,34 +8,39 @@ using myBestShop.Utils;
 
 namespace myBestShop.Domain.Repository
 {
-    public class UserRepository : IRepository
+    public class UserRepository : Observable<object>, IRepository
     {
         private IUserWebService webService;
         public UserRepository(IUserWebService webService)
         {
             this.webService = webService;
+            tag = GetType().Name;
         }
 
-        public async Task<Result<int>> logInUser(LoginHolder holder)
+        public async Task logInUser(LoginHolder holder)
         {
+            notify(new Result<object> { data = default, exception = null, isLoading = true });
+
             int sessionKey = await webService.fetchSessionKey(holder);
             if (sessionKey == -1)
             {
-                return new Result<int> { data = sessionKey, exception = new ArgumentException("Log in failed."), isLoading = false };
+                notify(new Result<object> { data = sessionKey, exception = new ArgumentException("Log in failed."), isLoading = false });
             }
 
-            return new Result<int> { data = sessionKey };
+            notify(new Result<object> { data = sessionKey, exception = null, isLoading = false });
         }
 
-        public async Task<Result<DateTime>> getServerTime(int userSessionKey)
+        public async Task getServerTime(int userSessionKey)
         {
+            notify(new Result<object> { data = default, exception = null, isLoading = true });
+
             string serverTimeStr = await webService.fetchServerTime(userSessionKey);
             if (serverTimeStr == null)
             {
-                return new Result<DateTime> { data = default, exception = new Exception("Server side exception"), isLoading = false };
+                notify(new Result<object> { data = default, exception = new Exception("Server side exception"), isLoading = false });
             }
 
-            return new Result<DateTime> { data = DateTime.Parse(serverTimeStr), exception = null, isLoading = false };
+            notify(new Result<object> { data = DateTime.Parse(serverTimeStr), exception = null, isLoading = false });
         }
     }
 }

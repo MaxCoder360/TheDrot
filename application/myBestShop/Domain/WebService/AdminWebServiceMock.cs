@@ -17,6 +17,11 @@ namespace myBestShop.Domain.WebService
             });
         }
 
+        public Task<int> fetchUserCount(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<string>> fetchUserProcesses(int userId)
         {
             return new Task<List<string>>(() =>

@@ -123,15 +123,19 @@
     <Compile Include="DependencyBuilders\DomainModule.cs" />
     <Compile Include="DependencyBuilders\PresentationModule.cs" />
     <Compile Include="Domain\Database\DatabaseManager.cs" />
-    <Compile Include="Domain\Database\Delegates\LoginDelegate.cs" />
+    <Compile Include="Domain\Database\Delegates\LoginDbDelegate.cs" />
+    <Compile Include="Domain\Database\Delegates\MainDbDelegate.cs" />
     <Compile Include="Domain\Entities\UserDataDTO.cs" />
-    <Compile Include="Domain\Repository\AdminMainRepository.cs" />
-    <Compile Include="Domain\Repository\LoginRepository.cs" />
+    <Compile Include="Domain\Repository\AdminRepository.cs" />
+    <Compile Include="Domain\Repository\IRepository.cs" />
+    <Compile Include="Domain\Repository\UserRepository.cs" />
     <Compile Include="Domain\UserEntity.cs" />
     <Compile Include="Domain\WebService\AdminWebService.cs" />
     <Compile Include="Domain\WebService\AdminWebServiceMock.cs" />
     <Compile Include="Domain\WebService\IAdminWebService.cs" />
+    <Compile Include="Domain\WebService\IUserWebService.cs" />
     <Compile Include="Domain\WebService\UserWebService.cs" />
+    <Compile Include="Domain\WebService\UserWebServiceMock.cs" />
     <Compile Include="Presentation\LoginScreen\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +198,8 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Domain\WebService\Delegates\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
