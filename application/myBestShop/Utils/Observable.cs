@@ -24,7 +24,6 @@ namespace myBestShop.Utils
     public interface Observer
     {
         void handleResult<T>(Result<T> result);
-
     }
 
     public class ObservableStorage
