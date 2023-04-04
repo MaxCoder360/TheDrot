@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Forms;
+using System.Windows;
 
 namespace myBestShop.Presentation.Common
 {
@@ -46,8 +46,8 @@ namespace myBestShop.Presentation.Common
             }
         }
         private List<TextBox> cells = new List<TextBox>();
-        private Form rootComponent = null;
-        public TableViewHolder(Form root, int width, int height, int locX, int locY)
+        private System.Windows.Forms.Form rootComponent = null;
+        public TableViewHolder(System.Windows.Forms.Form root, int width, int height, int locX, int locY)
         {
             rootComponent = root;
             this.width = width;

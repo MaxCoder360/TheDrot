@@ -137,6 +137,7 @@
     <Compile Include="Domain\WebService\IUserWebService.cs" />
     <Compile Include="Domain\WebService\UserWebService.cs" />
     <Compile Include="Domain\WebService\UserWebServiceMock.cs" />
+    <Compile Include="Presentation\Common\TableViewHolder.cs" />
     <Compile Include="Presentation\LoginScreen\Login.cs">
       <SubType>Form</SubType>
     </Compile>
