@@ -6,30 +6,33 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Utils
 {
-    abstract class Observable<T>
+    public class Observable<T> where T : class
     {
-        public string tag;
-        public void notify(Result<T> result)
+        public void notify(Result<T> result, string tag)
         {
             ObservableStorage storage = ObservableStorage.storage;
             storage.notifyObservers(tag, result);
         }
+        public void addObserver(Observer observer, string tag)
+        {
+            ObservableStorage storage = ObservableStorage.storage;
+            storage.addObserver(tag, observer);
+        }
     }
 
-    interface Observer
+    public interface Observer
     {
-        void handleResult<T>(Result<T> result);
-
+        void handleResult<ResultT>(Result<ResultT> result) where ResultT : class;
     }
 
-    class ObservableStorage
-    {
+    public class ObservableStorage
+    { 
         private Dictionary<string, List<Observer>> observers = new Dictionary<string, List<Observer>>();
         public static ObservableStorage storage = null;
 
         public static void initialize()
         {
-            if (storage != null)
+            if (storage == null)
             {
                 storage = new ObservableStorage();
             }
@@ -59,13 +62,13 @@ namespace myBestShop.Utils
 
             if (observerPosition == -1)
             {
-                System.Console.WriteLine("Given object is not observer of observable");
+                Logger.println("Given object is not observer of observable");
             }
 
             observers[observableTag].RemoveAt(observerPosition);
         }
 
-        public void notifyObservers<T>(string observableTag, Result<T> result)
+        public void notifyObservers<T>(string observableTag, Result<T> result) where T : class
         {
             foreach (Observer observer in observers[observableTag])
             {

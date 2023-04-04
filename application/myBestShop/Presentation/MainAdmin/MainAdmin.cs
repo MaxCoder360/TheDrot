@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using myBestShop.Domain.Repository;
+using static myBestShop.Utils.AppConfig;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,116 +13,126 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using myBestShop.Utils;
+using myBestShop.Presentation.Common;
 
 namespace myBestShop
 {
     public partial class MainAdmin : Form
     {
-        string currentTable;
-        DataTable dataTable;
-        MySqlDataAdapter myAdapter;
-
+        private AdminRepository repository;
+        private TableViewHolder tableView;
 
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DATA.mySqlConnection.Close();
         }
-
 
         public MainAdmin()
         {
-            DATA.mySqlConnection.Open();
             InitializeComponent();
-            try
+            var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
+            repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
+            repository.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
+
+            tableView = new TableViewHolder(727, 533, 117, 8);
+
+            updateComputerStatusGrid();
+        }
+
+        private void updateComputerStatusGrid()
+        {
+            repository.fetchUserStatuses();
+        }
+
+        private object onComputerStatusUpdate(List<ComputerWrapper> computers)
+        {
+            Logger.println("kek nice ass bro viyau");
+            tableView.clear();
+
+            var count = computers.Count();
+
+            computerStatusGrid.ColumnCount = 3;
+            computerStatusGrid.RowCount = (count + 2) / count;
+
+            for (int i = 0; i < count; i++)
             {
-                MySqlCommand mySqlCommand = new MySqlCommand("SELECT FIO FROM employee where id_employee = @id", DATA.mySqlConnection);
-                mySqlCommand.Parameters.Add("@id", MySqlDbType.Int32).Value = DATA.id;
-                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
-                if (myReader.Read())
-                {
-                    labelName.Text += myReader.GetString(0).Replace(" _", "");
-                }
-                else
-                {
-                    Console.WriteLine("NO");
-                }
-                myReader.Close();
+                int rowInd = i / 3;
+                int columnInd = i % 3;
+                var computer = computers[i];
+                var style = computer.convertStatusToDataGridStyle();
+
+                computerStatusGrid.Rows[rowInd].Cells[columnInd].Style = style;
             }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            
+            computerStatusGrid.Refresh();
+            return null;
         }
 
         private void deliveryInWork_Click(object sender, EventArgs e)
         {
-            currentTable = "delivery";
-            dataTable = new DataTable();
-            try
-            {   
-                myAdapter = new MySqlDataAdapter("SELECT * FROM delivery where id_employee = " + DATA.id + " AND status != 'Доставлен';", DATA.mySqlConnection);
-                MySqlCommandBuilder mySqlCommandBuilder = new MySqlCommandBuilder(myAdapter);
-                myAdapter.UpdateCommand = mySqlCommandBuilder.GetUpdateCommand();
-                myAdapter.DeleteCommand = mySqlCommandBuilder.GetDeleteCommand();
-                myAdapter.InsertCommand = mySqlCommandBuilder.GetInsertCommand();
-                myAdapter.Fill(dataTable);
-                BindingSource bindingSource = new BindingSource();
-                bindingSource.DataSource = dataTable;
-                dataGridView.DataSource = bindingSource;
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            myAdapter.Update(dataTable);
         }
 
         private void deliveryClosed_Click(object sender, EventArgs e)
         {
-            currentTable = "delivery";
-            dataTable = new DataTable();
-            try
-            {
-                myAdapter = new MySqlDataAdapter("SELECT * FROM delivery where id_employee = " + DATA.id + " AND status = 'Доставлен';", DATA.mySqlConnection);
-                MySqlCommandBuilder mySqlCommandBuilder = new MySqlCommandBuilder(myAdapter);
-                myAdapter.UpdateCommand = mySqlCommandBuilder.GetUpdateCommand();
-                myAdapter.DeleteCommand = mySqlCommandBuilder.GetDeleteCommand();
-                myAdapter.InsertCommand = mySqlCommandBuilder.GetInsertCommand();
-                myAdapter.Fill(dataTable);
-                BindingSource bindingSource = new BindingSource();
-                bindingSource.DataSource = dataTable;
-                dataGridView.DataSource = bindingSource;
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
         }
 
         private void tables_box_TextChanged(object sender, EventArgs e)
         {
-            /*dataTable = new DataTable();
-            try
+        }
+
+        private void MainAdmin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void computerStatusGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        public class ComputerStatusObserver : Observer
+        {
+            Func<List<ComputerWrapper>, object> onComputerStatusUpdate;
+            public ComputerStatusObserver(Func<List<ComputerWrapper>, object> onComputerStatusUpdate)
             {
-                myAdapter = new MySqlDataAdapter("SELECT * FROM "+ tables_box.Text +";", DATA.mySqlConnection);
-                MySqlCommandBuilder mySqlCommandBuilder = new MySqlCommandBuilder(myAdapter);
-                myAdapter.UpdateCommand = mySqlCommandBuilder.GetUpdateCommand();
-                myAdapter.DeleteCommand = mySqlCommandBuilder.GetDeleteCommand();
-                myAdapter.InsertCommand = mySqlCommandBuilder.GetInsertCommand();
-                myAdapter.Fill(dataTable);
-                BindingSource bindingSource = new BindingSource();
-                bindingSource.DataSource = dataTable;
-                dataGridView.DataSource = bindingSource;
+                this.onComputerStatusUpdate = onComputerStatusUpdate;
             }
-            catch (MySqlException ex)
+
+            public void handleResult<ResultT>(Result<ResultT> result) where ResultT : class
             {
-                Console.WriteLine(ex.ToString());
-            }*/
+                if (result == null)
+                {
+                    Logger.println("Admin screen: main observable caught null result from repository");
+                    return;
+                }
+
+                if (result.isLoading)
+                {
+                    // Init progress bar or circle
+                    Logger.println("Admin screen: waiting for computer status");
+                    return;
+                }
+
+                if (result.isError)
+                {
+                    Logger.println("Admin screen: error caught: " + result.exception.ToString());
+                    return;
+                }
+
+                if (result.data != null)
+                {
+                    Logger.println("Admin screen: result is ok");
+                    var computerStatuses = (List<ComputerWrapper>)Convert.ChangeType(result.data, typeof(List<ComputerWrapper>));
+                    onComputerStatusUpdate(computerStatuses);
+                }
+                else
+                {
+                    Logger.println("Admin screen: invalid result state from admin main repository");
+                }
+            }
         }
     }
 }

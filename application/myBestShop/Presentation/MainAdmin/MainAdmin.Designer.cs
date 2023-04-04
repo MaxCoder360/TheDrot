@@ -31,17 +31,16 @@
             this.deliveryInWork = new System.Windows.Forms.Button();
             this.deliveryClosed = new System.Windows.Forms.Button();
             this.labelName = new System.Windows.Forms.Label();
-            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.save = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // deliveryInWork
             // 
-            this.deliveryInWork.Location = new System.Drawing.Point(12, 85);
+            this.deliveryInWork.Location = new System.Drawing.Point(3, 54);
+            this.deliveryInWork.Margin = new System.Windows.Forms.Padding(2);
             this.deliveryInWork.Name = "deliveryInWork";
-            this.deliveryInWork.Size = new System.Drawing.Size(120, 84);
+            this.deliveryInWork.Size = new System.Drawing.Size(110, 56);
             this.deliveryInWork.TabIndex = 0;
             this.deliveryInWork.Text = "Просмотр компьтеров";
             this.deliveryInWork.UseVisualStyleBackColor = true;
@@ -49,9 +48,10 @@
             // 
             // deliveryClosed
             // 
-            this.deliveryClosed.Location = new System.Drawing.Point(12, 175);
+            this.deliveryClosed.Location = new System.Drawing.Point(3, 114);
+            this.deliveryClosed.Margin = new System.Windows.Forms.Padding(2, 0, 2, 2);
             this.deliveryClosed.Name = "deliveryClosed";
-            this.deliveryClosed.Size = new System.Drawing.Size(120, 84);
+            this.deliveryClosed.Size = new System.Drawing.Size(110, 55);
             this.deliveryClosed.TabIndex = 1;
             this.deliveryClosed.Text = "Редактирование Компьтеров";
             this.deliveryClosed.UseVisualStyleBackColor = true;
@@ -60,29 +60,19 @@
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(26, 20);
+            this.labelName.Location = new System.Drawing.Point(17, 13);
+            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(122, 20);
+            this.labelName.Size = new System.Drawing.Size(80, 13);
             this.labelName.TabIndex = 2;
             this.labelName.Text = "Здравствуйте,\r\n";
             // 
-            // dataGridView
-            // 
-            this.dataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView.Location = new System.Drawing.Point(176, 12);
-            this.dataGridView.Name = "dataGridView";
-            this.dataGridView.RowHeadersWidth = 62;
-            this.dataGridView.RowTemplate.Height = 28;
-            this.dataGridView.Size = new System.Drawing.Size(1090, 820);
-            this.dataGridView.TabIndex = 3;
-            // 
             // save
             // 
-            this.save.Location = new System.Drawing.Point(30, 720);
+            this.save.Location = new System.Drawing.Point(3, 478);
+            this.save.Margin = new System.Windows.Forms.Padding(2);
             this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(118, 62);
+            this.save.Size = new System.Drawing.Size(110, 63);
             this.save.TabIndex = 4;
             this.save.Text = "Сохранить изменения";
             this.save.UseVisualStyleBackColor = true;
@@ -90,29 +80,30 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 265);
+            this.button1.Location = new System.Drawing.Point(3, 173);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 75);
+            this.button1.Size = new System.Drawing.Size(110, 49);
             this.button1.TabIndex = 5;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // MainAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1278, 844);
+            this.ClientSize = new System.Drawing.Size(852, 549);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.save);
-            this.Controls.Add(this.dataGridView);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.deliveryClosed);
             this.Controls.Add(this.deliveryInWork);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainAdmin";
             this.Text = "ПАНЕЛЬ УПРАВЛЕНИЯ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
+            this.Load += new System.EventHandler(this.MainAdmin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,7 +114,6 @@
         private System.Windows.Forms.Button deliveryInWork;
         private System.Windows.Forms.Button deliveryClosed;
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.Button save;
         private System.Windows.Forms.Button button1;
     }

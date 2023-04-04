@@ -4,26 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static myBestShop.Utils.AppConfig;
 
 namespace myBestShop.Domain.WebService
 {
-    class UserWebService
+    public class UserWebService : IUserWebService
     {
-        public UserWebService()
-        {
+        public string baseUrl;
 
-        }
-
-        public Task<int> fetchSessionKey(LoginHolder holder)
+        Task<int> IUserWebService.fetchSessionKey(LoginHolder holder)
         {
             throw new NotImplementedException();
         }
 
-        public Task<string> fetchServerTime()
+        Task<string> IUserWebService.fetchServerTime(int userSessionKey)
         {
             throw new NotImplementedException();
         }
 
-
+        public UserWebService(WebServiceConfig config)
+        {
+            baseUrl = config.baseUrl;
+        }
     }
 }

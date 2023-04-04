@@ -1,4 +1,5 @@
-﻿using myBestShop.Utils;
+﻿using myBestShop.Domain.Database;
+using myBestShop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,11 @@ namespace myBestShop
 
             // initialize observable storage to keep info about observables
             ObservableStorage.initialize();
+            DatabaseManager.createInstance();
             try
             {
                 //new Form1()
-                Application.Run();
+                Application.Run(new LoginScreen());
             }
             catch
             {
