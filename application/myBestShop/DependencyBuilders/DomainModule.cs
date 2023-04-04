@@ -24,9 +24,14 @@ namespace myBestShop.DependencyBuilders
             return RepositoryConfig.createConfig(configType, userType);
         }
 
-        public static AdminWebService createAdminWebService(WebServiceConfig config)
+        public static IAdminWebService createAdminWebService(WebServiceConfig config)
         {
-            return new AdminWebService(config.baseUrl);
+            if (BUILD_CONFIG == ConfigType.DEBUG_CONFIG) {
+                return new AdminWebServiceMock();
+            } else
+            {
+                return new AdminWebService(config.baseUrl);
+            }
         }
 
         public static IUserWebService createUserWebService(WebServiceConfig config)

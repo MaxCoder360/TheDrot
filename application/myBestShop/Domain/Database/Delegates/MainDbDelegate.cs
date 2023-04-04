@@ -1,4 +1,5 @@
-﻿using myBestShop.Utils;
+﻿using myBestShop.Domain.Entities;
+using myBestShop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,26 @@ namespace myBestShop.Domain.Database.Delegates
 {
     public class MainDbDelegate
     {
-        Task<ComputerStatus> fetchUserStatus(int userId)
+        
+        public Task<int> getUserCount(int userId)
         {
-            throw new NotImplementedException();
+            return new Task<int>(() =>
+            {
+                return 4;
+            });
         }
-        Task<List<string>> fetchUserProcesses(int userId)
+
+        public async Task<List<User>> getAllUsers()
         {
-            throw new NotImplementedException();
+            return new List<User> { new User(1, 10), new User(2, 11), new User(3, 12), new User(4, 13) };
         }
-        Task blockRemoteComputer(int userId)
-        {
-            throw new NotImplementedException();
-        }
-        Task<int> fetchUserCount(int userId)
+
+        public async Task addUser()
         {
             throw new NotImplementedException();
         }
 
-        public Task addUser()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<LoginHolder> getLogin()
+        public async Task<LoginHolder> getLogin()
         {
             throw new NotImplementedException();
         }

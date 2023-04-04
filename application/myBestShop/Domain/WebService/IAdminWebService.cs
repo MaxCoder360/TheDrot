@@ -12,6 +12,5 @@ namespace myBestShop.Domain.WebService
         Task<ComputerStatus> fetchUserStatus(int userId);
         Task<List<string>> fetchUserProcesses(int userId);
         Task blockRemoteComputer(int userId);
-        Task<int> fetchUserCount(int userId);
     }
 }

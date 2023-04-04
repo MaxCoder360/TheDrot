@@ -125,6 +125,7 @@
     <Compile Include="Domain\Database\DatabaseManager.cs" />
     <Compile Include="Domain\Database\Delegates\LoginDbDelegate.cs" />
     <Compile Include="Domain\Database\Delegates\MainDbDelegate.cs" />
+    <Compile Include="Domain\Entities\User.cs" />
     <Compile Include="Domain\Entities\UserDataDTO.cs" />
     <Compile Include="Domain\Repository\AdminRepository.cs" />
     <Compile Include="Domain\Repository\IRepository.cs" />

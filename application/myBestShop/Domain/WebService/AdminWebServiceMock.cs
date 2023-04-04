@@ -17,48 +17,42 @@ namespace myBestShop.Domain.WebService
             });
         }
 
-        public Task<int> fetchUserCount(int userId)
+        public async Task<int> fetchUserCount()
         {
-            throw new NotImplementedException();
+            return 4;
         }
 
-        public Task<List<string>> fetchUserProcesses(int userId)
+        public async Task<List<string>> fetchUserProcesses(int userId)
         {
-            return new Task<List<string>>(() =>
+            if (userId == 0)
             {
-                if (userId == 0)
-                {
-                    return new List<string> { "NVideo Container", "Обработчик команд Windows" };
-                } else if (userId == 1)
-                {
-                    return new List<string> { "Microsoft Visual Studio 2022", "Обработчик команд Windows", "Anti Strike: Global Offense" };
-                } else if (userId == 2)
-                {
-                    return new List<string> { "Microsoft Visual Studio 2022", "Диспетчер задач Windows", "Неизвестная вирусная программа" };
-                }
+                return new List<string> { "NVideo Container", "Обработчик команд Windows" };
+            } else if (userId == 1)
+            {
+                return new List<string> { "Microsoft Visual Studio 2022", "Обработчик команд Windows", "Anti Strike: Global Offense" };
+            } else if (userId == 2)
+            {
+                return new List<string> { "Microsoft Visual Studio 2022", "Диспетчер задач Windows", "Неизвестная вирусная программа" };
+            }
 
-                return new List<string> { };
-            });
+            return new List<string> { };
         }
 
-        public Task<ComputerStatus> fetchUserStatus(int userId)
+        public async Task<ComputerStatus> fetchUserStatus(int userId)
         {
-            return new Task<ComputerStatus>(() =>
+            if (userId == 0) {
+                return ComputerStatus.AVAILABLE;
+            }
+            else if (userId == 1)
             {
-                if (userId == 0) {
-                    return ComputerStatus.AVAILABLE;
-                }
-                else if (userId == 1)
-                {
-                    return ComputerStatus.IS_USED;
-                } 
-                else if (userId == 2)
-                {
-                    return ComputerStatus.IN_DANGER;
-                }
+                return ComputerStatus.IS_USED;
+            } 
+            else if (userId == 2)
+            {
+                return ComputerStatus.IN_DANGER;
+            }
 
-                return ComputerStatus.UNAVAILABLE;
-            });
+            return ComputerStatus.UNAVAILABLE;
         }
     }
 }
