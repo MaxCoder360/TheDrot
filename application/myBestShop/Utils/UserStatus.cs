@@ -49,40 +49,34 @@ namespace myBestShop.Utils
             this.userId = userId;
         }
 
-        public DataGridViewCellStyle convertStatusToDataGridStyle()
+        public Color convertStatusToDataGridStyle()
         {
-            DataGridViewCellStyle style = null;
             if (status == ComputerStatus.UNAVAILABLE)
             {
-                style = new DataGridViewCellStyle();
-                style.BackColor = Color.FromArgb(-6118750); // Grey Color
+                return Color.FromArgb(-6118750); // Grey Color
                 // style.ForeColor = Color.Black;
             } else if (status == ComputerStatus.IN_DANGER)
             {
-                style = new DataGridViewCellStyle();
-                style.BackColor = Color.FromArgb(-1048576); // Red Color
+                return Color.FromArgb(-1048576); // Red Color
                 // style.ForeColor = Color.Black;
             }
             else if (status == ComputerStatus.AVAILABLE)
             {
-                style = new DataGridViewCellStyle();
-                style.BackColor = Color.FromArgb(-16725986); // Green Color
+                return Color.FromArgb(-16725986); // Green Color
                 // style.ForeColor = Color.Black;
             }
             else if (status == ComputerStatus.IS_USED)
             {
-                style = new DataGridViewCellStyle();
-                style.BackColor = Color.FromArgb(-659426); // Yellow Color
+                return Color.FromArgb(-659426); // Yellow Color
                 // style.ForeColor = Color.Black;
             }
             else if (status == ComputerStatus.UNKNOWN)
             {
-                style = new DataGridViewCellStyle();
-                style.BackColor = Color.FromArgb(-14803426); // Black Color
+                return Color.FromArgb(-14803426); // Black Color
                 // style.ForeColor = Color.Black;
             }
 
-            return style;
+            return Color.Black;
         }
     }
 }

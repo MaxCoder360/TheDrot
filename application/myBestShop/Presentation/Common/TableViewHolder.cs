@@ -43,10 +43,12 @@ namespace myBestShop.Presentation.Common
         {
             get
             {
+
                 return height / ((cellCount + columnCount - 1) / columnCount);
             }
         }
         private List<Label> cells = new List<Label>();
+        private List<ComputerWrapper> computerStatuses;
         public TableViewHolder(int width, int height, int locX, int locY)
         {
             this.width = width;
@@ -63,16 +65,18 @@ namespace myBestShop.Presentation.Common
 
         public TableViewHolder appendCellsWithStatuses(List<ComputerWrapper> comps)
         {
-            appendCellRange(comps.Count());
+            computerStatuses = comps;
+            appendCellRange(comps.Count);
             return this;
         }
 
         public TableViewHolder appendCellRange(int count)
         {
-            int rowInd = rowCount-1;
+            int rowInd = (cellCount) / columnCount;
             int colInd = cellCount % columnCount;
             while (count != 0)
             {
+                Logger.println(rowInd.ToString() + " : " + colInd.ToString());
                 addCell(rowInd, colInd);
 
                 if (++colInd == columnCount)
@@ -119,7 +123,9 @@ namespace myBestShop.Presentation.Common
         public List<List<Label>> getCells()
         {
             var result = new List<List<Label>>();
-            int rowsCount = (cellCount + columnCount) / columnCount;
+            int rowsCount = (cellCount + columnCount - 1) / columnCount;
+
+            int pos = 0;
 
             for (int i = 0; i < rowsCount; i++)
             {
@@ -128,8 +134,13 @@ namespace myBestShop.Presentation.Common
                 int locY = this.locY + i * cellHeight;
                 for (int j = 0; j < columnCount; j++)
                 {
-                    result[i].Append(updateCell(cells[i * rowsCount + j], locX, locY, i * columnCount + j));
+                    if (pos == cellCount)
+                    {
+                        return result;
+                    }
+                    result[i].Add(updateCell(cells[i * columnCount + j], locX, locY, i * columnCount + j, computerStatuses[pos].convertStatusToDataGridStyle()));
                     locX += cellWidth;
+                    pos++;
                 }
             }
 
@@ -141,11 +152,13 @@ namespace myBestShop.Presentation.Common
             return cells;
         }
 
-        private Label updateCell(Label box, int locX, int locY, int index)
+        private Label updateCell(Label box, int locX, int locY, int index, Color backColor)
         {
             box.Width = cellWidth;
             box.Height = cellHeight;
             box.Text = "Computer " + index.ToString();
+            box.BorderStyle = BorderStyle.FixedSingle;
+            box.BackColor = backColor;
             box.Location = new System.Drawing.Point(locX, locY);
 
             return box;

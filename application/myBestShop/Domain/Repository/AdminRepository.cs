@@ -31,18 +31,21 @@ namespace myBestShop.Domain.Repository
             List<User> users = await dbManager.Main.getAllUsers();
             List<ComputerWrapper> statuses = new List<ComputerWrapper>();
 
-            foreach (User user in users)
+            for (int i = 0; i < users.Count; i++)
             {
+                User user = users[i];
                 try
                 {
                     var status = await webService.fetchUserStatus(user.id);
-                    statuses.Append(new ComputerWrapper(user.computerId, user.id, status));
+                    Logger.println("Keke " + status.ToString());
+                    statuses.Add(new ComputerWrapper(user.computerId, user.id, status));
                 } catch (Exception)
                 {
-                    statuses.Append(new ComputerWrapper(user.computerId, user.id, ComputerStatus.UNKNOWN));
+                    statuses.Add(new ComputerWrapper(user.computerId, user.id, ComputerStatus.UNKNOWN));
                 }
             }
 
+            Logger.println("Meme name: " + statuses.Count);
             notify(new Result<object> { data = statuses, exception = null, isLoading = false }, userStatusTag);
         }
     }
