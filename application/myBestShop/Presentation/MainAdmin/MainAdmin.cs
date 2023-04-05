@@ -46,12 +46,22 @@ namespace myBestShop
 
         private object onComputerStatusUpdate(List<ComputerWrapper> computers)
         {
-            Logger.println("kek nice ass bro viyau");
-            tableView.clear();
-
             var count = computers.Count();
 
-            computerStatusGrid.ColumnCount = 3;
+            foreach (Control item in this.Controls.OfType<Control>())
+            {
+                foreach (var label in tableView.getReducedCells())
+                {
+                    if (item.Name.Equals(label.Name))
+                    {
+                        this.Controls.Remove(item);
+                        item.Dispose();
+                    }
+                }
+            }
+
+
+            /*computerStatusGrid.ColumnCount = 3;
             computerStatusGrid.RowCount = (count + 2) / count;
 
             for (int i = 0; i < count; i++)
@@ -63,7 +73,7 @@ namespace myBestShop
 
                 computerStatusGrid.Rows[rowInd].Cells[columnInd].Style = style;
             }
-            computerStatusGrid.Refresh();
+            computerStatusGrid.Refresh();*/
             return null;
         }
 
