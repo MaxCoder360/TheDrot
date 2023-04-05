@@ -35,8 +35,6 @@ namespace myBestShop
             repository.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
 
             tableView = new TableViewHolder(727, 533, 117, 8);
-
-            updateComputerStatusGrid();
         }
 
         private void updateComputerStatusGrid()
@@ -46,8 +44,6 @@ namespace myBestShop
 
         private object onComputerStatusUpdate(List<ComputerWrapper> computers)
         {
-            var count = computers.Count();
-
             foreach (Control item in this.Controls.OfType<Control>())
             {
                 foreach (var label in tableView.getReducedCells())
@@ -60,25 +56,23 @@ namespace myBestShop
                 }
             }
 
-
-            /*computerStatusGrid.ColumnCount = 3;
-            computerStatusGrid.RowCount = (count + 2) / count;
-
-            for (int i = 0; i < count; i++)
+            var cells1 = tableView.clear().appendCellsWithStatuses(computers);
+            var cells = cells1.getCells();
+            Logger.println(cells.Count.ToString());
+            for (int i = 0; i < cells.Count; i++)
             {
-                int rowInd = i / 3;
-                int columnInd = i % 3;
-                var computer = computers[i];
-                var style = computer.convertStatusToDataGridStyle();
-
-                computerStatusGrid.Rows[rowInd].Cells[columnInd].Style = style;
+                for (int j = 0; j < cells[i].Count; j++)
+                {
+                    this.Controls.Add(cells[i][j]);
+                }
             }
-            computerStatusGrid.Refresh();*/
+
             return null;
         }
 
         private void deliveryInWork_Click(object sender, EventArgs e)
         {
+            updateComputerStatusGrid();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -134,8 +128,9 @@ namespace myBestShop
 
                 if (result.data != null)
                 {
-                    Logger.println("Admin screen: result is ok");
+                    Logger.println("Admin screen: result is ok: ");
                     var computerStatuses = (List<ComputerWrapper>)Convert.ChangeType(result.data, typeof(List<ComputerWrapper>));
+                    Logger.println("MAn " + computerStatuses.Count.ToString());
                     onComputerStatusUpdate(computerStatuses);
                 }
                 else

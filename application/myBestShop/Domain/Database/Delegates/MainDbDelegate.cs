@@ -21,7 +21,7 @@ namespace myBestShop.Domain.Database.Delegates
 
         public async Task<List<User>> getAllUsers()
         {
-            return new List<User> { new User(1, 10), new User(2, 11), new User(3, 12), new User(4, 13) };
+            return new List<User> { new User(1, 10), new User(2, 11), new User(3, 12), new User(0, 13) };
         }
 
         public async Task addUser()
