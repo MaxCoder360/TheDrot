@@ -1,81 +1,46 @@
-﻿using MySql.Data.MySqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace myBestShop
 {
     public partial class MainClient : Form
     {
-        DataTable dataTable;
-        MySqlDataAdapter myAdapter;
-
-
-        private void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            DATA.mySqlConnection.Close();
-        }
-
         public MainClient()
         {
-            DATA.mySqlConnection.Open();
             InitializeComponent();
-            try
-            {
-                MySqlCommand mySqlCommand = new MySqlCommand("SELECT FIO FROM client WHERE id_client = @id", DATA.mySqlConnection);
-                mySqlCommand.Parameters.Add("@id", MySqlDbType.Int32).Value = DATA.id;
-                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
-                if (myReader.Read())
-                {
-                    Console.WriteLine(myReader.GetString(0));
-                    labelName.Text += myReader.GetString(0).Replace(" _", "");
-                }
-                else
-                {
-                    Console.WriteLine("NdfdfgfsgfgssdfgfagafaO");
-                }
-                myReader.Close();
-            }
-            catch (MySqlException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            // todo при открытии формы изменять labelName на имя человека который авторизовался
+            labelName.Text += "Краев Максим Максимович";
+
+            // получение времени из бд для пользователя
+            Value_time = 3712;
+            label_pass_time.Text = Int2StringTime(Value_time);
+            timer_pass_time = new Timer();
+            timer_pass_time.Tick += new EventHandler(tm_Tick);
+            timer_pass_time.Interval = 1000;
+            timer_pass_time.Start();
+            
         }
 
-        private void tables_box_TextChanged(object sender, EventArgs e)
+        int Value_time = 0;
+        private string Int2StringTime(int time)
         {
-            dataTable = new DataTable();
+            int hours = (time - (time % (60 * 60))) / (60 * 60);
+            int minutes = (time - time % 60) / 60 - hours * 60;
+            int seconds = time % 60;
+            return String.Format("{0:00} ч. {1:00} м. {2:00} с.", hours, minutes, seconds);
+        }
 
-            if (tables_box.Text == "order" || tables_box.Text == "discount") {
-                try
-                {
-                    myAdapter = new MySqlDataAdapter("SELECT * FROM " + tables_box.Text + " WHERE id_client = " + DATA.id + ";", DATA.mySqlConnection);
-                    myAdapter.Fill(dataTable);
-                    dataGridView.DataSource = dataTable;
-                }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+        void tm_Tick(object sender, EventArgs e)
+        {
+            if (Value_time != 0)
+            {
+                label_pass_time.Text = Int2StringTime(Value_time);
+                Value_time--;
             }
             else
             {
-                try
-                {
-                    myAdapter = new MySqlDataAdapter("SELECT * FROM " + tables_box.Text + ";", DATA.mySqlConnection);
-                    myAdapter.Fill(dataTable);
-                    dataGridView.DataSource = dataTable;
-                }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+                (sender as Timer).Stop();
+                (sender as Timer).Dispose();
             }
         }
     }

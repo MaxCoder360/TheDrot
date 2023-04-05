@@ -1,7 +1,6 @@
 ﻿using myBestShop.Domain.Repository;
 using myBestShop.Utils;
 using myBestShop.DependencyBuilders;
-using MySql.Data.MySqlClient;
 using System;
 using System.Text;
 using System.Windows.Forms;
@@ -28,8 +27,17 @@ namespace myBestShop
 
         private object onLoginSuccessful(object o)
         {
-            MainAdmin adminScreen = new MainAdmin();
-            adminScreen.Show();
+            if (loginField.Text == "maks")
+            {
+                MainClient clientScreen = new MainClient();
+                clientScreen.Show();
+            }
+            if (loginField.Text == "danis")
+            {
+                MainAdmin adminScreen = new MainAdmin();
+                adminScreen.Show();
+            }
+
 
             // Close();
 
