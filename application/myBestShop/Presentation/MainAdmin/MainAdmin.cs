@@ -23,13 +23,17 @@ namespace myBestShop
         private AdminRepository repository;
         private TableViewHolder tableView;
 
+        private Form parent;
+
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
         }
 
-        public MainAdmin()
+        public MainAdmin(Form parent)
         {
             InitializeComponent();
+            this.parent = parent;
+
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
             repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
             repository.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
@@ -138,6 +142,12 @@ namespace myBestShop
                     Logger.println("Admin screen: invalid result state from admin main repository");
                 }
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            parent.Show();
+            this.Close();
         }
     }
 }

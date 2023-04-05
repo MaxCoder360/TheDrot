@@ -5,11 +5,13 @@ namespace myBestShop
 {
     public partial class MainClient : Form
     {
-        public MainClient()
+        private Form parent;
+        public MainClient(Form parent)
         {
             InitializeComponent();
             // todo при открытии формы изменять labelName на имя человека который авторизовался
             labelName.Text += "Краев Максим Максимович";
+            this.parent = parent;
 
             // получение времени из бд для пользователя
             Value_time = 3712;
@@ -42,6 +44,33 @@ namespace myBestShop
                 (sender as Timer).Stop();
                 (sender as Timer).Dispose();
             }
+        }
+
+        private void button_pause_Click(object sender, EventArgs e)
+        {
+            if (this.timer_pass_time.Enabled)
+            {
+                this.timer_pass_time.Stop();
+            } else
+            {
+                this.timer_pass_time.Start();
+            }
+        }
+
+        private void button_call_admin_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Администратор сейчас подойдет к Вам!");
+        }
+
+        private void button_exit_Click(object sender, EventArgs e)
+        {
+            parent.Show();
+            this.Close();
+        }
+
+        private void MainClient_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

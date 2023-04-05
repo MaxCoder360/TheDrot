@@ -29,13 +29,17 @@ namespace myBestShop
         {
             if (loginField.Text == "maks")
             {
-                MainClient clientScreen = new MainClient();
+                MainClient clientScreen = new MainClient(this);
                 clientScreen.Show();
-            }
-            if (loginField.Text == "danis")
+                this.Hide();
+            } else if (loginField.Text == "danis")
             {
-                MainAdmin adminScreen = new MainAdmin();
+                MainAdmin adminScreen = new MainAdmin(this);
                 adminScreen.Show();
+                this.Hide();
+            } else
+            {
+                MessageBox.Show("Что-то пошло не так. Проверьте введенные данные и повторите попытку.");
             }
 
 
