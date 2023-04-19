@@ -12,11 +12,8 @@ namespace myBestShop.Domain.Database
 {
     public class DatabaseManager
     {
+        public static MySqlConnection mySqlConnection = null;
         public static DatabaseManager instance { get; private set; }
-
-        public LoginDbDelegate Login = new LoginDbDelegate();
-        public MainDbDelegate Main = new MainDbDelegate();
-
         public static void createInstance()
         {
             if (instance == null)
@@ -25,9 +22,14 @@ namespace myBestShop.Domain.Database
             }
             else
             {
-                throw new Exception("Database is already initialized");
+                Logger.println("MySql connection initialized");
             }
         }
+
+
+        public LoginDbDelegate Login = new LoginDbDelegate();
+        public MainDbDelegate Main = new MainDbDelegate();
+        
 
         private DatabaseManager() {
             initializeConnect();
@@ -35,21 +37,22 @@ namespace myBestShop.Domain.Database
 
         private void initializeConnect()
         {
-            if (DATA.mySqlConnection is null)
+            if (mySqlConnection is null)
             {
                 try
                 {
-                    DATA.mySqlConnection = new MySqlConnection("Server=172.20.10.2;Database=apple_store;Uid=test;Pwd=anime;SslMode=Preferred;");
-                    DATA.mySqlConnection.Open();
+                    mySqlConnection = new MySqlConnection("Server=172.20.10.2;Database=apple_store;Uid=test;Pwd=anime;SslMode=Preferred;ConnectionTimeout=2000");
+                    mySqlConnection.Open();
                 }
                 catch(Exception ex)
                 {
                     Logger.println("MySql connection initialization failed");
                     Logger.println(ex.Message);
+                    
                 }
                 finally
                 {
-                    DATA.mySqlConnection.Close();
+                    mySqlConnection.Close();
                 }
 
             }

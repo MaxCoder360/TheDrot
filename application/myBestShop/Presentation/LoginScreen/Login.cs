@@ -58,7 +58,7 @@ namespace myBestShop
             // cannot remove it
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void loginButton_Click(object sender, EventArgs e)
         {
             var loginHandler = new LoginHolder(loginField.Text, passwordField.Text);
             await repository.logInUser(loginHandler);
