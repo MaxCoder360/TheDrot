@@ -210,5 +210,8 @@
   <ItemGroup>
     <Folder Include="Domain\WebService\Delegates\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Presentation\Common\cancel.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

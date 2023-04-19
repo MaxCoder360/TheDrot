@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows;
+using System.IO;
+using System.Reflection;
 using myBestShop.Utils;
 
 namespace myBestShop.Presentation.Common
@@ -19,7 +17,7 @@ namespace myBestShop.Presentation.Common
                 return cells.Count;
             }
         }
-        public int columnCount = 3;
+        public int columnCount = 2;
         public int rowCount
         {
             get
@@ -120,7 +118,33 @@ namespace myBestShop.Presentation.Common
             return this;
         }
 
-        public List<List<Label>> getCells()
+        public List<Control> getCells()
+        {
+            var result = new List<Control>();
+            int rowsCount = 0;
+
+            for (int i = 0; i < cells.Count; i++)
+            {
+                if (i % (columnCount + 1) == columnCount)
+                {
+                    rowsCount++;
+                }
+                int locX = this.locX + (i % columnCount) * cellWidth;
+                int locY = this.locY + rowsCount * cellHeight;
+
+                var decoratedCell = generateStatusCell(locX, locY, cellHeight, computerStatuses[i].convertStatusToTableViewFormat(), "Computer "+i.ToString());
+
+                foreach (var box in decoratedCell)
+                {
+                    result.Add(box);
+                }
+            }
+
+            return result;
+        }
+
+        [Obsolete("Method getCellsAsGrid() is deprecated due to inappropriate work with cells. Use getCells() method instead.")]
+        public List<List<Label>> getCellsAsGrid()
         {
             var result = new List<List<Label>>();
             int rowsCount = (cellCount + columnCount - 1) / columnCount;
@@ -138,7 +162,7 @@ namespace myBestShop.Presentation.Common
                     {
                         return result;
                     }
-                    result[i].Add(updateCell(cells[i * columnCount + j], locX, locY, i * columnCount + j, computerStatuses[pos].convertStatusToDataGridStyle()));
+                    result[i].Add(updateCell(cells[i * columnCount + j], locX, locY, i * columnCount + j, computerStatuses[pos].convertStatusToTableViewFormat().first));
                     locX += cellWidth;
                     pos++;
                 }
@@ -150,6 +174,49 @@ namespace myBestShop.Presentation.Common
         public List<Label> getReducedCells()
         {
             return cells;
+        }
+
+        private List<Control> generateStatusCell(int begX, int begY, int cellHeight, Pair<Color, string> statusData, string information)
+        {
+            var backColor = statusData.first;
+            var statusHint = statusData.second;            
+
+            var result = new List<Label>();
+
+            Label statusBox = new Label();
+            Label infoBox = new Label();
+            Label hintBox = new Label();
+            Button cancelBox = new Button();
+            float infoCancelRatio = 0.9F;
+
+            infoBox.Width = (int)(cellWidth * infoCancelRatio);
+            infoBox.TextAlign = ContentAlignment.MiddleCenter;
+            // infoBox.Height = (cellHeight+1) / 2;
+            infoBox.Text = information;
+            infoBox.Location = new System.Drawing.Point(begX, begY);
+            infoBox.BorderStyle = BorderStyle.FixedSingle;
+
+            statusBox.Width = cellWidth;
+            statusBox.Height = (cellHeight+1) / 2;
+            statusBox.BackColor = backColor;
+            statusBox.Location = new System.Drawing.Point(begX, begY + infoBox.Height);
+            statusBox.BorderStyle = BorderStyle.FixedSingle;
+
+            cancelBox.Width = (int)(cellWidth * (1 - infoCancelRatio));
+            cancelBox.TextAlign = ContentAlignment.MiddleCenter;
+            cancelBox.Height = infoBox.Height;
+            cancelBox.Location = new System.Drawing.Point(begX + (int)(cellWidth * infoCancelRatio), begY);
+            cancelBox.BackColor = Color.Black;
+            cancelBox.ForeColor = Color.Black;
+
+            hintBox.Width = statusBox.Width;
+            hintBox.Height = cancelBox.Height;
+            hintBox.TextAlign = ContentAlignment.MiddleCenter;
+            hintBox.Location = new Point(begX, begY + statusBox.Height + hintBox.Height);
+            hintBox.Text = statusHint;
+            hintBox.BorderStyle = BorderStyle.FixedSingle;
+
+            return new List<Control> { infoBox, hintBox, statusBox, cancelBox };
         }
 
         private Label updateCell(Label box, int locX, int locY, int index, Color backColor)

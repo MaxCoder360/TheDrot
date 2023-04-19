@@ -49,34 +49,41 @@ namespace myBestShop.Utils
             this.userId = userId;
         }
 
-        public Color convertStatusToDataGridStyle()
+        public Pair<Color, string> convertStatusToTableViewFormat()
         {
             if (status == ComputerStatus.UNAVAILABLE)
             {
-                return Color.FromArgb(-6118750); // Grey Color
+                return new Pair<Color, string>(Color.FromArgb(-6118750), "На ремонте"); // Grey Color
                 // style.ForeColor = Color.Black;
             } else if (status == ComputerStatus.IN_DANGER)
             {
-                return Color.FromArgb(-1048576); // Red Color
+                return new Pair<Color, string>(Color.FromArgb(-1048576), "Под угрозой"); // Red Color
                 // style.ForeColor = Color.Black;
             }
             else if (status == ComputerStatus.AVAILABLE)
             {
-                return Color.FromArgb(-16725986); // Green Color
+                return new Pair<Color, string>(Color.FromArgb(-16725986), "Свободен"); // Green Color
                 // style.ForeColor = Color.Black;
             }
             else if (status == ComputerStatus.IS_USED)
             {
-                return Color.FromArgb(-659426); // Yellow Color
+                return new Pair<Color, string>(Color.FromArgb(-659426), "Занят"); // Yellow Color
                 // style.ForeColor = Color.Black;
             }
             else if (status == ComputerStatus.UNKNOWN)
             {
-                return Color.FromArgb(-14803426); // Black Color
+                return new Pair<Color, string>(Color.FromArgb(-14803426), "Статус неизвестен"); // Black Color
                 // style.ForeColor = Color.Black;
             }
 
-            return Color.Black;
+            if (AppConfig.BUILD_CONFIG == AppConfig.ConfigType.DEBUG_CONFIG)
+            {
+                throw new Exception("Status is undefined");
+            } else
+            {
+                Logger.println("Status is undefined");
+                return new Pair<Color, string>(Color.FromArgb(-14803426), "Статус неизвестен"); // Black Color
+            }
         }
     }
 }

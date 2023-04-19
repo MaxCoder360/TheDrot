@@ -1,18 +1,10 @@
 ﻿using myBestShop.Domain.Repository;
 using static myBestShop.Utils.AppConfig;
-using MySql.Data.MySqlClient;
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using myBestShop.Utils;
 using myBestShop.Presentation.Common;
 
@@ -27,6 +19,7 @@ namespace myBestShop
 
         private void Form_FormClosing(object sender, FormClosingEventArgs e)
         {
+
         }
 
         public MainAdmin(Form parent)
@@ -60,15 +53,10 @@ namespace myBestShop
                 }
             }
 
-            var cells1 = tableView.clear().appendCellsWithStatuses(computers);
-            var cells = cells1.getCells();
-            Logger.println(cells.Count.ToString());
-            for (int i = 0; i < cells.Count; i++)
+            var cells = tableView.clear().appendCellsWithStatuses(computers).getCells();
+            foreach (var cell in cells)
             {
-                for (int j = 0; j < cells[i].Count; j++)
-                {
-                    this.Controls.Add(cells[i][j]);
-                }
+                this.Controls.Add(cell);
             }
 
             return null;
@@ -81,14 +69,17 @@ namespace myBestShop
 
         private void button1_Click(object sender, EventArgs e)
         {
+
         }
 
         private void deliveryClosed_Click(object sender, EventArgs e)
         {
+
         }
 
         private void tables_box_TextChanged(object sender, EventArgs e)
         {
+
         }
 
         private void MainAdmin_Load(object sender, EventArgs e)
