@@ -9,6 +9,8 @@ using WebSocketSharp;
 using myBestShop.Domain.Repository;
 using System.Text.Json;
 using WebSocketSharp.Server;
+using System.Net;
+using System.Net.Sockets;
 
 namespace myBestShop.Domain.WebService
 {
@@ -29,9 +31,9 @@ namespace myBestShop.Domain.WebService
 
     public class UserWebService : IUserWebService
     {
-        public string baseUrl;
         private WebSocket webSocketConnection;
         private Observable<object> _observable;
+        private WebSocketServer wsServer;
 
 
         /*async Task IUserWebService.fetchSessionKey(LoginHolder holder)
@@ -67,8 +69,10 @@ namespace myBestShop.Domain.WebService
 
         public UserWebService(WebServiceConfig config)
         {
-            baseUrl = config.baseUrl;
-            webSocketConnection = new WebSocket(baseUrl);
+            wsServer = new WebSocketServer("wss://" + UserWebService.GetLocalIPAddress() + ":5050");
+
+            wsServer.AddWebSocketService<UserServerWebSocketBehavior>("/ToClient");
+            wsServer.Start();
         }
 
         void IUserWebService.addObservable(Observable<object> observable)
@@ -116,6 +120,19 @@ namespace myBestShop.Domain.WebService
             }, UserRepository.getServerTimeTag);
             webSocketConnection.OnMessage -= onMessageServerTime;
             webSocketConnection.OnError -= onErrorServerTime;
+        }
+
+        private static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
     }
 }
