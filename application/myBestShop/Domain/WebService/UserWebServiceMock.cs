@@ -60,5 +60,10 @@ namespace myBestShop.Domain.WebService
             
             return new Task(() => { });
         }
+
+        public void addObservable(Observable<object> observable)
+        {
+
+        }
     }
 }

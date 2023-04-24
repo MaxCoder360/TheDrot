@@ -15,21 +15,7 @@ namespace myBestShop.Domain.WebService
     {
         public string baseUrl;
         private WebSocket webSocketConnection;
-
-        async Task IUserWebService.fetchSessionKey(LoginHolder holder)
-        {
-            webSocketConnection.OnMessage += (sender, e) =>
-            {
-                Utils.Logger.println("Obtained session key successfully");
-            };
-
-            webSocketConnection.OnError += (sender, e) =>
-            {
-                Utils.Logger.println("Failed fetch session key. Exception occured:" + e.Message);
-            };
-
-            webSocketConnection.Connect();
-        }
+        private Observable<object> _observable;
 
         async Task IUserWebService.fetchSessionKey(LoginHolder holder)
         {
