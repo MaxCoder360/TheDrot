@@ -28,16 +28,15 @@ namespace myBestShop.Domain.Repository
         {
             notify(new Result<object> { data = default, exception = null, isLoading = true }, userStatusTag);
 
-            List<User> users = await dbManager.Main.getAllComputers();
+            List<Computer> computers = await dbManager.Main.getAllComputers();
             List<ComputerWrapper> statuses = new List<ComputerWrapper>();
 
-            for (int i = 0; i < users.Count; i++)
+            for (int i = 0; i < computers.Count; i++)
             {
-                User user = users[i];
+                Computer comp = computers[i];
                 try
                 {
                     var status = await webService.fetchUserStatus(user.id);
-                    Logger.println("Keke " + status.ToString());
                     statuses.Add(new ComputerWrapper(user.computerId, user.id, status));
                 } catch (Exception)
                 {
@@ -45,7 +44,6 @@ namespace myBestShop.Domain.Repository
                 }
             }
 
-            Logger.println("Meme name: " + statuses.Count);
             notify(new Result<object> { data = statuses, exception = null, isLoading = false }, userStatusTag);
         }
     }

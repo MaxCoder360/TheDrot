@@ -1,4 +1,5 @@
-﻿using myBestShop.Utils;
+﻿using myBestShop.Domain.Entities;
+using myBestShop.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace myBestShop.Domain.WebService
 {
     public interface IAdminWebService
     {
-        Task<ComputerStatus> fetchUserStatus(int userId);
-        Task<List<string>> fetchUserProcesses(int userId);
-        Task blockRemoteComputer(int userId);
+        Task<ComputerStatus> fetchUserStatus(Computer computer);
+        Task<List<string>> fetchUserProcesses(Computer computer);
+        Task blockRemoteComputer(Computer computer);
     }
 }
