@@ -1,4 +1,8 @@
-﻿using System;
+﻿using myBestShop.Domain.Repository;
+using myBestShop.Domain.WebService;
+using myBestShop.Presentation.MainClient.Observers;
+using myBestShop.Utils;
+using System;
 using System.Windows.Forms;
 
 namespace myBestShop
@@ -6,12 +10,22 @@ namespace myBestShop
     public partial class MainClient : Form
     {
         private Form parent;
+        private UserRepository repository;
+
+        // observers
+        private SessionKeyObserver sessionKeyObserver;
         public MainClient(Form parent)
         {
             InitializeComponent();
             // todo при открытии формы изменять labelName на имя человека который авторизовался
             labelName.Text += "Краев Максим Максимович";
             this.parent = parent;
+
+            var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
+            repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
+
+            sessionKeyObserver = new SessionKeyObserver(onSessionKeyObtained);
+            repository.addObserver(sessionKeyObserver, UserRepository.obtainSessionKeyTag);
 
             // получение времени из бд для пользователя
             Value_time = 3712;
@@ -30,6 +44,13 @@ namespace myBestShop
             int minutes = (time - time % 60) / 60 - hours * 60;
             int seconds = time % 60;
             return String.Format("{0:00} ч. {1:00} м. {2:00} с.", hours, minutes, seconds);
+        }
+
+        private object onSessionKeyObtained(int sessionKey)
+        {
+
+
+            return null;
         }
 
         void tm_Tick(object sender, EventArgs e)

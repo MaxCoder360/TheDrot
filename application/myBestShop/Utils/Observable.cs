@@ -70,6 +70,11 @@ namespace myBestShop.Utils
 
         public void notifyObservers<T>(string observableTag, Result<T> result) where T : class
         {
+            if (!observers.ContainsKey(observableTag))
+            {
+                Logger.println("Failed to notify observers due to invalid observableTag" + observableTag);
+                return;
+            }
             foreach (Observer observer in observers[observableTag])
             {
                 observer.handleResult(result);

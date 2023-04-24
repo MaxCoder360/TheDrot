@@ -12,6 +12,7 @@ namespace myBestShop.Domain.Repository
     {
         public static string loginTag = "Login_observer_tag";
         public static string getServerTimeTag = "Get_server_time_tag";
+        public static string obtainSessionKeyTag = "Obtain_session_key_tag";
         private IUserWebService webService;
         public UserRepository(IUserWebService webService)
         {
@@ -42,6 +43,16 @@ namespace myBestShop.Domain.Repository
             }
 
             notify(new Result<object> { data = DateTime.Parse(serverTimeStr), exception = null, isLoading = false }, getServerTimeTag);
+        }
+
+        public async Task fetchTestData()
+        {
+            notify(new Result<object> { data = default, exception = null, isLoading = true }, "Default none tag");
+            Logger.println("User repository: fetch test data before fetching");
+            await webService.fetchTestData();
+            Logger.println("User repository: fetch test data after fetching");
+
+            notify(new Result<object> { data = "Default Success string", exception = null, isLoading = false }, "Default none tag");
         }
     }
 }

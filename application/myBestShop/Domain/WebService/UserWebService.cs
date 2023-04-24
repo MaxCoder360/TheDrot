@@ -5,19 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static myBestShop.Utils.AppConfig;
+using WebSocketSharp;
 
 namespace myBestShop.Domain.WebService
 {
     public class UserWebService : IUserWebService
     {
         public string baseUrl;
+        private WebSocket webSocketConnection;
 
-        Task<int> IUserWebService.fetchSessionKey(LoginHolder holder)
+        async Task IUserWebService.fetchSessionKey(LoginHolder holder)
+        {
+            webSocketConnection.OnMessage += (sender, e) =>
+            {
+                Utils.Logger.println("Obtained session key successfully");
+            };
+
+            webSocketConnection.OnError += (sender, e) =>
+            {
+                Utils.Logger.println("Failed fetch session key. Exception occured:" + e.Message);
+            };
+
+            webSocketConnection.Connect();
+        }
+
+        async Task IUserWebService.fetchServerTime(int userSessionKey)
         {
             throw new NotImplementedException();
         }
 
-        Task<string> IUserWebService.fetchServerTime(int userSessionKey)
+        Task IUserWebService.fetchTestData()
         {
             throw new NotImplementedException();
         }
@@ -25,6 +42,7 @@ namespace myBestShop.Domain.WebService
         public UserWebService(WebServiceConfig config)
         {
             baseUrl = config.baseUrl;
+            webSocketConnection = new WebSocket(baseUrl);
         }
     }
 }
