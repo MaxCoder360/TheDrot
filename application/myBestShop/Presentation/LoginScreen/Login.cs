@@ -22,7 +22,7 @@ namespace myBestShop
 
         private void addObservers()
         {
-            repository.addObserver(new LoginObserver(onLoginSuccessful), UserRepository.loginTag);
+            repository.observable.addObserver(new LoginObserver(onLoginSuccessful), UserRepository.loginTag);
         }
 
         private object onLoginSuccessful(object o)
@@ -41,7 +41,6 @@ namespace myBestShop
             {
                 MessageBox.Show("Что-то пошло не так. Проверьте введенные данные и повторите попытку.");
             }
-
 
             // Close();
 
