@@ -55,14 +55,14 @@ namespace myBestShop.DependencyBuilders
             }
 
             var webServiceConfig = createWebConfig(BUILD_CONFIG);
-            var userWebService = createUserWebService(webServiceConfig);
-            var adminWebService = createAdminWebService(webServiceConfig);
             var dbManager = DatabaseManager.instance;
             if ((config.type & (int)UserType.USER) == (int)UserType.USER)
             {
+                var userWebService = createUserWebService(webServiceConfig);
                 return new UserRepository(userWebService, dbManager);
             } else
             {
+                var adminWebService = createAdminWebService(webServiceConfig);
                 return new AdminRepository(adminWebService, dbManager);
             }
         }
