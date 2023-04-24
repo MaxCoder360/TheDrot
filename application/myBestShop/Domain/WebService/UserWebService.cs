@@ -69,7 +69,7 @@ namespace myBestShop.Domain.WebService
 
         public UserWebService(WebServiceConfig config)
         {
-            wsServer = new WebSocketServer("wss://" + UserWebService.GetLocalIPAddress() + ":5050");
+            wsServer = new WebSocketServer("ws://" + UserWebService.GetLocalIPAddress() + ":5050");
 
             wsServer.AddWebSocketService<UserServerWebSocketBehavior>("/ToClient");
             wsServer.Start();
