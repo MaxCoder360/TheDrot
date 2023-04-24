@@ -3,6 +3,7 @@ using myBestShop.Utils;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ namespace myBestShop.Domain.Database
             {
                 try
                 {
-                    mySqlConnection = new MySqlConnection("Server=172.20.10.2;Database=apple_store;Uid=test;Pwd=anime;SslMode=Preferred;ConnectionTimeout=2000");
+                    mySqlConnection = new MySqlConnection("Server=DESKTOP-MU21P6Q;Database=thedrot;Uid=test;Pwd=password;SslMode=Preferred;ConnectionTimeout=2000");
                     mySqlConnection.Open();
                 }
                 catch(Exception ex)
@@ -52,10 +53,12 @@ namespace myBestShop.Domain.Database
                 }
                 finally
                 {
+                    Logger.println("всё ок") ;
                     mySqlConnection.Close();
                 }
 
             }
         }
+
     }
 }

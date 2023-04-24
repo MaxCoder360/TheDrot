@@ -15,104 +15,39 @@ namespace myBestShop.Domain.Database.Delegates
 
         }
 
-        private MainAdmin mainAdmin = null;
-        private MainClient mainClient = null;
-
         public async Task<int> getUserSessionKeyByLogin(LoginHolder holder)
         {
             string userLogin = holder.userName;
             string userPass = holder.password;
-            return 0;
-
-            /*if (userLogin != "" && userPass != "")
+            int id = -1;
+            try
             {
-                bool isEmployee = true;
-                try
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM client where mail = @login AND password = @password", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@login", MySqlDbType.VarChar).Value = userLogin;
+                mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(userPass);
+                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
+                if (myReader.Read())
                 {
-                    DATA.mySqlConnection.Open();
-                    MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM client where mail = @login AND password = @password", DATA.mySqlConnection);
-                    mySqlCommand.Parameters.Add("@login", MySqlDbType.VarChar).Value = userLogin;
-                    mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(userPass);
-                    MySqlDataReader myReader = mySqlCommand.ExecuteReader();
-                    if (myReader.Read())
-                    {
-                        Console.WriteLine("isClient");
-                        if (mainAdmin is null)
-                        {
-                            DATA.id = myReader.GetInt32(0);
-                            myReader.Close();
-                            DATA.mySqlConnection.Close();
-                            mainClient = new MainClient();
-                            *//*mainClient.Closed += (s, args) => this.Close();
-                            mainClient.Show();
-                            this.Visible = false;*//*
-                        }
-                        isEmployee = false;
-                    }
-                    else
-                    {
-                        Console.WriteLine("NO");
-                    }
-                    myReader.Close();
-
-
+                    id = myReader.GetInt32(0);
                 }
-                catch (MySqlException ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-                finally
-                {
-                    DATA.mySqlConnection.Close();
-                }
-                if (isEmployee)
-                {
-                    try
-                    {
-                        DATA.mySqlConnection.Open();
-                        MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM employee where mail = @login AND password = @password", DATA.mySqlConnection);
-                        mySqlCommand.Parameters.Add("@login", MySqlDbType.VarChar).Value = userLogin;
-                        mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(userPass);
-                        MySqlDataReader myReader = mySqlCommand.ExecuteReader();
-                        if (myReader.Read())
-                        {
-                            Console.WriteLine("isEmployee");
-                            if (mainAdmin is null)
-                            {
-                                DATA.id = myReader.GetInt32(0);
-                                myReader.Close();
-                                DATA.mySqlConnection.Close();
-                                mainAdmin = new MainAdmin();
-                                *//*mainAdmin.Closed += (s, args) => this.Close();
-                                mainAdmin.Show();
-                                this.Visible = false;*//*
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("NO");
-                        }
-
-                        myReader.Close();
-
-
-
-                    }
-                    catch (MySqlException ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                    }
-                    finally
-                    {
-                        DATA.mySqlConnection.Close();
-                    }
-
-                }
-            }*/
-
+                myReader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+            return id;
         }
 
-        public static string CreateMD5(string input)
+
+
+
+        private string CreateMD5(string input)
         {
             // Use input string to calculate MD5 hash
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
