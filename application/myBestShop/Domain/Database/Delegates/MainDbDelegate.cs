@@ -19,7 +19,7 @@ namespace myBestShop.Domain.Database.Delegates
             });
         }
 
-        public async Task<List<User>> getAllUsers()
+        public async Task<List<User>> getAllComputers()
         {
             return new List<User> { new User(1, 10), new User(2, 11), new User(3, 12), new User(0, 13) };
         }

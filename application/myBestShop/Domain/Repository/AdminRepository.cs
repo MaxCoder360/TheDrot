@@ -28,7 +28,7 @@ namespace myBestShop.Domain.Repository
         {
             notify(new Result<object> { data = default, exception = null, isLoading = true }, userStatusTag);
 
-            List<User> users = await dbManager.Main.getAllUsers();
+            List<User> users = await dbManager.Main.getAllComputers();
             List<ComputerWrapper> statuses = new List<ComputerWrapper>();
 
             for (int i = 0; i < users.Count; i++)
