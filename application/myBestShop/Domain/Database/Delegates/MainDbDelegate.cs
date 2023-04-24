@@ -55,5 +55,31 @@ namespace myBestShop.Domain.Database.Delegates
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Computer> getAllInfoAboutComputer(int ID)
+        {
+            Computer computers = null;
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM thedrot.computers WHERE id_computer = @id;", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@id", MySqlDbType.Int32).Value = ID;
+                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    computers = new Computer(myReader.GetInt32(0), myReader.GetString(1), myReader.GetString(2), myReader.GetString(3), myReader.GetString(4), myReader.GetString(5), myReader.GetString(6), myReader.GetString(7), myReader.GetString(8));
+                }
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+            return computers;
+        }
     }
 }
