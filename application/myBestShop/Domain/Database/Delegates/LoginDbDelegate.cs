@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,16 +11,27 @@ namespace myBestShop.Domain.Database.Delegates
 {
     public class LoginDbDelegate
     {
-        public LoginDbDelegate()
+        /*public LoginDbDelegate()
         {
 
+        }*/
+
+
+        public class ReturnAUF {
+            public int id;
+            public bool is_admin;
+            public ReturnAUF (int id, string is_admin) {
+                this.id = id;
+                this.is_admin = (is_admin == "1");
+                }
         }
 
-        public async Task<int> getUserSessionKeyByLogin(LoginHolder holder)
+
+        public async Task<ReturnAUF> getUserSessionKeyByLogin(LoginHolder holder)
         {
             string userLogin = holder.userName;
             string userPass = holder.password;
-            int id = -1;
+            ReturnAUF AUF = null;
             try
             {
                 DatabaseManager.mySqlConnection.Open();
@@ -29,7 +41,7 @@ namespace myBestShop.Domain.Database.Delegates
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();
                 if (myReader.Read())
                 {
-                    id = myReader.GetInt32(0);
+                    AUF = new ReturnAUF(myReader.GetInt32(0), myReader.GetString(7));
                 }
                 myReader.Close();
             }
@@ -41,7 +53,7 @@ namespace myBestShop.Domain.Database.Delegates
             {
                 DatabaseManager.mySqlConnection.Close();
             }
-            return id;
+            return AUF;
         }
 
 

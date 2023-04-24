@@ -42,18 +42,17 @@ namespace myBestShop.Domain.Database
             {
                 try
                 {
-                    mySqlConnection = new MySqlConnection("Server=DESKTOP-MU21P6Q;Database=thedrot;Uid=test;Pwd=password;SslMode=Preferred;ConnectionTimeout=2000");
+                    mySqlConnection = new MySqlConnection("Server=DESKTOP-MU21P6Qq;Database=thedrot;Uid=test;Pwd=password;SslMode=Preferred;ConnectionTimeout=2000");
                     mySqlConnection.Open();
                 }
                 catch(Exception ex)
                 {
                     Logger.println("MySql connection initialization failed");
                     Logger.println(ex.Message);
-                    
+                    Logger.println("всё ок");
                 }
                 finally
                 {
-                    Logger.println("всё ок") ;
                     mySqlConnection.Close();
                 }
 
