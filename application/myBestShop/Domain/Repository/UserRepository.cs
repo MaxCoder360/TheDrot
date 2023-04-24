@@ -8,40 +8,36 @@ using myBestShop.Utils;
 
 namespace myBestShop.Domain.Repository
 {
-    public class UserRepository : Observable<object>, IRepository
+    public class UserRepository : IRepository
     {
         public static string loginTag = "Login_observer_tag";
         public static string getServerTimeTag = "Get_server_time_tag";
+        public static string obtainSessionKeyTag = "Obtain_session_key_tag";
+        
         private IUserWebService webService;
+
+        public Observable<object> observable;
+
         public UserRepository(IUserWebService webService)
         {
             this.webService = webService;
+            observable = new Observable<object>();
+            this.webService.addObservable(observable);
         }
 
         public async Task logInUser(LoginHolder holder)
         {
-            notify(new Result<object> { data = default, exception = null, isLoading = true }, loginTag);
-
-            int sessionKey = await webService.fetchSessionKey(holder);
-            if (sessionKey == -1)
-            {
-                notify(new Result<object> { data = sessionKey, exception = new ArgumentException("Log in failed."), isLoading = false }, loginTag);
-            }
-
-            notify(new Result<object> { data = sessionKey, exception = null, isLoading = false }, loginTag);
+            webService.fetchSessionKey(holder);
         }
 
         public async Task getServerTime(int userSessionKey)
         {
-            notify(new Result<object> { data = default, exception = null, isLoading = true }, getServerTimeTag);
+            webService.fetchServerTime(userSessionKey);
+        }
 
-            string serverTimeStr = await webService.fetchServerTime(userSessionKey);
-            if (serverTimeStr == null)
-            {
-                notify(new Result<object> { data = default, exception = new Exception("Server side exception"), isLoading = false }, getServerTimeTag);
-            }
-
-            notify(new Result<object> { data = DateTime.Parse(serverTimeStr), exception = null, isLoading = false }, getServerTimeTag);
+        public async Task fetchTestData()
+        {
+            await webService.fetchTestData();
         }
     }
 }

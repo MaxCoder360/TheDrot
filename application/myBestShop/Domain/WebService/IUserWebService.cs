@@ -9,7 +9,10 @@ namespace myBestShop.Domain.WebService
 {
     public interface IUserWebService
     {
-        Task<int> fetchSessionKey(LoginHolder holder);
-        Task<string> fetchServerTime(int userSessionKey);
+        Task fetchSessionKey(LoginHolder holder);
+        Task fetchServerTime(int userSessionKey);
+        Task fetchTestData();
+
+        void addObservable(Observable<object> observable);
     }
 }
