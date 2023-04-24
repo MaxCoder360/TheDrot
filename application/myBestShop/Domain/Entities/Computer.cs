@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Domain.Entities
 {
-    internal class Computer
+    public class Computer
     {
         public int id { get; }
 

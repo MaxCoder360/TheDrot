@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
+using MySql.Data.MySqlClient;
 
 namespace myBestShop.Domain.Database.Delegates
 {
@@ -19,9 +21,29 @@ namespace myBestShop.Domain.Database.Delegates
             });
         }
 
-        public async Task<List<User>> getAllComputers()
+        public async Task<List<Computer>> getAllComputers()
         {
-            return new List<User> { new User(1, 10), new User(2, 11), new User(3, 12), new User(0, 13) };
+            List<Computer> computers = new List<Computer>();
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT id_computer, ip_adress FROM thedrot.computers;", DatabaseManager.mySqlConnection);
+                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    computers.Add(new Computer(myReader.GetInt32(0), myReader.GetString(1)));
+                }
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+            return computers;
         }
 
         public async Task addUser()
