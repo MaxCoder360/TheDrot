@@ -12,5 +12,7 @@ namespace myBestShop.Domain.WebService
         Task fetchSessionKey(LoginHolder holder);
         Task fetchServerTime(int userSessionKey);
         Task fetchTestData();
+
+        void addObservable(Observable<object> observable);
     }
 }

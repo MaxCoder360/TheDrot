@@ -45,7 +45,6 @@ namespace myBestShop.Domain.WebService
 
         Task IUserWebService.fetchTestData()
         {
-            Utils.Logger.println("NIce ass");
             var ws = new WebSocket("wss://ws.finnhub.io?token=c12ht2f48v6oi252p5ag");
             ws.OnMessage += (sender, e) => {
                 Console.WriteLine("Laputa says: " + e.Data);
@@ -56,11 +55,9 @@ namespace myBestShop.Domain.WebService
             var obj = new TestWebSocketObject("subscribe", "AAPL");
 
             ws.Connect();
-            Utils.Logger.println("NIce ass connection");
             var jsonRequest = JsonSerializer.Serialize(obj);
             ws.Send(jsonRequest);
-            Utils.Logger.println("NIce ass sending");
-
+            
             return new Task(() => { });
         }
     }

@@ -25,7 +25,7 @@ namespace myBestShop
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
             sessionKeyObserver = new SessionKeyObserver(onSessionKeyObtained);
-            repository.addObserver(sessionKeyObserver, UserRepository.obtainSessionKeyTag);
+            repository.observable.addObserver(sessionKeyObserver, UserRepository.obtainSessionKeyTag);
 
             // получение времени из бд для пользователя
             Value_time = 3712;
@@ -48,7 +48,6 @@ namespace myBestShop
 
         private object onSessionKeyObtained(int sessionKey)
         {
-
 
             return null;
         }
