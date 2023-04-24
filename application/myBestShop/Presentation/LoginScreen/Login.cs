@@ -4,6 +4,7 @@ using myBestShop.DependencyBuilders;
 using System;
 using System.Text;
 using System.Windows.Forms;
+using static myBestShop.Domain.Database.Delegates.LoginDbDelegate;
 
 namespace myBestShop
 {
@@ -25,14 +26,14 @@ namespace myBestShop
             repository.observable.addObserver(new LoginObserver(onLoginSuccessful), UserRepository.loginTag);
         }
 
-        private object onLoginSuccessful(object o)
+        private object onLoginSuccessful(ReturnAUF auth)
         {
-            if (loginField.Text == "maks")
+            if (!auth.is_admin)
             {
                 MainClient clientScreen = new MainClient(this);
                 clientScreen.Show();
                 this.Hide();
-            } else if (loginField.Text == "danis")
+            } else if (auth.is_admin)
             {
                 MainAdmin adminScreen = new MainAdmin(this);
                 adminScreen.Show();
@@ -65,9 +66,9 @@ namespace myBestShop
 
         public class LoginObserver : Observer
         {
-            private Func<object, object> onLogin;
+            private Func<ReturnAUF, object> onLogin;
 
-            public LoginObserver(Func<object, object> onLogin)
+            public LoginObserver(Func<ReturnAUF, object> onLogin)
             {
                 this.onLogin = onLogin;
             }
@@ -93,7 +94,9 @@ namespace myBestShop
                     Logger.print("Login screen current data is ");
                     Logger.println(result.data.ToString());
 
-                    onLogin(result.data);
+                    var auth = (ReturnAUF)Convert.ChangeType(result.data, typeof(ReturnAUF));
+
+                    onLogin(auth);
                 } else
                 {
                     Logger.println("Login screen: invalid result data");

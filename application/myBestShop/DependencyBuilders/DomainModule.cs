@@ -59,7 +59,7 @@ namespace myBestShop.DependencyBuilders
             var dbManager = DatabaseManager.instance;
             if ((config.type & (int)UserType.USER) == (int)UserType.USER)
             {
-                return new UserRepository(userWebService);
+                return new UserRepository(userWebService, dbManager);
             } else
             {
                 return new AdminRepository(adminWebService, dbManager);

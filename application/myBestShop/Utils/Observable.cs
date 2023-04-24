@@ -75,8 +75,9 @@ namespace myBestShop.Utils
                 Logger.println("Failed to notify observers due to invalid observableTag" + observableTag);
                 return;
             }
-            foreach (Observer observer in observers[observableTag])
+            for (int i = 0; i < observers[observableTag].Count; i++)
             {
+                Observer observer = observers[observableTag][i];
                 observer.handleResult(result);
             }
         }

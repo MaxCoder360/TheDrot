@@ -24,9 +24,6 @@ namespace myBestShop
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
-            sessionKeyObserver = new SessionKeyObserver(onSessionKeyObtained);
-            repository.observable.addObserver(sessionKeyObserver, UserRepository.obtainSessionKeyTag);
-
             // получение времени из бд для пользователя
             Value_time = 3712;
             label_pass_time.Text = Int2StringTime(Value_time);
@@ -34,7 +31,6 @@ namespace myBestShop
             timer_pass_time.Tick += new EventHandler(tm_Tick);
             timer_pass_time.Interval = 1000;
             timer_pass_time.Start();
-            
         }
 
         int Value_time = 0;

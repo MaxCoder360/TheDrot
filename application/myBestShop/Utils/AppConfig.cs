@@ -13,7 +13,7 @@ namespace myBestShop.Utils
             RELEASE_CONFIG = 1
         }
 
-        public static ConfigType BUILD_CONFIG = ConfigType.DEBUG_CONFIG;
+        public static ConfigType BUILD_CONFIG = ConfigType.RELEASE_CONFIG;
 
         public class WebServiceConfig
         {
@@ -56,7 +56,7 @@ namespace myBestShop.Utils
 
     public static class Consts
     {
-        public static string LOCALHOST_URL = "127.0.0.1";
-        public static string OPEN_URL = "0.0.0.0";
+        public static string LOCALHOST_URL = "wss://ws.finnhub.io?token=c12ht2f48v6oi252p5ag";
+        public static string OPEN_URL = "wss://ws.finnhub.io?token=c12ht2f48v6oi252p5ag";
     }
 }

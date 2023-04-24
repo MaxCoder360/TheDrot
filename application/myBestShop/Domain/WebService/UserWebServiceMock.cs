@@ -21,7 +21,8 @@ namespace myBestShop.Domain.WebService
             if (holder.userName == "")
             {
                 await Task.Run(() => result = 0);
-            } else if (holder.userName == "MaxCode360")
+            }
+            else if (holder.userName == "MaxCode360")
             {
                 await Task.Run(() => result = 1);
             }
@@ -39,6 +40,7 @@ namespace myBestShop.Domain.WebService
 
         public UserWebServiceMock(WebServiceConfig config)
         {
+            Utils.Logger.println(config.baseUrl);
             baseUrl = config.baseUrl;
             webSocketConnection = new WebSocket(baseUrl);
         }

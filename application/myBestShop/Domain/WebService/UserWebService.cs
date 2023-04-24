@@ -27,7 +27,7 @@ namespace myBestShop.Domain.WebService
                 JsonSerializer.Serialize(holder)
             );
 
-            _observable.notify(new Result<object> { data = default, exception = null, isLoading = true }, UserRepository.obtainSessionKeyTag);
+            _observable.notify(new Result<object> { data = default, exception = null, isLoading = true }, UserRepository.loginTag);
         }
 
         async Task IUserWebService.fetchServerTime(int userSessionKey)
@@ -68,7 +68,7 @@ namespace myBestShop.Domain.WebService
         {
             Utils.Logger.println("Obtained session key successfully");
             // var data = JsonSerializer.Deserialize(e.Data);
-            _observable.notify(new Result<object> { data = e.Data, exception = null, isLoading = false }, UserRepository.obtainSessionKeyTag);
+            _observable.notify(new Result<object> { data = e.Data, exception = null, isLoading = false }, UserRepository.loginTag);
             webSocketConnection.OnMessage -= onMessageSessionKey;
             webSocketConnection.OnError -= onErrorSessionKey;
         }
@@ -76,7 +76,7 @@ namespace myBestShop.Domain.WebService
         private void onErrorSessionKey(Object sender, ErrorEventArgs e) {
         
             Utils.Logger.println("Failed fetch session key. Exception occured:" + e.Message);
-            _observable.notify(new Result<object> { data = default, exception = e.Exception, isLoading = false }, UserRepository.obtainSessionKeyTag);
+            _observable.notify(new Result<object> { data = default, exception = e.Exception, isLoading = false }, UserRepository.loginTag);
             webSocketConnection.OnMessage -= onMessageSessionKey;
             webSocketConnection.OnError -= onErrorSessionKey;
         }
@@ -84,7 +84,7 @@ namespace myBestShop.Domain.WebService
         private void onMessageServerTime(Object sender, MessageEventArgs e)
         {
             Utils.Logger.println("Obtained left time successfully");
-            _observable.notify(new Result<object> { data = DateTime.Parse(e.Data), exception = null, isLoading = false }, UserRepository.getServerTimeTag);
+            _observable.notify(new Result<object> { data = DateTime.Parse(e.Data), exception = null, isLoading = false }, UserRepository.loginTag);
             webSocketConnection.OnMessage -= onMessageServerTime;
             webSocketConnection.OnError -= onErrorServerTime;
         }
