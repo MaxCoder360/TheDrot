@@ -8,16 +8,33 @@ using static myBestShop.Utils.AppConfig;
 using WebSocketSharp;
 using myBestShop.Domain.Repository;
 using System.Text.Json;
+using WebSocketSharp.Server;
 
 namespace myBestShop.Domain.WebService
 {
+    public class UserServerWebSocketBehavior : WebSocketBehavior
+    {
+        protected override void OnMessage(MessageEventArgs e)
+        {
+            var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
+
+            if (data.type == WsJsonTemplate.WsJsonDataTypes.FetchUserStatus)
+            {
+                var status = JsonSerializer.Serialize<ComputerStatus>(ComputerStatus.IS_USED);
+                var template = JsonSerializer.Serialize(new WsJsonTemplate(status, WsJsonTemplate.WsJsonDataTypes.FetchUserStatus));
+                Send(template);
+            }
+        }
+    }
+
     public class UserWebService : IUserWebService
     {
         public string baseUrl;
         private WebSocket webSocketConnection;
         private Observable<object> _observable;
 
-        async Task IUserWebService.fetchSessionKey(LoginHolder holder)
+
+        /*async Task IUserWebService.fetchSessionKey(LoginHolder holder)
         {
             webSocketConnection.OnMessage += onMessageSessionKey;
             webSocketConnection.OnError += onErrorSessionKey;
@@ -29,8 +46,8 @@ namespace myBestShop.Domain.WebService
 
             _observable.notify(new Result<object> { data = default, exception = null, isLoading = true }, UserRepository.loginTag);
         }
-
-        async Task IUserWebService.fetchServerTime(int userSessionKey)
+*/
+        /*async Task IUserWebService.fetchServerTime(int userSessionKey)
         {
             webSocketConnection.OnMessage += onMessageServerTime;
             webSocketConnection.OnError += onErrorServerTime;
@@ -41,12 +58,12 @@ namespace myBestShop.Domain.WebService
             );
 
             _observable.notify(new Result<object> { data=default, exception=null, isLoading=true }, UserRepository.getServerTimeTag);
-        }
-
+        }*/
+/*
         Task IUserWebService.fetchTestData()
         {
             throw new NotImplementedException();
-        }
+        }*/
 
         public UserWebService(WebServiceConfig config)
         {

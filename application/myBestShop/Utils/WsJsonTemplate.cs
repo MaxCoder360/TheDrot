@@ -10,13 +10,15 @@ namespace myBestShop.Utils
     {
         public enum WsJsonDataTypes
         {
-            LogInUser,
+            FetchUserStatus,
+            RequestAdmin,
+            ExtendAvailableTimeForClient
         };
 
         public string data;
-        public string type;
+        public WsJsonDataTypes type;
 
-        public WsJsonTemplate(string data, string type)
+        public WsJsonTemplate(string data, WsJsonDataTypes type)
         {
             this.data = data;
             this.type = type;

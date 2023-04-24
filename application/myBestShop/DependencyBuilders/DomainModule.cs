@@ -26,11 +26,12 @@ namespace myBestShop.DependencyBuilders
 
         public static IAdminWebService createAdminWebService(WebServiceConfig config)
         {
+            var dbManager = DatabaseManager.instance;
             if (BUILD_CONFIG == ConfigType.DEBUG_CONFIG) {
                 return new AdminWebServiceMock();
             } else
             {
-                return new AdminWebService(config.baseUrl);
+                return new AdminWebService(dbManager);
             }
         }
 

@@ -39,14 +39,14 @@ namespace myBestShop.Domain.Repository
             observable.notify(new Result<object> { data = default, exception = new Exception("Log in user failed"), isLoading = false }, UserRepository.loginTag);
         }
 
-        public async Task getServerTime(int userSessionKey)
+        /*public async Task getServerTime(int userSessionKey)
         {
             webService.fetchServerTime(userSessionKey);
-        }
+        }*/
 
-        public async Task fetchTestData()
+        /*public async Task fetchTestData()
         {
             await webService.fetchTestData();
-        }
+        }*/
     }
 }

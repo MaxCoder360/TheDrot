@@ -15,7 +15,7 @@ namespace myBestShop.Domain.WebService
         public string baseUrl;
         private WebSocket webSocketConnection;
 
-        async Task IUserWebService.fetchSessionKey(LoginHolder holder)
+        /*async Task IUserWebService.fetchSessionKey(LoginHolder holder)
         {
             int result = -1;
             if (holder.userName == "")
@@ -31,12 +31,12 @@ namespace myBestShop.Domain.WebService
                 await Task.Run(() => result = 2);
             }
             // return result;
-        }
+        }*/
 
-        Task IUserWebService.fetchServerTime(int userSessionKey)
+        /*Task IUserWebService.fetchServerTime(int userSessionKey)
         {
             return new Task<string>(() => DateTime.Now.ToString());
-        }
+        }*/
 
         public UserWebServiceMock(WebServiceConfig config)
         {
@@ -45,7 +45,12 @@ namespace myBestShop.Domain.WebService
             webSocketConnection = new WebSocket(baseUrl);
         }
 
-        Task IUserWebService.fetchTestData()
+        public void addObservable(Observable<object> observable)
+        {
+            throw new NotImplementedException();
+        }
+
+        /*Task IUserWebService.fetchTestData()
         {
             var ws = new WebSocket("wss://ws.finnhub.io?token=c12ht2f48v6oi252p5ag");
             ws.OnMessage += (sender, e) => {
@@ -62,10 +67,6 @@ namespace myBestShop.Domain.WebService
             
             return new Task(() => { });
         }
-
-        public void addObservable(Observable<object> observable)
-        {
-
-        }
+         */ 
     }
 }

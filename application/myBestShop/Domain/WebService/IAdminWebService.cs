@@ -10,8 +10,8 @@ namespace myBestShop.Domain.WebService
 {
     public interface IAdminWebService
     {
-        Task<ComputerStatus> fetchUserStatus(Computer computer);
-        Task<List<string>> fetchUserProcesses(Computer computer);
-        Task blockRemoteComputer(Computer computer);
+        void fetchUserStatus(Computer computer);
+        void fetchUserProcesses(Computer computer);
+        void blockRemoteComputer(Computer computer);
     }
 }

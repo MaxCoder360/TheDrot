@@ -26,25 +26,13 @@ namespace myBestShop.Domain.Repository
 
         public async Task fetchUserStatuses()
         {
-            notify(new Result<object> { data = default, exception = null, isLoading = true }, userStatusTag);
-
             List<Computer> computers = await dbManager.Main.getAllComputers();
-            List<ComputerWrapper> statuses = new List<ComputerWrapper>();
 
             for (int i = 0; i < computers.Count; i++)
             {
                 Computer comp = computers[i];
-                try
-                {
-                    var status = await webService.fetchUserStatus(user.id);
-                    statuses.Add(new ComputerWrapper(user.computerId, user.id, status));
-                } catch (Exception)
-                {
-                    statuses.Add(new ComputerWrapper(user.computerId, user.id, ComputerStatus.UNKNOWN));
-                }
+                webService.fetchUserStatus(comp);
             }
-
-            notify(new Result<object> { data = statuses, exception = null, isLoading = false }, userStatusTag);
         }
     }
 }
