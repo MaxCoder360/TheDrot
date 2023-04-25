@@ -190,6 +190,7 @@
     <Compile Include="Utils\LoginHolder.cs" />
     <Compile Include="Utils\TestWebSocketObject.cs" />
     <Compile Include="Utils\UserStatus.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Utils\WsJsonTemplate.cs" />
     <EmbeddedResource Include="Presentation\LoginScreen\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

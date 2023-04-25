@@ -5,6 +5,8 @@ using System;
 using System.Text;
 using System.Windows.Forms;
 using static myBestShop.Domain.Database.Delegates.LoginDbDelegate;
+using WebSocketSharp.Server;
+using static myBestShop.Utils.Utils;
 
 namespace myBestShop
 {
@@ -84,10 +86,12 @@ namespace myBestShop
                 {
                     Logger.print("Login screen: ");
                     Logger.println(result.exception.ToString());
+                    return;
                 }
                 if (result.isLoading)
                 {
                     Logger.println("Login screen is loading");
+                    return;
                 }
                 if (result.data != null)
                 {

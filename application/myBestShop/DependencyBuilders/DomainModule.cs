@@ -31,7 +31,7 @@ namespace myBestShop.DependencyBuilders
                 return new AdminWebServiceMock();
             } else
             {
-                return new AdminWebService(dbManager);
+                return AdminWebService.getInstance(dbManager);
             }
         }
 
@@ -40,10 +40,10 @@ namespace myBestShop.DependencyBuilders
             if (BUILD_CONFIG == ConfigType.DEBUG_CONFIG)
             {
                 return new UserWebServiceMock(config);
-            } 
+            }
             else
             {
-                return new UserWebService(config);
+                return UserWebService.getInstance(config);
             }
         }
 

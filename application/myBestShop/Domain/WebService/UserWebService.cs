@@ -14,26 +14,11 @@ using System.Net.Sockets;
 
 namespace myBestShop.Domain.WebService
 {
-    public class UserServerWebSocketBehavior : WebSocketBehavior
-    {
-        protected override void OnMessage(MessageEventArgs e)
-        {
-            var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
-
-            if (data.type == WsJsonTemplate.WsJsonDataTypes.FetchUserStatus)
-            {
-                var status = JsonSerializer.Serialize<ComputerStatus>(ComputerStatus.IS_USED);
-                var template = JsonSerializer.Serialize(new WsJsonTemplate(status, WsJsonTemplate.WsJsonDataTypes.FetchUserStatus));
-                Send(template);
-            }
-        }
-    }
-
     public class UserWebService : IUserWebService
     {
-        private WebSocket webSocketConnection;
         private Observable<object> _observable;
-        private WebSocketServer wsServer;
+
+        public static UserWebService instance;
 
 
         /*async Task IUserWebService.fetchSessionKey(LoginHolder holder)
@@ -67,12 +52,18 @@ namespace myBestShop.Domain.WebService
             throw new NotImplementedException();
         }*/
 
-        public UserWebService(WebServiceConfig config)
+        public static UserWebService getInstance(WebServiceConfig config)
         {
-            wsServer = new WebSocketServer("ws://" + UserWebService.GetLocalIPAddress() + ":5050");
+            if (instance == null)
+            {
+                instance = new UserWebService(config);
+            }
 
-            wsServer.AddWebSocketService<UserServerWebSocketBehavior>("/ToClient");
-            wsServer.Start();
+            return instance;
+        }
+
+        private UserWebService(WebServiceConfig config)
+        {
         }
 
         void IUserWebService.addObservable(Observable<object> observable)
@@ -85,7 +76,7 @@ namespace myBestShop.Domain.WebService
             var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
         }
 
-        private void onMessageSessionKey(Object sender, MessageEventArgs e)
+        /*private void onMessageSessionKey(Object sender, MessageEventArgs e)
         {
             Utils.Logger.println("Obtained session key successfully");
             // var data = JsonSerializer.Deserialize(e.Data);
@@ -120,19 +111,6 @@ namespace myBestShop.Domain.WebService
             }, UserRepository.getServerTimeTag);
             webSocketConnection.OnMessage -= onMessageServerTime;
             webSocketConnection.OnError -= onErrorServerTime;
-        }
-
-        private static string GetLocalIPAddress()
-        {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
-            {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return ip.ToString();
-                }
-            }
-            throw new Exception("No network adapters with an IPv4 address in the system!");
-        }
+        }*/
     }
 }

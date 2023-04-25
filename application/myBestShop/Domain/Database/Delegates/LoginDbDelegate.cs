@@ -53,6 +53,7 @@ namespace myBestShop.Domain.Database.Delegates
             {
                 DatabaseManager.mySqlConnection.Close();
             }
+            Logger.println(AUF.id.ToString());
             return AUF;
         }
 
