@@ -36,6 +36,8 @@ namespace myBestShop
             repository.observable.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
 
             tableView = new TableViewHolder(727, 533, 117, 8);
+
+            updateComputerStatusGrid();
         }
 
         private async void updateComputerStatusGrid()
