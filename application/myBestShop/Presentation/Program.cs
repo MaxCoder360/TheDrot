@@ -33,6 +33,7 @@ namespace myBestShop
         {
             protected override void OnMessage(MessageEventArgs e)
             {
+                Utils.Logger.println(e.Data);
                 var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
 
                 if (data.type == WsJsonTemplate.WsJsonDataTypes.FetchUserStatus)

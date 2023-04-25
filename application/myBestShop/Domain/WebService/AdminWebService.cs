@@ -44,7 +44,9 @@ namespace myBestShop.Domain.WebService
             {
                 if (ws.first.id == computer.id)
                 {
-                    WsJsonTemplate template = new WsJsonTemplate("", WsJsonTemplate.WsJsonDataTypes.FetchUserStatus);
+                    Utils.Logger.println(WsJsonTemplate.WsJsonDataTypes.FetchUserStatus.ToString());
+                    WsJsonTemplate template = new WsJsonTemplate("j", WsJsonTemplate.WsJsonDataTypes.FetchUserStatus);
+                    Utils.Logger.println(JsonSerializer.Serialize(template));
                     try
                     {
                         ws.second.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) =>
