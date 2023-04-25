@@ -35,17 +35,15 @@
             this.label_pass_time = new System.Windows.Forms.Label();
             this.button_pause = new System.Windows.Forms.Button();
             this.button_call_admin = new System.Windows.Forms.Button();
-            this.button_exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelName
             // 
             this.labelName.AutoSize = true;
             this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.labelName.Location = new System.Drawing.Point(8, 6);
-            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelName.Location = new System.Drawing.Point(12, 9);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(126, 20);
+            this.labelName.Size = new System.Drawing.Size(183, 29);
             this.labelName.TabIndex = 14;
             this.labelName.Text = "Здравствуйте, ";
             // 
@@ -53,10 +51,9 @@
             // 
             this.label_on_time.AutoSize = true;
             this.label_on_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label_on_time.Location = new System.Drawing.Point(8, 25);
-            this.label_on_time.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_on_time.Location = new System.Drawing.Point(12, 38);
             this.label_on_time.Name = "label_on_time";
-            this.label_on_time.Size = new System.Drawing.Size(156, 20);
+            this.label_on_time.Size = new System.Drawing.Size(238, 29);
             this.label_on_time.TabIndex = 15;
             this.label_on_time.Text = "Осталось времени:";
             // 
@@ -64,19 +61,17 @@
             // 
             this.label_pass_time.AutoSize = true;
             this.label_pass_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label_pass_time.Location = new System.Drawing.Point(171, 25);
-            this.label_pass_time.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_pass_time.Location = new System.Drawing.Point(256, 38);
             this.label_pass_time.Name = "label_pass_time";
-            this.label_pass_time.Size = new System.Drawing.Size(59, 20);
+            this.label_pass_time.Size = new System.Drawing.Size(88, 29);
             this.label_pass_time.TabIndex = 16;
             this.label_pass_time.Text = "TIMER";
             // 
             // button_pause
             // 
-            this.button_pause.Location = new System.Drawing.Point(8, 63);
-            this.button_pause.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_pause.Location = new System.Drawing.Point(12, 97);
             this.button_pause.Name = "button_pause";
-            this.button_pause.Size = new System.Drawing.Size(73, 58);
+            this.button_pause.Size = new System.Drawing.Size(110, 89);
             this.button_pause.TabIndex = 17;
             this.button_pause.Text = "Поставить на паузу";
             this.button_pause.UseVisualStyleBackColor = true;
@@ -84,40 +79,27 @@
             // 
             // button_call_admin
             // 
-            this.button_call_admin.Location = new System.Drawing.Point(222, 63);
-            this.button_call_admin.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_call_admin.Location = new System.Drawing.Point(655, 101);
             this.button_call_admin.Name = "button_call_admin";
-            this.button_call_admin.Size = new System.Drawing.Size(73, 58);
+            this.button_call_admin.Size = new System.Drawing.Size(110, 89);
             this.button_call_admin.TabIndex = 18;
             this.button_call_admin.Text = "Вызвать админа";
             this.button_call_admin.UseVisualStyleBackColor = true;
             this.button_call_admin.Click += new System.EventHandler(this.button_call_admin_Click);
             // 
-            // button_exit
-            // 
-            this.button_exit.Location = new System.Drawing.Point(437, 63);
-            this.button_exit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button_exit.Name = "button_exit";
-            this.button_exit.Size = new System.Drawing.Size(73, 58);
-            this.button_exit.TabIndex = 19;
-            this.button_exit.Text = "ВЫйти";
-            this.button_exit.UseVisualStyleBackColor = true;
-            this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
-            // 
             // MainClient
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(518, 131);
-            this.Controls.Add(this.button_exit);
+            this.ClientSize = new System.Drawing.Size(777, 202);
             this.Controls.Add(this.button_call_admin);
             this.Controls.Add(this.button_pause);
             this.Controls.Add(this.label_pass_time);
             this.Controls.Add(this.label_on_time);
             this.Controls.Add(this.labelName);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainClient";
             this.Text = "MainClient";
+            this.FormClosing += button_exit_Click;
             this.Load += new System.EventHandler(this.MainClient_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -131,6 +113,5 @@
         private System.Windows.Forms.Label label_pass_time;
         private System.Windows.Forms.Button button_pause;
         private System.Windows.Forms.Button button_call_admin;
-        private System.Windows.Forms.Button button_exit;
     }
 }

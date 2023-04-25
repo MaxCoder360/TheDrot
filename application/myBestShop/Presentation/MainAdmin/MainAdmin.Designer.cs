@@ -103,6 +103,7 @@
             this.Name = "MainAdmin";
             this.Text = "ПАНЕЛЬ УПРАВЛЕНИЯ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
+            this.FormClosing += button_exit_Click;
             this.Load += new System.EventHandler(this.MainAdmin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

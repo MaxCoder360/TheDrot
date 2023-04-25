@@ -32,7 +32,6 @@ namespace myBestShop.Domain.Repository
             Logger.println("UShfuid");
             observable.notify(new Result<object> { data = default, exception = null, isLoading = true }, UserRepository.loginTag);
             var result = await dbManager.Login.getUserSessionKeyByLogin(holder);
-            Logger.println(result.ToString());
             if (result != null)
             {
                 observable.notify(new Result<object> { data = result, exception = null, isLoading = false }, UserRepository.loginTag);

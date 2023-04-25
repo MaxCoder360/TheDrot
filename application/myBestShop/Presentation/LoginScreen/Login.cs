@@ -44,6 +44,8 @@ namespace myBestShop
             {
                 MessageBox.Show("Что-то пошло не так. Проверьте введенные данные и повторите попытку.");
             }
+            loginField.Text = "";
+            passwordField.Text = "";
 
             // Close();
 

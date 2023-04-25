@@ -81,7 +81,6 @@ namespace myBestShop
         private void button_exit_Click(object sender, EventArgs e)
         {
             parent.Show();
-            this.Close();
         }
 
         private void MainClient_Load(object sender, EventArgs e)
