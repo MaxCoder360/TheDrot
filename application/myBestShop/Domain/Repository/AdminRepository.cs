@@ -28,6 +28,7 @@ namespace myBestShop.Domain.Repository
         {
             List<Computer> computers = await dbManager.Main.getAllComputers();
 
+            WebService.updateWebSockets();
             for (int i = 0; i < computers.Count; i++)
             {
                 Computer comp = computers[i];

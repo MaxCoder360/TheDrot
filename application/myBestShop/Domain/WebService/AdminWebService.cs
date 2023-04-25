@@ -77,7 +77,7 @@ namespace myBestShop.Domain.WebService
                 if (computer != null)
                 {
                     Utils.Logger.println(computer.ip_adress);
-                    WebSocket socket = new WebSocket("ws://" + computer.ip_adress + "5050" + "/ToClient");
+                    WebSocket socket = new WebSocket("ws://" + computer.ip_adress + ":5050" + "/ToClient");
 
                     socket.OnMessage += onMessageWS;
                     socket.OnError += onErrorWS;
