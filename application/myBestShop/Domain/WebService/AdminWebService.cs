@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using static myBestShop.Utils.Utils;
+using static myBestShop.Utils.WsJsonTemplate;
 
 namespace myBestShop.Domain.WebService
 {

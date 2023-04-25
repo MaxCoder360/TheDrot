@@ -32,15 +32,15 @@
             this.deliveryClosed = new System.Windows.Forms.Button();
             this.labelName = new System.Windows.Forms.Label();
             this.save = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.add_User = new System.Windows.Forms.Button();
+            this.add_comp = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // deliveryInWork
             // 
-            this.deliveryInWork.Location = new System.Drawing.Point(3, 54);
-            this.deliveryInWork.Margin = new System.Windows.Forms.Padding(2);
+            this.deliveryInWork.Location = new System.Drawing.Point(4, 83);
             this.deliveryInWork.Name = "deliveryInWork";
-            this.deliveryInWork.Size = new System.Drawing.Size(110, 56);
+            this.deliveryInWork.Size = new System.Drawing.Size(165, 86);
             this.deliveryInWork.TabIndex = 0;
             this.deliveryInWork.Text = "Просмотр компьтеров";
             this.deliveryInWork.UseVisualStyleBackColor = true;
@@ -48,10 +48,10 @@
             // 
             // deliveryClosed
             // 
-            this.deliveryClosed.Location = new System.Drawing.Point(3, 114);
-            this.deliveryClosed.Margin = new System.Windows.Forms.Padding(2, 0, 2, 2);
+            this.deliveryClosed.Location = new System.Drawing.Point(4, 172);
+            this.deliveryClosed.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.deliveryClosed.Name = "deliveryClosed";
-            this.deliveryClosed.Size = new System.Drawing.Size(110, 55);
+            this.deliveryClosed.Size = new System.Drawing.Size(165, 85);
             this.deliveryClosed.TabIndex = 1;
             this.deliveryClosed.Text = "Редактирование Компьтеров";
             this.deliveryClosed.UseVisualStyleBackColor = true;
@@ -60,50 +60,57 @@
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(17, 13);
-            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelName.Location = new System.Drawing.Point(26, 20);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(80, 13);
+            this.labelName.Size = new System.Drawing.Size(122, 20);
             this.labelName.TabIndex = 2;
             this.labelName.Text = "Здравствуйте,\r\n";
             // 
             // save
             // 
-            this.save.Location = new System.Drawing.Point(3, 478);
-            this.save.Margin = new System.Windows.Forms.Padding(2);
+            this.save.Location = new System.Drawing.Point(4, 735);
             this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(110, 63);
+            this.save.Size = new System.Drawing.Size(165, 97);
             this.save.TabIndex = 4;
             this.save.Text = "Сохранить изменения";
             this.save.UseVisualStyleBackColor = true;
             this.save.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button1
+            // add_User
             // 
-            this.button1.Location = new System.Drawing.Point(3, 174);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 55);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Выйти";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.add_User.Location = new System.Drawing.Point(4, 260);
+            this.add_User.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.add_User.Name = "add_User";
+            this.add_User.Size = new System.Drawing.Size(165, 85);
+            this.add_User.TabIndex = 5;
+            this.add_User.Text = "Добовление пользователя";
+            this.add_User.UseVisualStyleBackColor = true;
+            // 
+            // add_comp
+            // 
+            this.add_comp.Location = new System.Drawing.Point(4, 348);
+            this.add_comp.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.add_comp.Name = "add_comp";
+            this.add_comp.Size = new System.Drawing.Size(165, 85);
+            this.add_comp.TabIndex = 6;
+            this.add_comp.Text = "Добовление компьтера";
+            this.add_comp.UseVisualStyleBackColor = true;
             // 
             // MainAdmin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(852, 549);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1278, 845);
+            this.Controls.Add(this.add_comp);
+            this.Controls.Add(this.add_User);
             this.Controls.Add(this.save);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.deliveryClosed);
             this.Controls.Add(this.deliveryInWork);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainAdmin";
             this.Text = "ПАНЕЛЬ УПРАВЛЕНИЯ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
-            this.FormClosing += button_exit_Click;
             this.Load += new System.EventHandler(this.MainAdmin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -116,6 +123,7 @@
         private System.Windows.Forms.Button deliveryClosed;
         private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Button save;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button add_User;
+        private System.Windows.Forms.Button add_comp;
     }
 }

@@ -36,5 +36,10 @@ namespace myBestShop.Domain.Entities
             this.Storage = Storage;
             this.ip_adress = ip_adress;
         }
+
+        public override string ToString()
+        {
+            return type + ", " + manufacturer + ", " + CPU + ", " + GPU + ", " + RAM + ", " + Storage;
+        }
     }
 }
