@@ -1,6 +1,6 @@
 ﻿namespace myBestShop.Presentation.MainAdmin
 {
-    partial class createUser
+    partial class CreateUser
     {
         /// <summary>
         /// Required designer variable.

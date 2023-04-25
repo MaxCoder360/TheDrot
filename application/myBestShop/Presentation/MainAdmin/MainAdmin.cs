@@ -10,6 +10,7 @@ using myBestShop.Presentation.Common;
 using myBestShop.Domain.Entities;
 using System.Drawing;
 using static myBestShop.Utils.Utils;
+using myBestShop.Presentation.MainAdmin;
 
 namespace myBestShop
 {
@@ -162,7 +163,7 @@ namespace myBestShop
 
         private void add_User_Click(object sender, EventArgs e)
         {
-            using (Form forms = new createUser())
+            using (Form forms = new CreateUser())
             {
                 forms.ShowDialog();
             }
