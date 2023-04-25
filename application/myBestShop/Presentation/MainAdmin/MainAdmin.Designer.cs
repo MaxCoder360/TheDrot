@@ -101,7 +101,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainAdmin";
             this.Text = "ПАНЕЛЬ УПРАВЛЕНИЯ";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing) + button_exit_Click;
             this.Load += new System.EventHandler(this.MainAdmin_Load);
             this.ResumeLayout(false);
 

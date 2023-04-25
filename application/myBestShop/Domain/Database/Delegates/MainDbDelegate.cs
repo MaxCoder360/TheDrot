@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 using MySql.Data.MySqlClient;
 using System.Drawing;
+using static myBestShop.Utils.Utils;
 
 namespace myBestShop.Domain.Database.Delegates
 {
@@ -108,21 +109,20 @@ namespace myBestShop.Domain.Database.Delegates
             }
             return check;
         }
-        public async Task<string> addUserInDB(User comp)
+        public async Task<string> addUserInDB(User user)
         {
             string check = null;
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`users` (`mail`, `password`, `name`, `surname`, `phone_number`, `passport`, `admin`) VALUES (@mail, @password, @name, 'wefc', 'wefc', 'wefc', '0');", DatabaseManager.mySqlConnection);
-               /* mySqlCommand.Parameters.Add("@type", MySqlDbType.VarString).Value = comp.type;
-                mySqlCommand.Parameters.Add("@manufacturer", MySqlDbType.VarString).Value = comp.manufacturer;
-                mySqlCommand.Parameters.Add("@serial_number", MySqlDbType.VarString).Value = comp.serial_number;
-                mySqlCommand.Parameters.Add("@CPU", MySqlDbType.VarString).Value = comp.CPU;
-                mySqlCommand.Parameters.Add("@GPU", MySqlDbType.VarString).Value = comp.GPU;
-                mySqlCommand.Parameters.Add("@RAM", MySqlDbType.VarString).Value = comp.RAM;
-                mySqlCommand.Parameters.Add("@Storage", MySqlDbType.VarString).Value = comp.Storage;
-                mySqlCommand.Parameters.Add("@ip_adress", MySqlDbType.VarString).Value = comp.ip_adress;*/
+                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`users` (`mail`, `password`, `name`, `surname`, `phone_number`, `passport`, `admin`) VALUES (@mail, @password, @name, @surname, @phone_number, @passport, @admin);", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@mail", MySqlDbType.VarString).Value = user.mail;
+                mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(user.password);
+                mySqlCommand.Parameters.Add("@name", MySqlDbType.VarString).Value = user.name;
+                mySqlCommand.Parameters.Add("@surname", MySqlDbType.VarString).Value = user.surname;
+                mySqlCommand.Parameters.Add("@phone_number", MySqlDbType.VarString).Value = user.phone_number;
+                mySqlCommand.Parameters.Add("@passport", MySqlDbType.VarString).Value = user.passport;
+                mySqlCommand.Parameters.Add("@admin", MySqlDbType.VarString).Value = user.admin;
                 mySqlCommand.ExecuteNonQuery();
                 check = "OK";
             }
