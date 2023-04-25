@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace myBestShop.Utils
 {
+    public enum WsJsonDataTypes
+    {
+        FetchUserStatus,
+        RequestAdmin,
+        ExtendAvailableTimeForClient
+    };
+
     public class WsJsonTemplate
     {
-        public enum WsJsonDataTypes
-        {
-            FetchUserStatus,
-            RequestAdmin,
-            ExtendAvailableTimeForClient
-        };
-
-        public string data;
-        public WsJsonDataTypes type;
+        public string data { get; set; }
+        public WsJsonDataTypes type { get; set; }
 
         public WsJsonTemplate(string data, WsJsonDataTypes type)
         {

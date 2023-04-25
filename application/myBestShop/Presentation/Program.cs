@@ -22,7 +22,7 @@ namespace myBestShop
             {
                 var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
 
-                if (data.type == WsJsonTemplate.WsJsonDataTypes.RequestAdmin)
+                if (data.type == WsJsonDataTypes.RequestAdmin)
                 {
                     Utils.Logger.println(data.data);
                 }
@@ -36,10 +36,10 @@ namespace myBestShop
                 Utils.Logger.println(e.Data);
                 var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
 
-                if (data.type == WsJsonTemplate.WsJsonDataTypes.FetchUserStatus)
+                if (data.type == WsJsonDataTypes.FetchUserStatus)
                 {
                     var status = JsonSerializer.Serialize<ComputerStatus>(ComputerStatus.IS_USED);
-                    var template = JsonSerializer.Serialize(new WsJsonTemplate(status, WsJsonTemplate.WsJsonDataTypes.FetchUserStatus));
+                    var template = JsonSerializer.Serialize(new WsJsonTemplate(status, WsJsonDataTypes.FetchUserStatus));
                     Send(template);
                 }
             }
