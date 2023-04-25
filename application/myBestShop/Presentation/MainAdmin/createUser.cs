@@ -21,7 +21,7 @@ namespace myBestShop.Presentation.MainAdmin
             dbManager = DatabaseManager.instance;
         }
 
-        private void SaveUserInDB_Click(object sender, EventArgs e)
+        private async void SaveUserInDB_Click(object sender, EventArgs e)
         {
             /*if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" &&
                 textBox5.Text != "" && textBox7.Text != "")

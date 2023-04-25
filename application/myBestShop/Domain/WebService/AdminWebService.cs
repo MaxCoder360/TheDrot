@@ -9,9 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebSocketSharp;
-using WebSocketSharp.Server;
-using static myBestShop.Utils.Utils;
-using static myBestShop.Utils.WsJsonTemplate;
 
 namespace myBestShop.Domain.WebService
 {
@@ -46,8 +43,9 @@ namespace myBestShop.Domain.WebService
 
         public void fetchUserStatus(Computer computer)
         {
-            foreach (Pair<Computer, WebSocket> ws in wsPool)
+            for (int i = 0; i < wsPool.Count; i++)
             {
+                Pair<Computer, WebSocket> ws = wsPool[i];
                 if (ws.first.id == computer.id)
                 {
                     WsJsonTemplate template = new WsJsonTemplate(computer.id.ToString(), WsJsonDataTypes.FetchUserStatus);
@@ -78,8 +76,9 @@ namespace myBestShop.Domain.WebService
         private void initializeWebSockets(List<Computer> availableComputers)
         {
             wsPool.Clear();
-            foreach (Computer computer in availableComputers)
+            for (int i = 0; i < availableComputers.Count; i++)
             {
+                Computer computer = availableComputers[i];
                 if (computer != null)
                 {
                     Utils.Logger.println(computer.ip_adress);
@@ -102,8 +101,9 @@ namespace myBestShop.Domain.WebService
 
         public void updateWebSockets()
         {
-            foreach (Pair<Computer, WebSocket> ws in wsPool)
+            for (int i = 0; i < wsPool.Count; i++)
             {
+                Pair<Computer, WebSocket> ws = wsPool[i];
                 Utils.Logger.println("Trying to connect to " + ws.first.ip_adress);
                 try
                 {
