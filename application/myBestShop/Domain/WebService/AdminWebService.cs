@@ -1,5 +1,6 @@
 ﻿using myBestShop.Domain.Database;
 using myBestShop.Domain.Entities;
+using myBestShop.Domain.Repository;
 using myBestShop.Utils;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace myBestShop.Domain.WebService
     {
         private List<Pair<Computer, WebSocket>> wsPool;
         private DatabaseManager dbManager;
+        public Observable<object> observable;
 
         public static AdminWebService Instance;
 
@@ -35,7 +37,10 @@ namespace myBestShop.Domain.WebService
         {
             wsPool = new List<Pair<Computer, WebSocket>>();
             this.dbManager = dbManager;
-            
+        }
+
+        public void initialize()
+        {
             Task.Run(() => getAllAvailableComputers());
         }
 
@@ -45,9 +50,7 @@ namespace myBestShop.Domain.WebService
             {
                 if (ws.first.id == computer.id)
                 {
-                    Utils.Logger.println(WsJsonDataTypes.FetchUserStatus.ToString());
-                    WsJsonTemplate template = new WsJsonTemplate("j", WsJsonDataTypes.FetchUserStatus);
-                    Utils.Logger.println(JsonSerializer.Serialize(template));
+                    WsJsonTemplate template = new WsJsonTemplate(computer.id.ToString(), WsJsonDataTypes.FetchUserStatus);
                     try
                     {
                         ws.second.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) =>
@@ -120,7 +123,15 @@ namespace myBestShop.Domain.WebService
 
         private void onMessageWS(Object sender, MessageEventArgs e)
         {
-            Utils.Logger.println(e.Data);
+            var template = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
+            if (template.type == WsJsonDataTypes.FetchUserStatus)
+            {
+                var cw = JsonSerializer.Deserialize<ComputerWrapper>(template.data);
+                observable.notify(
+                    new Result<object> { data = cw, exception = null, isLoading = false },
+                        AdminRepository.userStatusTag
+                );
+            }
         }
 
         private void onErrorWS(Object sender, ErrorEventArgs e)

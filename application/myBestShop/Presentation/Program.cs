@@ -38,8 +38,8 @@ namespace myBestShop
 
                 if (data.type == WsJsonDataTypes.FetchUserStatus)
                 {
-                    var status = JsonSerializer.Serialize<ComputerStatus>(ComputerStatus.IS_USED);
-                    var template = JsonSerializer.Serialize(new WsJsonTemplate(status, WsJsonDataTypes.FetchUserStatus));
+                    var cw = JsonSerializer.Serialize<ComputerWrapper>(new ComputerWrapper(int.Parse(data.data), ComputerStatus.IS_USED));
+                    var template = JsonSerializer.Serialize(new WsJsonTemplate(cw, WsJsonDataTypes.FetchUserStatus));
                     Send(template);
                 }
             }
