@@ -15,6 +15,7 @@ namespace myBestShop
     internal static class Program
     {
         public static WebSocketServer wsServer;
+        public static bool isLogined = false;
 
         public class AdminServerSocketBehaviour : WebSocketBehavior
         {
@@ -38,7 +39,8 @@ namespace myBestShop
 
                 if (data.type == WsJsonDataTypes.FetchUserStatus)
                 {
-                    var cw = JsonSerializer.Serialize<ComputerWrapper>(new ComputerWrapper(int.Parse(data.data), ComputerStatus.IS_USED));
+                    var status = isLogined ? ComputerStatus.IS_USED : ComputerStatus.AVAILABLE;
+                    var cw = JsonSerializer.Serialize<ComputerWrapper>(new ComputerWrapper(int.Parse(data.data), status));
                     var template = JsonSerializer.Serialize(new WsJsonTemplate(cw, WsJsonDataTypes.FetchUserStatus));
                     Send(template);
                 }

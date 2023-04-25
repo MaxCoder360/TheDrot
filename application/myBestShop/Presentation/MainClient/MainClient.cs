@@ -81,6 +81,7 @@ namespace myBestShop
         private void button_exit_Click(object sender, EventArgs e)
         {
             parent.Show();
+            Program.isLogined = false;
         }
 
         private void MainClient_Load(object sender, EventArgs e)
