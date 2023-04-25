@@ -89,7 +89,7 @@ namespace myBestShop.Domain.WebService
 
                     try
                     {
-                        socket.Connect();
+                        socket.ConnectAsync();
                     } catch (Exception ex)
                     {
                         Utils.Logger.println("WebSocket not working (" + computer.ip_adress + "): " + ex.Message);
@@ -104,10 +104,14 @@ namespace myBestShop.Domain.WebService
             for (int i = 0; i < wsPool.Count; i++)
             {
                 Pair<Computer, WebSocket> ws = wsPool[i];
+                if (ws.second.IsAlive)
+                {
+                    continue;
+                }
                 Utils.Logger.println("Trying to connect to " + ws.first.ip_adress);
                 try
                 {
-                    ws.second.Connect();
+                    ws.second.ConnectAsync();
                 } catch (Exception ex)
                 {
                     Utils.Logger.println("WebSocket not working (" + ws.first.ip_adress + "): " + ex.Message);

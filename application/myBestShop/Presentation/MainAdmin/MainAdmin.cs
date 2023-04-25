@@ -159,6 +159,7 @@ namespace myBestShop
         private void button_exit_Click(object sender, EventArgs e)
         {
             parent.Show();
+            Program.isLogined = false;
         }
 
         private void add_User_Click(object sender, EventArgs e)
