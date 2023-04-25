@@ -37,6 +37,18 @@ namespace myBestShop.Domain.Entities
             this.ip_adress = ip_adress;
         }
 
+        public Computer(string type, string manufacturer, string serial_number, string CPU, string GPU, string RAM, string Storage, string ip_adress)
+        {
+            this.type = type;
+            this.manufacturer = manufacturer;
+            this.serial_number = serial_number;
+            this.CPU = CPU;
+            this.GPU = GPU;
+            this.RAM = RAM;
+            this.Storage = Storage;
+            this.ip_adress = ip_adress;
+        }
+
         public override string ToString()
         {
             return type + ", " + manufacturer + ", " + CPU + ", " + GPU + ", " + RAM + ", " + Storage;

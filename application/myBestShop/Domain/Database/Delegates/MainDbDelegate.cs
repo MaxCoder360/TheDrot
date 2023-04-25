@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
 using MySql.Data.MySqlClient;
+using System.Drawing;
 
 namespace myBestShop.Domain.Database.Delegates
 {
@@ -51,10 +52,6 @@ namespace myBestShop.Domain.Database.Delegates
             throw new NotImplementedException();
         }
 
-        public async Task<LoginHolder> getLogin()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Computer> getAllInfoAboutComputer(int ID)
         {
@@ -80,6 +77,65 @@ namespace myBestShop.Domain.Database.Delegates
                 DatabaseManager.mySqlConnection.Close();
             }
             return computers;
+        }
+
+        public async Task<string> addComputerInDB(Computer comp)
+        {
+            string check = null;
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`computers` (`type`, `manufacturer`, `serial_number`, `CPU`, `GPU`, `RAM`, `Storage`, `ip_adress`) VALUES (@type, @manufacturer, @serial_number, @CPU, @GPU, @RAM, @Storage, @ip_adress);", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@type", MySqlDbType.VarString).Value = comp.type;
+                mySqlCommand.Parameters.Add("@manufacturer", MySqlDbType.VarString).Value = comp.manufacturer;
+                mySqlCommand.Parameters.Add("@serial_number", MySqlDbType.VarString).Value = comp.serial_number;
+                mySqlCommand.Parameters.Add("@CPU", MySqlDbType.VarString).Value = comp.CPU;
+                mySqlCommand.Parameters.Add("@GPU", MySqlDbType.VarString).Value = comp.GPU;
+                mySqlCommand.Parameters.Add("@RAM", MySqlDbType.VarString).Value = comp.RAM;
+                mySqlCommand.Parameters.Add("@Storage", MySqlDbType.VarString).Value = comp.Storage;
+                mySqlCommand.Parameters.Add("@ip_adress", MySqlDbType.VarString).Value = comp.ip_adress;
+                mySqlCommand.ExecuteNonQuery();
+                check = "OK";
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+                check = ex.Message;
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+            return check;
+        }
+        public async Task<string> addUserInDB(User comp)
+        {
+            string check = null;
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+               /* MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`computers` (`type`, `manufacturer`, `serial_number`, `CPU`, `GPU`, `RAM`, `Storage`, `ip_adress`) VALUES (@type, @manufacturer, @serial_number, @CPU, @GPU, @RAM, @Storage, @ip_adress);", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@type", MySqlDbType.VarString).Value = comp.type;
+                mySqlCommand.Parameters.Add("@manufacturer", MySqlDbType.VarString).Value = comp.manufacturer;
+                mySqlCommand.Parameters.Add("@serial_number", MySqlDbType.VarString).Value = comp.serial_number;
+                mySqlCommand.Parameters.Add("@CPU", MySqlDbType.VarString).Value = comp.CPU;
+                mySqlCommand.Parameters.Add("@GPU", MySqlDbType.VarString).Value = comp.GPU;
+                mySqlCommand.Parameters.Add("@RAM", MySqlDbType.VarString).Value = comp.RAM;
+                mySqlCommand.Parameters.Add("@Storage", MySqlDbType.VarString).Value = comp.Storage;
+                mySqlCommand.Parameters.Add("@ip_adress", MySqlDbType.VarString).Value = comp.ip_adress;
+                mySqlCommand.ExecuteNonQuery();*/
+                check = "OK";
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+                check = ex.Message;
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+            return check;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace myBestShop.Domain.Database.Delegates
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM users where mail = @login AND password = @password", DatabaseManager.mySqlConnection);
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM users where mail = @login AND password = @password;", DatabaseManager.mySqlConnection);
                 mySqlCommand.Parameters.Add("@login", MySqlDbType.VarChar).Value = userLogin;
                 mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(userPass);
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();

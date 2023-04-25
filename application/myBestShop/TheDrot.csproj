@@ -167,6 +167,18 @@
     <Compile Include="Presentation\LoginScreen\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\MainAdmin\CreateComp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\MainAdmin\CreateComp.Designer.cs">
+      <DependentUpon>CreateComp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\MainAdmin\createUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\MainAdmin\createUser.Designer.cs">
+      <DependentUpon>createUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\MainAdmin\MainAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +206,12 @@
     <Compile Include="Utils\WsJsonTemplate.cs" />
     <EmbeddedResource Include="Presentation\LoginScreen\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\MainAdmin\CreateComp.resx">
+      <DependentUpon>CreateComp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\MainAdmin\createUser.resx">
+      <DependentUpon>createUser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\MainAdmin\MainAdmin.resx">
       <DependentUpon>MainAdmin.cs</DependentUpon>

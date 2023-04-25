@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using myBestShop.Utils;
 using myBestShop.Presentation.Common;
+using myBestShop.Presentation.MainAdmin;
 
 namespace myBestShop
 {
@@ -135,15 +136,25 @@ namespace myBestShop
             }
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            parent.Show();
-            this.Close();
-        }
-
         private void button_exit_Click(object sender, EventArgs e)
         {
             parent.Show();
+        }
+
+        private void add_User_Click(object sender, EventArgs e)
+        {
+            using (Form forms = new createUser())
+            {
+                forms.ShowDialog();
+            }
+        }
+
+        private void add_comp_Click(object sender, EventArgs e)
+        {
+            using (Form forms = new CreateComp())
+            {
+                forms.ShowDialog();
+            }
         }
     }
 }
