@@ -198,7 +198,6 @@
     <Compile Include="Utils\Logger.cs" />
     <Compile Include="Utils\Observable.cs" />
     <Compile Include="Utils\Result.cs" />
-    <Compile Include="Utils\SessionManager.cs" />
     <Compile Include="Utils\LoginHolder.cs" />
     <Compile Include="Utils\TestWebSocketObject.cs" />
     <Compile Include="Utils\UserStatus.cs" />

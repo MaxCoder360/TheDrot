@@ -23,7 +23,7 @@ namespace myBestShop.Presentation.MainAdmin
 
         private async void SaveUserInDB_Click(object sender, EventArgs e)
         {
-            /*if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" &&
+            if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" &&
                 textBox5.Text != "" && textBox7.Text != "")
             {
                 User user = new User(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text, textBox7.Text);
@@ -43,7 +43,7 @@ namespace myBestShop.Presentation.MainAdmin
                 const string message = "Нужно заполнить все поля";
                 const string caption = "ОшиБка";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }*/
+            }
         }
     }
 }
