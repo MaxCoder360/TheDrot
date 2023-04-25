@@ -39,14 +39,12 @@ namespace myBestShop.Utils
     public class ComputerWrapper
     {
         public int computerId { get; private set; }
-        public int userId { get; private set; }
         public ComputerStatus status { get; private set; }
 
-        public ComputerWrapper(int computerId, int userId, ComputerStatus status)
+        public ComputerWrapper(int computerId, ComputerStatus status)
         {
             this.computerId = computerId;
             this.status = status;
-            this.userId = userId;
         }
 
         public Pair<Color, string> convertStatusToTableViewFormat()

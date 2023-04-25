@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
+using System.Windows.Forms;
 
 namespace myBestShop.Utils
 {
@@ -21,6 +24,10 @@ namespace myBestShop.Utils
                 }
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+        public static void ExecuteInMainContext(Action action)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(action);
         }
     }
 }

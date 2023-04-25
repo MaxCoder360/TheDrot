@@ -132,7 +132,8 @@ namespace myBestShop.Presentation.Common
                 int locX = this.locX + (i % columnCount) * cellWidth;
                 int locY = this.locY + rowsCount * cellHeight;
 
-                var decoratedCell = generateStatusCell(locX, locY, cellHeight, computerStatuses[i].convertStatusToTableViewFormat(), "Computer "+i.ToString());
+                var decoratedCell = generateStatusCell(locX, locY, cellHeight, computerStatuses[i].convertStatusToTableViewFormat(),
+                    "Computer id("+computerStatuses[i].computerId.ToString()+")");
 
                 foreach (var box in decoratedCell)
                 {
@@ -201,6 +202,7 @@ namespace myBestShop.Presentation.Common
             statusBox.BackColor = backColor;
             statusBox.Location = new System.Drawing.Point(begX, begY + infoBox.Height);
             statusBox.BorderStyle = BorderStyle.FixedSingle;
+            statusBox.Name = information;
 
             cancelBox.Width = (int)(cellWidth * (1 - infoCancelRatio));
             cancelBox.TextAlign = ContentAlignment.MiddleCenter;
@@ -215,6 +217,7 @@ namespace myBestShop.Presentation.Common
             hintBox.Location = new Point(begX, begY + statusBox.Height + hintBox.Height);
             hintBox.Text = statusHint;
             hintBox.BorderStyle = BorderStyle.FixedSingle;
+            hintBox.Name = information + "1";
 
             return new List<Control> { infoBox, hintBox, statusBox, cancelBox };
         }

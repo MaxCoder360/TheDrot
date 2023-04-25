@@ -7,7 +7,9 @@ using System.Linq;
 using System.Windows.Forms;
 using myBestShop.Utils;
 using myBestShop.Presentation.Common;
-using myBestShop.Presentation.MainAdmin;
+using myBestShop.Domain.Entities;
+using System.Drawing;
+using static myBestShop.Utils.Utils;
 
 namespace myBestShop
 {
@@ -30,18 +32,14 @@ namespace myBestShop
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
             repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
-            repository.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
+            repository.observable.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
 
             tableView = new TableViewHolder(727, 533, 117, 8);
         }
 
-        private void updateComputerStatusGrid()
+        private async void updateComputerStatusGrid()
         {
-            repository.fetchUserStatuses();
-        }
-
-        private object onComputerStatusUpdate(List<ComputerWrapper> computers)
-        {
+            List<Computer> computers = await repository.dbManager.Main.getAllComputers();
             foreach (Control item in this.Controls.OfType<Control>())
             {
                 foreach (var label in tableView.getReducedCells())
@@ -54,12 +52,35 @@ namespace myBestShop
                 }
             }
 
-            var cells = tableView.clear().appendCellsWithStatuses(computers).getCells();
+            List<ComputerWrapper> cw = new List<ComputerWrapper>();
+            for (int i = 0; i < computers.Count; i++)
+            {
+                cw.Add(new ComputerWrapper (computers[i].id, ComputerStatus.UNKNOWN));
+            }
+
+
+            var cells = tableView.clear().appendCellsWithStatuses(cw).getCells();
             foreach (var cell in cells)
             {
                 this.Controls.Add(cell);
             }
+            await repository.fetchUserStatuses(computers);
+        }
 
+        private object onComputerStatusUpdate(ComputerWrapper computer)
+        {
+            Pair<Color, string> cc = computer.convertStatusToTableViewFormat();
+            foreach (Label control in this.Controls.OfType<Label>())
+            {
+                if (control.Name == "Computer id(" + computer.computerId + ")")
+                {
+                    this.Invoke(new Action<object>((obj) => { control.BackColor = cc.first; }), new object[] { null });
+                }
+
+                if (control.Name == "Computer id(" + computer.computerId + ")1") {
+                    this.Invoke(new Action<object>((obj) => { control.Text = cc.second; }), new object[] { null });
+                }
+            }
             return null;
         }
 
@@ -95,8 +116,8 @@ namespace myBestShop
 
         public class ComputerStatusObserver : Observer
         {
-            Func<List<ComputerWrapper>, object> onComputerStatusUpdate;
-            public ComputerStatusObserver(Func<List<ComputerWrapper>, object> onComputerStatusUpdate)
+            Func<ComputerWrapper, object> onComputerStatusUpdate;
+            public ComputerStatusObserver(Func<ComputerWrapper, object> onComputerStatusUpdate)
             {
                 this.onComputerStatusUpdate = onComputerStatusUpdate;
             }
@@ -124,10 +145,8 @@ namespace myBestShop
 
                 if (result.data != null)
                 {
-                    Logger.println("Admin screen: result is ok: ");
-                    var computerStatuses = (List<ComputerWrapper>)Convert.ChangeType(result.data, typeof(List<ComputerWrapper>));
-                    Logger.println("MAn " + computerStatuses.Count.ToString());
-                    onComputerStatusUpdate(computerStatuses);
+                    var computerStatus = (ComputerWrapper)Convert.ChangeType(result.data, typeof(ComputerWrapper));
+                    onComputerStatusUpdate(computerStatus);
                 }
                 else
                 {
