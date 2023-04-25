@@ -16,11 +16,11 @@ namespace myBestShop.Domain.Repository
     {
         public static string userStatusTag = "User_status_tag";
 
-        private IAdminWebService webService;
+        private AdminWebService webService;
         private DatabaseManager dbManager;
         public AdminRepository(IAdminWebService webService, DatabaseManager manager)
         {
-            this.webService = webService;
+            this.webService = (AdminWebService)webService;
             this.dbManager = manager;
         }
 
@@ -28,7 +28,7 @@ namespace myBestShop.Domain.Repository
         {
             List<Computer> computers = await dbManager.Main.getAllComputers();
 
-            WebService.updateWebSockets();
+            webService.updateWebSockets();
             for (int i = 0; i < computers.Count; i++)
             {
                 Computer comp = computers[i];
