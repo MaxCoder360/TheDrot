@@ -33,7 +33,7 @@ namespace myBestShop
             if (!auth.is_admin)
             {
                 Program.isLogined = true;
-                MainClient clientScreen = new MainClient(this);
+                MainClient clientScreen = new MainClient(this, auth.id);
                 clientScreen.Show();
                 this.Hide();
             } else if (auth.is_admin)

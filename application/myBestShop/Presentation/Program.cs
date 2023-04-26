@@ -1,4 +1,5 @@
 ﻿using myBestShop.Domain.Database;
+using myBestShop.Domain.Entities;
 using myBestShop.Utils;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,8 @@ namespace myBestShop
 
                 if (data.type == WsJsonDataTypes.RequestAdmin)
                 {
-                    Utils.Logger.println(data.data);
+                    var messageInfo = JsonSerializer.Deserialize<ClientMessageDTO>(data.data);
+                    MessageBox.Show("User (id=" + messageInfo.computerId +") requests:\n" + messageInfo.message);
                 }
             }
         }
