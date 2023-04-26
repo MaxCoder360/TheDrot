@@ -49,7 +49,9 @@ namespace myBestShop.Domain.Repository
         public async Task updateStatusOnAdminSide(int computerId, ComputerStatus status)
         {
             var computerInfo = await dbManager.Main.getAllInfoAboutComputer(computerId);
-            await webService.updateStatusOnAdminSide(computerId, status, computerInfo.ip_adress);
+            var adminIPAddress = "DESKTOP-MU21P6Q";
+            Logger.println("updateStatusOnAdminSide: " + computerId.ToString() + " " + computerInfo.ip_adress);
+            await webService.updateStatusOnAdminSide(computerId, status, adminIPAddress);
         }
 
         /*public async Task getServerTime(int userSessionKey)

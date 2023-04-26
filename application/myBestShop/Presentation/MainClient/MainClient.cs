@@ -15,6 +15,7 @@ namespace myBestShop
         private Form parent;
         private UserRepository repository;
         private int computerId;
+        private int adminId;
 
         // observers
         private SessionKeyObserver sessionKeyObserver;
@@ -22,14 +23,15 @@ namespace myBestShop
         {
             InitializeComponent();
             this.parent = parent;
-            this.computerId = sess.id_user;
+            this.computerId = sess.id_computer;
+            this.adminId = sess.id_admin;
             labelName.Text += sess.name + " " + sess.surname;
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
             Task.Run(async () => {
-                await repository.updateStatusOnAdminSide(computerId, ComputerStatus.UNAVAILABLE);
+                await repository.updateStatusOnAdminSide(adminId, ComputerStatus.UNAVAILABLE);
             });
 
             // получение времени из бд для пользователя
@@ -84,7 +86,7 @@ namespace myBestShop
         private void button_call_admin_Click(object sender, EventArgs e)
         {
             SendMessageToAdmin sendMessageForm = new SendMessageToAdmin(async (message) => {
-                await repository.sendMessageToAdmin(message, computerId);
+                await repository.sendMessageToAdmin(message, adminId);
             });
 
             sendMessageForm.Show();

@@ -87,12 +87,15 @@ namespace myBestShop.Domain.WebService
         {
             if (!tryConnect(computerIpAddress))
             {
+                Utils.Logger.println("Not connected: updateStatusOnAdminSide");
                 return;
             }
 
             var cw = JsonSerializer.Serialize(new ComputerWrapper(computerId, status));
             var template = new WsJsonTemplate(cw, WsJsonDataTypes.UpdateUserStatus);
-            ws.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) => { });
+            ws.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) => {
+                Utils.Logger.println("Success sending to " + computerIpAddress + " " + isSuccessful.ToString());
+            });
         }
 
         private void onWsMessage(Object sender, MessageEventArgs e)
