@@ -24,22 +24,22 @@ namespace myBestShop.DependencyBuilders
             return RepositoryConfig.createConfig(configType, userType);
         }
 
-        public static IAdminWebService createAdminWebService(WebServiceConfig config)
+        public static AdminWebService createAdminWebService(WebServiceConfig config)
         {
             var dbManager = DatabaseManager.instance;
             if (BUILD_CONFIG == ConfigType.DEBUG_CONFIG) {
-                return new AdminWebServiceMock();
+                throw new NotImplementedException();
             } else
             {
                 return AdminWebService.getInstance(dbManager);
             }
         }
 
-        public static IUserWebService createUserWebService(WebServiceConfig config)
+        public static UserWebService createUserWebService(WebServiceConfig config)
         {
             if (BUILD_CONFIG == ConfigType.DEBUG_CONFIG)
             {
-                return new UserWebServiceMock(config);
+                throw new NotImplementedException();
             }
             else
             {

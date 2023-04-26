@@ -11,13 +11,14 @@ using System.Text.Json;
 using WebSocketSharp.Server;
 using System.Net;
 using System.Net.Sockets;
+using myBestShop.Domain.Entities;
 
 namespace myBestShop.Domain.WebService
 {
-    public class UserWebService : IUserWebService
+    public class UserWebService
     {
         private Observable<object> _observable;
-
+        private WebSocket ws;
         public static UserWebService instance;
 
 
@@ -57,6 +58,7 @@ namespace myBestShop.Domain.WebService
             if (instance == null)
             {
                 instance = new UserWebService(config);
+
             }
 
             return instance;
@@ -66,9 +68,33 @@ namespace myBestShop.Domain.WebService
         {
         }
 
-        void IUserWebService.addObservable(Observable<object> observable)
+        public void addObservable(Observable<object> observable)
         {
             this._observable = observable;
+        }
+
+        public void sendMessageToAdmin(string message, string computerIpAddress)
+        {
+            if (ws == null)
+            {
+                ws = new WebSocket("ws://" + computerIpAddress+ ":5050" + "/ToAdmin");
+            }
+
+            if (!ws.IsAlive)
+            {
+                try
+                {
+                    ws.ConnectAsync();
+                } catch (Exception ex)
+                {
+                    Utils.Logger.println("UserWebService Cannot connect to websocket of " + computerIpAddress+ " ip: " + ex.Message);
+                    _observable.notify(new Result<object> { data = default, exception = ex, isLoading = false }, UserRepository.sendMessageToAdminTag);
+                    return;
+                }
+            }
+
+            var template = new WsJsonTemplate(message, WsJsonDataTypes.RequestAdmin);
+            ws.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) => { });
         }
 
         private void onWsMessage(Object sender, MessageEventArgs e)

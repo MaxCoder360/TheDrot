@@ -13,13 +13,14 @@ namespace myBestShop.Domain.Repository
     {
         public static string loginTag = "Login_observer_tag";
         public static string getServerTimeTag = "Get_server_time_tag";
+        public static string sendMessageToAdminTag = "Send_message_to_admin";
         
-        private IUserWebService webService;
+        private UserWebService webService;
         private DatabaseManager dbManager;
 
         public Observable<object> observable;
 
-        public UserRepository(IUserWebService webService, DatabaseManager manager)
+        public UserRepository(UserWebService webService, DatabaseManager manager)
         {
             this.webService = webService;
             observable = new Observable<object>();
@@ -29,7 +30,6 @@ namespace myBestShop.Domain.Repository
 
         public async Task logInUser(LoginHolder holder)
         {
-            Logger.println("UShfuid");
             observable.notify(new Result<object> { data = default, exception = null, isLoading = true }, UserRepository.loginTag);
             var result = await dbManager.Login.getUserSessionKeyByLogin(holder);
             if (result != null)
@@ -37,8 +37,13 @@ namespace myBestShop.Domain.Repository
                 observable.notify(new Result<object> { data = result, exception = null, isLoading = false }, UserRepository.loginTag);
                 return;
             }
-            Logger.println("jkdsals");
             observable.notify(new Result<object> { data = default, exception = new Exception("Log in user failed"), isLoading = false }, UserRepository.loginTag);
+        }
+
+        public async Task sendMessageToAdmin(string message, int computerId)
+        {
+            var computerInfo = await dbManager.Main.getAllInfoAboutComputer(computerId);
+            webService.sendMessageToAdmin(message, computerInfo.ip_adress);
         }
 
         /*public async Task getServerTime(int userSessionKey)

@@ -10,7 +10,8 @@ namespace myBestShop.Utils
     {
         FetchUserStatus,
         RequestAdmin,
-        ExtendAvailableTimeForClient
+        ExtendAvailableTimeForClient,
+        UpdateUserStatus
     };
 
     public class WsJsonTemplate

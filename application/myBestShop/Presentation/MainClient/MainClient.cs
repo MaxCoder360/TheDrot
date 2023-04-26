@@ -4,6 +4,8 @@ using myBestShop.Presentation.MainClient.Observers;
 using myBestShop.Utils;
 using System;
 using System.Windows.Forms;
+using System.Threading.Tasks;
+using myBestShop.Presentation.MainClient;
 
 namespace myBestShop
 {
@@ -11,15 +13,17 @@ namespace myBestShop
     {
         private Form parent;
         private UserRepository repository;
+        private int computerId;
 
         // observers
         private SessionKeyObserver sessionKeyObserver;
-        public MainClient(Form parent)
+        public MainClient(Form parent, int computerId)
         {
             InitializeComponent();
             // todo при открытии формы изменять labelName на имя человека который авторизовался
             labelName.Text += "Краев Максим Максимович";
             this.parent = parent;
+            this.computerId = computerId;
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
@@ -75,7 +79,9 @@ namespace myBestShop
 
         private void button_call_admin_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Администратор сейчас подойдет к Вам!");
+            SendMessageToAdmin sendMessageForm = new SendMessageToAdmin(async (message) => {
+                await repository.sendMessageToAdmin(message, computerId);
+            });
         }
 
         private void button_exit_Click(object sender, EventArgs e)
