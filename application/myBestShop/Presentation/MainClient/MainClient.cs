@@ -29,7 +29,7 @@ namespace myBestShop
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
             // получение времени из бд для пользователя
-            Value_time = (sess.end_time_rent - sess.start_time_rent);
+            Value_time = (sess.end_time_rent - sess.start_time_rent).Ticks * 100;
             label_pass_time.Text = Int2StringTime(Value_time);
             timer_pass_time = new Timer();
             timer_pass_time.Tick += new EventHandler(tm_Tick);
@@ -37,12 +37,12 @@ namespace myBestShop
             timer_pass_time.Start();
         }
 
-        int Value_time = 0;
-        private string Int2StringTime(int time)
+        long Value_time = 0;
+        private string Int2StringTime(long time)
         {
-            int hours = (time - (time % (60 * 60))) / (60 * 60);
-            int minutes = (time - time % 60) / 60 - hours * 60;
-            int seconds = time % 60;
+            long hours = (time - (time % (60 * 60))) / (60 * 60);
+            long minutes = (time - time % 60) / 60 - hours * 60;
+            long seconds = time % 60;
             return String.Format("{0:00} ч. {1:00} м. {2:00} с.", hours, minutes, seconds);
         }
 
