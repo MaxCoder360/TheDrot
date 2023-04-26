@@ -4,9 +4,9 @@ using myBestShop.DependencyBuilders;
 using System;
 using System.Text;
 using System.Windows.Forms;
-using static myBestShop.Domain.Database.Delegates.LoginDbDelegate;
 using WebSocketSharp.Server;
 using static myBestShop.Utils.Utils;
+using myBestShop.Domain.Entities;
 
 namespace myBestShop
 {
@@ -32,6 +32,8 @@ namespace myBestShop
         {
             if (!auth.is_admin)
             {
+                GetClientSession(auth);
+
                 Program.isLogined = true;
                 MainClient clientScreen = new MainClient(this, auth.id);
                 clientScreen.Show();

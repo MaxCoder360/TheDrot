@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Drawing;
 using static myBestShop.Utils.Utils;
 
+
 namespace myBestShop.Domain.Database.Delegates
 {
     public class MainDbDelegate
@@ -138,7 +139,7 @@ namespace myBestShop.Domain.Database.Delegates
             return check;
         }
 
-        public async Task<string> GetClientSession(User user)
+        public async Task<string> GetClientSession(ReturnAUF user)
         {
             string check = null;
             try
