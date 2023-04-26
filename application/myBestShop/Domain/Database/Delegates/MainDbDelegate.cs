@@ -137,5 +137,34 @@ namespace myBestShop.Domain.Database.Delegates
             }
             return check;
         }
+
+        public async Task<string> GetClientSession(User user)
+        {
+            string check = null;
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`users` (`mail`, `password`, `name`, `surname`, `phone_number`, `passport`, `admin`) VALUES (@mail, @password, @name, @surname, @phone_number, @passport, @admin);", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@mail", MySqlDbType.VarString).Value = user.mail;
+                mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(user.password);
+                mySqlCommand.Parameters.Add("@name", MySqlDbType.VarString).Value = user.name;
+                mySqlCommand.Parameters.Add("@surname", MySqlDbType.VarString).Value = user.surname;
+                mySqlCommand.Parameters.Add("@phone_number", MySqlDbType.VarString).Value = user.phone_number;
+                mySqlCommand.Parameters.Add("@passport", MySqlDbType.VarString).Value = user.passport;
+                mySqlCommand.Parameters.Add("@admin", MySqlDbType.VarString).Value = user.admin;
+                mySqlCommand.ExecuteNonQuery();
+                check = "OK";
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+                check = ex.Message;
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+            return check;
+        }
     }
 }

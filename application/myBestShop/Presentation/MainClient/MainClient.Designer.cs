@@ -106,6 +106,7 @@
             this.Name = "MainClient";
             this.Text = "MainClient";
             this.Load += new System.EventHandler(this.MainClient_Load);
+            this.FormClosing += button_exit_Click;
             this.ResumeLayout(false);
             this.PerformLayout();
 

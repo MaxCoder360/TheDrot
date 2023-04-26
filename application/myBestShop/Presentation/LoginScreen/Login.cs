@@ -88,6 +88,7 @@ namespace myBestShop
                 }
                 if (result.isError)
                 {
+                    MessageBox.Show("Данные введены нЕ веррно.");
                     Logger.print("Login screen: ");
                     Logger.println(result.exception.ToString());
                     return;
@@ -107,6 +108,7 @@ namespace myBestShop
                     onLogin(auth);
                 } else
                 {
+                    MessageBox.Show("Данные введены нЕ веррно.");
                     Logger.println("Login screen: invalid result data");
                 }
             }
