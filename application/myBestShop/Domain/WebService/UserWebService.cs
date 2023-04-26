@@ -64,42 +64,65 @@ namespace myBestShop.Domain.WebService
             return instance;
         }
 
-        private UserWebService(WebServiceConfig config)
-        {
-        }
+        private UserWebService(WebServiceConfig config) {}
 
         public void addObservable(Observable<object> observable)
         {
             this._observable = observable;
         }
 
-        public void sendMessageToAdmin(string message, string computerIpAddress)
+        public async Task sendMessageToAdmin(string message, string computerIpAddress, int computerId)
         {
-            if (ws == null)
+            if (!tryConnect(computerIpAddress))
             {
-                ws = new WebSocket("ws://" + computerIpAddress+ ":5050" + "/ToAdmin");
+                return;
             }
 
-            if (!ws.IsAlive)
+            var clientMessage = JsonSerializer.Serialize(new ClientMessageDTO(computerId, message));
+            var template = new WsJsonTemplate(clientMessage, WsJsonDataTypes.RequestAdmin);
+            ws.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) => { });
+        }
+
+        public async Task updateStatusOnAdminSide(int computerId, ComputerStatus status, string computerIpAddress)
+        {
+            if (!tryConnect(computerIpAddress))
             {
-                try
-                {
-                    ws.ConnectAsync();
-                } catch (Exception ex)
-                {
-                    Utils.Logger.println("UserWebService Cannot connect to websocket of " + computerIpAddress+ " ip: " + ex.Message);
-                    _observable.notify(new Result<object> { data = default, exception = ex, isLoading = false }, UserRepository.sendMessageToAdminTag);
-                    return;
-                }
+                return;
             }
 
-            var template = new WsJsonTemplate(message, WsJsonDataTypes.RequestAdmin);
+            var cw = JsonSerializer.Serialize(new ComputerWrapper(computerId, status));
+            var template = new WsJsonTemplate(cw, WsJsonDataTypes.UpdateUserStatus);
             ws.SendAsync(JsonSerializer.Serialize(template), (isSuccessful) => { });
         }
 
         private void onWsMessage(Object sender, MessageEventArgs e)
         {
             var data = JsonSerializer.Deserialize<WsJsonTemplate>(e.Data);
+            Utils.Logger.println("Message from admin:\n" + data.data + "\nfor event " + data.type);
+        }
+
+        private bool tryConnect(string computerIpAddress)
+        {
+            if (ws == null)
+            {
+                ws = new WebSocket("ws://" + computerIpAddress + ":5050" + "/ToAdmin");
+            }
+
+            if (!ws.IsAlive)
+            {
+                try
+                {
+                    ws.Connect();
+                }
+                catch (Exception ex)
+                {
+                    Utils.Logger.println("UserWebService Cannot connect to websocket of " + computerIpAddress + " ip: " + ex.Message);
+                    _observable.notify(new Result<object> { data = default, exception = ex, isLoading = false }, UserRepository.sendMessageToAdminTag);
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /*private void onMessageSessionKey(Object sender, MessageEventArgs e)

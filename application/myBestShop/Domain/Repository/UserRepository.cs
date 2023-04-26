@@ -43,7 +43,13 @@ namespace myBestShop.Domain.Repository
         public async Task sendMessageToAdmin(string message, int computerId)
         {
             var computerInfo = await dbManager.Main.getAllInfoAboutComputer(computerId);
-            webService.sendMessageToAdmin(message, computerInfo.ip_adress);
+            await webService.sendMessageToAdmin(message, computerInfo.ip_adress, computerId);
+        }
+
+        public async Task updateStatusOnAdminSide(int computerId, ComputerStatus status)
+        {
+            var computerInfo = await dbManager.Main.getAllInfoAboutComputer(computerId);
+            await webService.updateStatusOnAdminSide(computerId, status, computerInfo.ip_adress);
         }
 
         /*public async Task getServerTime(int userSessionKey)

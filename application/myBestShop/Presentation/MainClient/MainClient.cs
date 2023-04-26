@@ -28,6 +28,10 @@ namespace myBestShop
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
+            Task.Run(async () => {
+                await repository.updateStatusOnAdminSide(computerId, ComputerStatus.UNAVAILABLE);
+            });
+
             // получение времени из бд для пользователя
             Value_time = 3712;
             label_pass_time.Text = Int2StringTime(Value_time);
@@ -82,10 +86,15 @@ namespace myBestShop
             SendMessageToAdmin sendMessageForm = new SendMessageToAdmin(async (message) => {
                 await repository.sendMessageToAdmin(message, computerId);
             });
+
+            sendMessageForm.Show();
         }
 
         private void button_exit_Click(object sender, EventArgs e)
         {
+            Task.Run(async () => {
+                await repository.updateStatusOnAdminSide(computerId, ComputerStatus.AVAILABLE);
+            });
             parent.Show();
             Program.isLogined = false;
         }
