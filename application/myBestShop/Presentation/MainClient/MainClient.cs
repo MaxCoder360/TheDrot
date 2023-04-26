@@ -33,7 +33,7 @@ namespace myBestShop
             });
 
             // получение времени из бд для пользователя
-            Value_time = (sess.end_time_rent - DateTime.Now).Ticks * 1000;
+            Value_time = (long)(sess.end_time_rent - DateTime.Now).TotalSeconds;
             label_pass_time.Text = Int2StringTime(Value_time);
             timer_pass_time = new Timer();
             timer_pass_time.Tick += new EventHandler(tm_Tick);
