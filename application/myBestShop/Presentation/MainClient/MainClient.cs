@@ -6,6 +6,7 @@ using System;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using myBestShop.Presentation.MainClient;
+using myBestShop.Domain.Entities;
 
 namespace myBestShop
 {
@@ -17,13 +18,12 @@ namespace myBestShop
 
         // observers
         private SessionKeyObserver sessionKeyObserver;
-        public MainClient(Form parent, int computerId)
+        public MainClient(Form parent, Session sess)
         {
             InitializeComponent();
-            // todo при открытии формы изменять labelName на имя человека который авторизовался
-            labelName.Text += "Краев Максим Максимович";
             this.parent = parent;
-            this.computerId = computerId;
+            this.computerId = sess.id_user;
+            labelName.Text += sess.name + " " + sess.surname;
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
@@ -33,7 +33,7 @@ namespace myBestShop
             });
 
             // получение времени из бд для пользователя
-            Value_time = 3712;
+            Value_time = (sess.end_time_rent - sess.start_time_rent).Ticks * 100;
             label_pass_time.Text = Int2StringTime(Value_time);
             timer_pass_time = new Timer();
             timer_pass_time.Tick += new EventHandler(tm_Tick);
@@ -41,12 +41,12 @@ namespace myBestShop
             timer_pass_time.Start();
         }
 
-        int Value_time = 0;
-        private string Int2StringTime(int time)
+        long Value_time = 0;
+        private string Int2StringTime(long time)
         {
-            int hours = (time - (time % (60 * 60))) / (60 * 60);
-            int minutes = (time - time % 60) / 60 - hours * 60;
-            int seconds = time % 60;
+            long hours = (time - (time % (60 * 60))) / (60 * 60);
+            long minutes = (time - time % 60) / 60 - hours * 60;
+            long seconds = time % 60;
             return String.Format("{0:00} ч. {1:00} м. {2:00} с.", hours, minutes, seconds);
         }
 

@@ -10,6 +10,7 @@ using MySql.Data.MySqlClient;
 using System.Drawing;
 using static myBestShop.Utils.Utils;
 
+
 namespace myBestShop.Domain.Database.Delegates
 {
     public class MainDbDelegate
@@ -138,33 +139,31 @@ namespace myBestShop.Domain.Database.Delegates
             return check;
         }
 
-        public async Task<string> GetClientSession(User user)
+        public Session GetClientSession(ReturnAUF user)
         {
-            string check = null;
+            Session sess = null;
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`users` (`mail`, `password`, `name`, `surname`, `phone_number`, `passport`, `admin`) VALUES (@mail, @password, @name, @surname, @phone_number, @passport, @admin);", DatabaseManager.mySqlConnection);
-                mySqlCommand.Parameters.Add("@mail", MySqlDbType.VarString).Value = user.mail;
-                mySqlCommand.Parameters.Add("@password", MySqlDbType.Binary).Value = CreateMD5(user.password);
-                mySqlCommand.Parameters.Add("@name", MySqlDbType.VarString).Value = user.name;
-                mySqlCommand.Parameters.Add("@surname", MySqlDbType.VarString).Value = user.surname;
-                mySqlCommand.Parameters.Add("@phone_number", MySqlDbType.VarString).Value = user.phone_number;
-                mySqlCommand.Parameters.Add("@passport", MySqlDbType.VarString).Value = user.passport;
-                mySqlCommand.Parameters.Add("@admin", MySqlDbType.VarString).Value = user.admin;
-                mySqlCommand.ExecuteNonQuery();
-                check = "OK";
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM thedrot.sessions WHERE id_user = @id_user AND end_time_rent >= @data_time AND start_time_rent <= @data_time;", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@id_user", MySqlDbType.VarString).Value = user.id;
+                mySqlCommand.Parameters.Add("@data_time", MySqlDbType.DateTime).Value = DateTime.Now;
+                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
+                if (myReader.Read())
+                {
+                    sess = new Session(myReader.GetInt32(0), myReader.GetDateTime(4), myReader.GetDateTime(5), myReader.GetInt32(1), myReader.GetInt32(3), myReader.GetInt32(2), null, null);
+                }
+                myReader.Close();
             }
             catch (Exception ex)
             {
                 Logger.println(ex.ToString());
-                check = ex.Message;
             }
             finally
             {
                 DatabaseManager.mySqlConnection.Close();
             }
-            return check;
+            return sess;
         }
     }
 }

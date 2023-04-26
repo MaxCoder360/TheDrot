@@ -147,6 +147,7 @@
     <Compile Include="Domain\Database\DatabaseManager.cs" />
     <Compile Include="Domain\Database\Delegates\LoginDbDelegate.cs" />
     <Compile Include="Domain\Database\Delegates\MainDbDelegate.cs" />
+    <Compile Include="Domain\Entities\ReturnAUF.cs" />
     <Compile Include="Domain\Entities\ClientMessageDTO.cs" />
     <Compile Include="Domain\Entities\Computer.cs" />
     <Compile Include="Domain\Entities\Session.cs" />

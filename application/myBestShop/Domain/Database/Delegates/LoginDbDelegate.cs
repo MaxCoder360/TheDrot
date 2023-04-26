@@ -1,4 +1,5 @@
-﻿using myBestShop.Utils;
+﻿using myBestShop.Domain.Entities;
+using myBestShop.Utils;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,7 @@ namespace myBestShop.Domain.Database.Delegates
 {
     public class LoginDbDelegate
     {
-        /*public LoginDbDelegate()
-        {
 
-        }*/
-
-
-        public class ReturnAUF {
-            public int id;
-            public bool is_admin;
-            public ReturnAUF (int id, string is_admin) {
-                this.id = id;
-                this.is_admin = (is_admin == "1");
-                }
-        }
 
 
         public async Task<ReturnAUF> getUserSessionKeyByLogin(LoginHolder holder)
