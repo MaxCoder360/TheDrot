@@ -6,6 +6,7 @@ using System;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 using myBestShop.Presentation.MainClient;
+using myBestShop.Domain.Entities;
 
 namespace myBestShop
 {
@@ -17,19 +18,18 @@ namespace myBestShop
 
         // observers
         private SessionKeyObserver sessionKeyObserver;
-        public MainClient(Form parent, int computerId)
+        public MainClient(Form parent, Session sess)
         {
             InitializeComponent();
-            // todo при открытии формы изменять labelName на имя человека который авторизовался
-            labelName.Text += "Краев Максим Максимович";
             this.parent = parent;
-            this.computerId = computerId;
+            this.computerId = sess.id_user;
+            labelName.Text += sess.name + " " + sess.surname;
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
             // получение времени из бд для пользователя
-            Value_time = 3712;
+            Value_time = (sess.end_time_rent - sess.start_time_rent);
             label_pass_time.Text = Int2StringTime(Value_time);
             timer_pass_time = new Timer();
             timer_pass_time.Tick += new EventHandler(tm_Tick);

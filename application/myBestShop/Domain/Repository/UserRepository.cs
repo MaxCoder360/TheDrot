@@ -16,7 +16,7 @@ namespace myBestShop.Domain.Repository
         public static string sendMessageToAdminTag = "Send_message_to_admin";
         
         private UserWebService webService;
-        private DatabaseManager dbManager;
+        public DatabaseManager dbManager;
 
         public Observable<object> observable;
 

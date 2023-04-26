@@ -7,12 +7,14 @@ using System.Windows.Forms;
 using WebSocketSharp.Server;
 using static myBestShop.Utils.Utils;
 using myBestShop.Domain.Entities;
+using myBestShop.Domain.Database.Delegates;
 
 namespace myBestShop
 {
     public partial class LoginScreen : Form
     {
         private UserRepository repository;
+
         public LoginScreen()
         {
             InitializeComponent();
@@ -30,12 +32,11 @@ namespace myBestShop
 
         private object onLoginSuccessful(ReturnAUF auth)
         {
-            if (!auth.is_admin)
+            Session sess = repository.dbManager.Main.GetClientSession(auth);
+            if (!auth.is_admin && sess != null)
             {
-                GetClientSession(auth);
-
                 Program.isLogined = true;
-                MainClient clientScreen = new MainClient(this, auth.id);
+                MainClient clientScreen = new MainClient(this, sess);
                 clientScreen.Show();
                 this.Hide();
             } else if (auth.is_admin)
