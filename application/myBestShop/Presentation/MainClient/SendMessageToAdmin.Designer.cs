@@ -49,16 +49,16 @@
             this.textBox1.Location = new System.Drawing.Point(51, 52);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(553, 20);
+            this.textBox1.Size = new System.Drawing.Size(553, 81);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // SendButton
             // 
             this.SendButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, ((byte)(204)));
-            this.SendButton.Location = new System.Drawing.Point(250, 139);
+            this.SendButton.Location = new System.Drawing.Point(249, 139);
             this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(153, 23);
+            this.SendButton.Size = new System.Drawing.Size(153, 29);
             this.SendButton.TabIndex = 2;
             this.SendButton.Text = "Отправить!";
             this.SendButton.UseVisualStyleBackColor = true;
