@@ -27,7 +27,8 @@ namespace myBestShop.Presentation.MainClient
         private void SendButton_Click(object sender, EventArgs e)
         {
             var message = textBox1.Text;
-            action(message);
+            Task.Run(() => { action(message); });
+            this.Close();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using myBestShop.Domain.Database;
 using myBestShop.Domain.Entities;
+using myBestShop.Domain.Repository;
 using myBestShop.Utils;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,16 @@ namespace myBestShop
                 {
                     var messageInfo = JsonSerializer.Deserialize<ClientMessageDTO>(data.data);
                     MessageBox.Show("User (id=" + messageInfo.computerId +") requests:\n" + messageInfo.message);
+                } else if (data.type == WsJsonDataTypes.UpdateUserStatus)
+                {
+                    var newStatusInfo = JsonSerializer.Deserialize<ComputerWrapper>(data.data);
+                    (new Observable<object>()).notify(
+                        new Result<object> { data = newStatusInfo, exception = null, isLoading = false },
+                            AdminRepository.userStatusTag
+                    );
                 }
+
+                // else ignore
             }
         }
 
