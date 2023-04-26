@@ -29,7 +29,7 @@ namespace myBestShop
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
             // получение времени из бд для пользователя
-            Value_time = (sess.end_time_rent - sess.start_time_rent).Ticks * 100;
+            Value_time = (sess.end_time_rent - DateTime.Now).Ticks * 1000;
             label_pass_time.Text = Int2StringTime(Value_time);
             timer_pass_time = new Timer();
             timer_pass_time.Tick += new EventHandler(tm_Tick);
