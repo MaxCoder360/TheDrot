@@ -15,14 +15,6 @@ namespace myBestShop.Domain.Database.Delegates
 {
     public class MainDbDelegate
     {
-        
-        public Task<int> getUserCount(int userId)
-        {
-            return new Task<int>(() =>
-            {
-                return 4;
-            });
-        }
 
         public async Task<List<Computer>> getAllComputers()
         {
@@ -47,11 +39,6 @@ namespace myBestShop.Domain.Database.Delegates
                 DatabaseManager.mySqlConnection.Close();
             }
             return computers;
-        }
-
-        public async Task addUser()
-        {
-            throw new NotImplementedException();
         }
 
 
@@ -145,13 +132,13 @@ namespace myBestShop.Domain.Database.Delegates
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM thedrot.sessions WHERE id_user = @id_user AND end_time_rent >= @data_time AND start_time_rent <= @data_time;", DatabaseManager.mySqlConnection);
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT sess.*, users.name, users.surname FROM thedrot.sessions AS sess, thedrot.users AS users WHERE sess.id_user = @id_user AND sess.end_time_rent >= @data_time AND sess.start_time_rent <= @data_time and users.id_user = @id_user;", DatabaseManager.mySqlConnection);
                 mySqlCommand.Parameters.Add("@id_user", MySqlDbType.VarString).Value = user.id;
                 mySqlCommand.Parameters.Add("@data_time", MySqlDbType.DateTime).Value = DateTime.Now;
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();
                 if (myReader.Read())
                 {
-                    sess = new Session(myReader.GetInt32(0), myReader.GetDateTime(4), myReader.GetDateTime(5), myReader.GetInt32(1), myReader.GetInt32(3), myReader.GetInt32(2), null, null);
+                    sess = new Session(myReader.GetInt32(0), myReader.GetDateTime(4), myReader.GetDateTime(5), myReader.GetInt32(1), myReader.GetInt32(3), myReader.GetInt32(2), myReader.GetString(6), myReader.GetString(7));
                 }
                 myReader.Close();
             }
@@ -165,5 +152,6 @@ namespace myBestShop.Domain.Database.Delegates
             }
             return sess;
         }
+
     }
 }

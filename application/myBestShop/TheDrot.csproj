@@ -145,6 +145,7 @@
     <Compile Include="DependencyBuilders\DomainModule.cs" />
     <Compile Include="DependencyBuilders\PresentationModule.cs" />
     <Compile Include="Domain\Database\DatabaseManager.cs" />
+    <Compile Include="Domain\Database\Delegates\IPAdminDelegate.cs" />
     <Compile Include="Domain\Database\Delegates\LoginDbDelegate.cs" />
     <Compile Include="Domain\Database\Delegates\MainDbDelegate.cs" />
     <Compile Include="Domain\Entities\ReturnAUF.cs" />

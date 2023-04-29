@@ -11,6 +11,9 @@ using myBestShop.Domain.Entities;
 using System.Drawing;
 using static myBestShop.Utils.Utils;
 using myBestShop.Presentation.MainAdmin;
+using System.Windows.Media.Animation;
+using myBestShop.Domain.Database.Delegates;
+using System.Threading.Tasks;
 
 namespace myBestShop
 {
@@ -26,7 +29,7 @@ namespace myBestShop
 
         }
 
-        public MainAdmin(Form parent)
+        public MainAdmin(Form parent, ReturnAUF auf)
         {
             InitializeComponent();
             this.parent = parent;
@@ -36,6 +39,10 @@ namespace myBestShop
             repository.observable.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
 
             tableView = new TableViewHolder(727, 533, 117, 8);
+
+            Task.Run(async () => { await IPAdminDelegate.SetIPAdmin(auf.id); });
+
+
 
             updateComputerStatusGrid();
         }
