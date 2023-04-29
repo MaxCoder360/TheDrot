@@ -42,7 +42,7 @@ namespace myBestShop
             } else if (auth.is_admin)
             {
                 Program.isLogined = true;
-                MainAdmin adminScreen = new MainAdmin(this, auth.id);
+                MainAdmin adminScreen = new MainAdmin(this, auth);
                 adminScreen.Show();
                 this.Hide();
             } else

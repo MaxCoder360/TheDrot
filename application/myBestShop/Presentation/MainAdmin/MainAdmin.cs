@@ -40,8 +40,9 @@ namespace myBestShop
 
             tableView = new TableViewHolder(727, 533, 117, 8);
 
-            Task.Run(async () => { await IPAdminDelegate.SetIPAdmin(auf.id); });
-
+            Task.Run(async () => {
+                await (new IPAdminDelegate()).SetIPAdmin(auf.id);
+            });
 
 
             updateComputerStatusGrid();

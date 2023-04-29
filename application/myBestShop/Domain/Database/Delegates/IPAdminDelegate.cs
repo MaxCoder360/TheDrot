@@ -46,12 +46,7 @@ namespace myBestShop.Domain.Database.Delegates
                 mySqlCommand.Parameters.Add("@id_admin", MySqlDbType.Int32).Value = id_admin;
                 mySqlCommand.Parameters.Add("@DATAS", MySqlDbType.DateTime).Value = DateTime.Now;
                 mySqlCommand.Parameters.Add("@ip_adresss", MySqlDbType.VarString).Value = Utils.Utils.GetLocalIPAddress();
-                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
-                if (myReader.Read())
-                {
-                    ip_adress = myReader.GetString(0);
-                }
-                myReader.Close();
+                mySqlCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
