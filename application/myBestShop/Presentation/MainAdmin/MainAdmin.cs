@@ -42,7 +42,6 @@ namespace myBestShop
 
             Task.Run(async () => {
                 await (repository.dbManager.IPadmin.SetIPAdmin(auf.id));
-                Logger.println(await repository.dbManager.IPadmin.GetIPAdmin(auf.id));
             });
 
 
