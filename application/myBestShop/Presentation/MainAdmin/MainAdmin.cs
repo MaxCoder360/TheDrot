@@ -41,7 +41,8 @@ namespace myBestShop
             tableView = new TableViewHolder(727, 533, 117, 8);
 
             Task.Run(async () => {
-                await (new IPAdminDelegate()).SetIPAdmin(auf.id);
+                await (repository.dbManager.IPadmin.SetIPAdmin(auf.id));
+                Logger.println(await repository.dbManager.IPadmin.GetIPAdmin(auf.id));
             });
 
 
