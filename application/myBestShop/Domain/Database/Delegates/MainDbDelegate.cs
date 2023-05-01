@@ -9,12 +9,14 @@ using System.Windows.Media.Animation;
 using MySql.Data.MySqlClient;
 using System.Drawing;
 using static myBestShop.Utils.Utils;
-
+using System.Diagnostics.Eventing.Reader;
+using System.Threading;
 
 namespace myBestShop.Domain.Database.Delegates
 {
     public class MainDbDelegate
     {
+        bool WAIT = false;
 
         public async Task<List<Computer>> getAllComputers()
         {
@@ -40,7 +42,6 @@ namespace myBestShop.Domain.Database.Delegates
             }
             return computers;
         }
-
 
         public async Task<Computer> getAllInfoAboutComputer(int ID)
         {
@@ -153,5 +154,47 @@ namespace myBestShop.Domain.Database.Delegates
             return sess;
         }
 
+
+        public async Task<List<User>> getAllUsers()
+        {
+            int zhdum = 0;
+            while (WAIT) // не знаю заем добавил)))
+            {
+                if (zhdum > 10)
+                {
+                    Logger.println("Не дождались подключения для " + "getAllInfoAboutComputer");
+                    return null;
+                }
+                zhdum += 1;
+                Thread.Sleep(500);
+
+            }
+            WAIT = true;
+            List<User> users = new List<User>();
+
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM thedrot.users;", DatabaseManager.mySqlConnection);
+                MySqlDataReader myReader = mySqlCommand.ExecuteReader();
+                while (myReader.Read())
+                {
+                    if (myReader.GetString(7) != "1")
+                        users.Add(new User(myReader.GetInt32(0), myReader.GetString(3), myReader.GetString(4), myReader.GetString(5), myReader.GetString(1)));
+                }
+                myReader.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+
+            WAIT = false;
+            return users;
+        }
     }
 }

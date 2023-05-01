@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Controls;
 
 namespace myBestShop.Domain.Entities
@@ -44,6 +45,13 @@ namespace myBestShop.Domain.Entities
             this.passport = passport;
             this.admin = admin;
         }
-
+        public User(int id, string name, string surname, string phone_number, string mail)
+        {
+            this.id = id;
+            this.name = name;
+            this.surname = surname;
+            this.phone_number = phone_number;
+            this.mail = mail;
+        }
     }
 }

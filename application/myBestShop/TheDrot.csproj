@@ -176,6 +176,12 @@
     <Compile Include="Presentation\MainAdmin\CreateComp.Designer.cs">
       <DependentUpon>CreateComp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\MainAdmin\CreateSession.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentation\MainAdmin\CreateSession.Designer.cs">
+      <DependentUpon>CreateSession.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\MainAdmin\CreateUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\MainAdmin\CreateComp.resx">
       <DependentUpon>CreateComp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentation\MainAdmin\CreateSession.resx">
+      <DependentUpon>CreateSession.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentation\MainAdmin\CreateUser.resx">
       <DependentUpon>CreateUser.cs</DependentUpon>

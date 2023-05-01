@@ -30,7 +30,7 @@
         {
             this.deliveryInWork = new System.Windows.Forms.Button();
             this.deliveryClosed = new System.Windows.Forms.Button();
-            this.save = new System.Windows.Forms.Button();
+            this.Add_session = new System.Windows.Forms.Button();
             this.add_User = new System.Windows.Forms.Button();
             this.add_comp = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -54,17 +54,16 @@
             this.deliveryClosed.TabIndex = 1;
             this.deliveryClosed.Text = "Редактирование Компьтеров";
             this.deliveryClosed.UseVisualStyleBackColor = true;
-            this.deliveryClosed.Click += new System.EventHandler(this.deliveryClosed_Click);
             // 
-            // save
+            // Add_session
             // 
-            this.save.Location = new System.Drawing.Point(4, 735);
-            this.save.Name = "save";
-            this.save.Size = new System.Drawing.Size(165, 97);
-            this.save.TabIndex = 4;
-            this.save.Text = "Сохранить изменения";
-            this.save.UseVisualStyleBackColor = true;
-            this.save.Click += new System.EventHandler(this.button1_Click);
+            this.Add_session.Location = new System.Drawing.Point(4, 361);
+            this.Add_session.Name = "Add_session";
+            this.Add_session.Size = new System.Drawing.Size(165, 85);
+            this.Add_session.TabIndex = 4;
+            this.Add_session.Text = "Добавить сессию";
+            this.Add_session.UseVisualStyleBackColor = true;
+            this.Add_session.Click += new System.EventHandler(this.add_session_Click);
             // 
             // add_User
             // 
@@ -95,14 +94,13 @@
             this.ClientSize = new System.Drawing.Size(1278, 845);
             this.Controls.Add(this.add_comp);
             this.Controls.Add(this.add_User);
-            this.Controls.Add(this.save);
+            this.Controls.Add(this.Add_session);
             this.Controls.Add(this.deliveryClosed);
             this.Controls.Add(this.deliveryInWork);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainAdmin";
             this.Text = "ПАНЕЛЬ УПРАВЛЕНИЯ";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_FormClosing) + button_exit_Click;
-            this.Load += new System.EventHandler(this.MainAdmin_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainAdmin_FormClosing);
             this.ResumeLayout(false);
 
         }
@@ -111,7 +109,7 @@
 
         private System.Windows.Forms.Button deliveryInWork;
         private System.Windows.Forms.Button deliveryClosed;
-        private System.Windows.Forms.Button save;
+        private System.Windows.Forms.Button Add_session;
         private System.Windows.Forms.Button add_User;
         private System.Windows.Forms.Button add_comp;
     }
