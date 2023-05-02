@@ -175,12 +175,11 @@ namespace myBestShop.Domain.Database.Delegates
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM thedrot.users;", DatabaseManager.mySqlConnection);
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT * FROM thedrot.users WHERE admin != 1;", DatabaseManager.mySqlConnection);
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();
                 while (myReader.Read())
                 {
-                    if (myReader.GetString(7) != "1")
-                        users.Add(new User(myReader.GetInt32(0), myReader.GetString(3), myReader.GetString(4), myReader.GetString(5), myReader.GetString(1)));
+                    users.Add(new User(myReader.GetInt32(0), myReader.GetString(3), myReader.GetString(4), myReader.GetString(5), myReader.GetString(1)));
                 }
                 myReader.Close();
             }
@@ -195,6 +194,45 @@ namespace myBestShop.Domain.Database.Delegates
 
             WAIT = false;
             return users;
+        }
+
+        public async Task addSessionInDB(Session sess)
+        {
+            int zhdum = 0;
+            while (WAIT) // не знаю заем добавил)))
+            {
+                if (zhdum > 10)
+                {
+                    Logger.println("Не дождались подключения для " + "addSessionInDB");
+                    return;
+                }
+                zhdum += 1;
+                Thread.Sleep(500);
+
+            }
+            WAIT = true;
+
+            try
+            {
+                DatabaseManager.mySqlConnection.Open();
+                MySqlCommand mySqlCommand = new MySqlCommand("INSERT INTO `thedrot`.`sessions` (`id_admin`, `id_user`, `id_computer`, `start_time_rent`, `end_time_rent`) VALUES (@id_admin, @id_user, @id_comp, @start_time, @end_time);", DatabaseManager.mySqlConnection);
+                mySqlCommand.Parameters.Add("@id_admin", MySqlDbType.Int32).Value = sess.id_admin;
+                mySqlCommand.Parameters.Add("@id_user", MySqlDbType.Int32).Value = sess.id_user;
+                mySqlCommand.Parameters.Add("@id_comp", MySqlDbType.Int32).Value = sess.id_computer;
+                mySqlCommand.Parameters.Add("@start_time", MySqlDbType.DateTime).Value = sess.start_time_rent;
+                mySqlCommand.Parameters.Add("@end_time", MySqlDbType.DateTime).Value = sess.end_time_rent;
+                mySqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Logger.println(ex.ToString());
+            }
+            finally
+            {
+                DatabaseManager.mySqlConnection.Close();
+            }
+
+            WAIT = false;
         }
     }
 }

@@ -14,6 +14,7 @@ using myBestShop.Presentation.MainAdmin;
 using System.Windows.Media.Animation;
 using myBestShop.Domain.Database.Delegates;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace myBestShop
 {
@@ -22,12 +23,14 @@ namespace myBestShop
         private AdminRepository repository;
         private TableViewHolder tableView;
 
+        ReturnAUF auf;
         private Form parent;
 
         public MainAdmin(Form parent, ReturnAUF auf)
         {
             InitializeComponent();
             this.parent = parent;
+            this.auf = auf;
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
             repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
@@ -158,9 +161,13 @@ namespace myBestShop
         private async void add_session_Click(object sender, EventArgs e)
         {
             List<User> users = await repository.dbManager.Main.getAllUsers();
-            using (Form forms = new CreateSession(users))
+            using (CreateSession forms = new CreateSession(users))
             {
                 forms.ShowDialog();
+                Session resultSeesion = forms.MyReturnValue;
+                resultSeesion.id_admin = auf.id;
+
+                await repository.dbManager.Main.addSessionInDB(resultSeesion);
             }
         }
     }

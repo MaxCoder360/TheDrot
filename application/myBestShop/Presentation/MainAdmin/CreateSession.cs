@@ -9,25 +9,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Media.Animation;
 
 namespace myBestShop.Presentation.MainAdmin
 {
     public partial class CreateSession : Form
     {
+        public Session MyReturnValue { get; set; } = null;
+
         public CreateSession(List<User> users)
         {
             InitializeComponent();
             dataGridView.DataSource = users.ToArray();
-            dataGridView.CurrentCell = null;
             dataGridView.Columns["password"].Visible = false;
             dataGridView.Columns["admin"].Visible = false;
             dataGridView.Columns["passport"].Visible = false;
             dataGridView.Columns["computerId"].Visible = false;
+
+            dataGridView.ClearSelection(); // почемуто не работает)
+            dataGridView.CurrentCell = null;
         }
 
         private void find_Click(object sender, EventArgs e)
         {
-            dataGridView.DefaultCellStyle.BackColor = Color.White;
+            bool assssssssssssssssssssssss = false;
+            if (textBox1.Text == "")
+            {
+                dataGridView.ClearSelection();
+                dataGridView.CurrentCell = null;
+                return;
+            }
             for (int i = 0; i < dataGridView.RowCount; i++)
             {
                 dataGridView.Rows[i].Selected = false;
@@ -36,14 +47,29 @@ namespace myBestShop.Presentation.MainAdmin
                         if (dataGridView.Rows[i].Cells[j].Value.ToString().Contains(textBox1.Text))
                         {
                             dataGridView.Rows[i].Selected = true;
-                            dataGridView.Rows[i].DefaultCellStyle.BackColor = Color.Red;
-                            
+                            dataGridView.CurrentCell = dataGridView.Rows[i].Cells[j];
+                            assssssssssssssssssssssss = true;
                             break;
                         }
+                if (assssssssssssssssssssssss) break;
+                dataGridView.ClearSelection();
                 dataGridView.CurrentCell = null;
             }
+        }
 
-
+        private void SaveSessionInDB_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.CurrentCell == null)
+            {
+                MessageBox.Show("Вы не выбрали чела", "ЖЕСТЬ") ;
+                return;
+            } 
+            DateTime start_datetime = DateTime.Now;
+            DateTime end_datetime = start_datetime.AddMinutes(Convert.ToDouble(textBox3.Text)).AddHours(Convert.ToDouble(textBox2.Text));
+            int ass = Convert.ToInt32(dataGridView[0, dataGridView.CurrentCell.RowIndex].Value);
+            int assss = Convert.ToInt32(textBox4.Text);
+            MyReturnValue = new Session(start_datetime, end_datetime, -1, assss, ass);
+            this.Close();
         }
     }
 }
