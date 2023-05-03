@@ -158,17 +158,7 @@ namespace myBestShop.Domain.Database.Delegates
         public async Task<List<User>> getAllUsers()
         {
             int zhdum = 0;
-            while (WAIT) // не знаю заем добавил)))
-            {
-                if (zhdum > 10)
-                {
-                    Logger.println("Не дождались подключения для " + "getAllInfoAboutComputer");
-                    return null;
-                }
-                zhdum += 1;
-                Thread.Sleep(500);
-
-            }
+            if (WAIT) return null;
             WAIT = true;
             List<User> users = new List<User>();
 
@@ -199,17 +189,7 @@ namespace myBestShop.Domain.Database.Delegates
         public async Task addSessionInDB(Session sess)
         {
             int zhdum = 0;
-            while (WAIT) // не знаю заем добавил)))
-            {
-                if (zhdum > 10)
-                {
-                    Logger.println("Не дождались подключения для " + "addSessionInDB");
-                    return;
-                }
-                zhdum += 1;
-                Thread.Sleep(500);
-
-            }
+            if (WAIT) return;
             WAIT = true;
 
             try
