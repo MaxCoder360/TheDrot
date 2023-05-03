@@ -30,7 +30,8 @@ namespace myBestShop.Domain.Database
 
         public LoginDbDelegate Login = new LoginDbDelegate();
         public MainDbDelegate Main = new MainDbDelegate();
-        
+        public IPAdminDelegate IPadmin = new IPAdminDelegate();
+
 
         private DatabaseManager() {
             initializeConnect();

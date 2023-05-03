@@ -17,8 +17,16 @@ namespace myBestShop.Domain.Database.Delegates
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("", DatabaseManager.mySqlConnection);
-                mySqlCommand.Parameters.Add("@id_admin", MySqlDbType.VarString).Value = id_admin;
+                MySqlCommand mySqlCommand = null;
+                if (id_admin == -1) // получить IP любого последнего авторизоаванного чела
+                {
+                    mySqlCommand = new MySqlCommand("SELECT ip_adress_admin FROM thedrot.ipadmin ORDER BY last_in DESC LIMIT 1;", DatabaseManager.mySqlConnection);
+                }
+                else // получить IP чела по id
+                {
+                    mySqlCommand = new MySqlCommand("SELECT ip_adress_admin FROM thedrot.ipadmin WHERE id_Admin = @id_admin;", DatabaseManager.mySqlConnection);
+                    mySqlCommand.Parameters.Add("@id_admin", MySqlDbType.Int32).Value = id_admin;
+                }
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();
                 if (myReader.Read())
                 {

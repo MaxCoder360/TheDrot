@@ -14,6 +14,7 @@ using myBestShop.Presentation.MainAdmin;
 using System.Windows.Media.Animation;
 using myBestShop.Domain.Database.Delegates;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace myBestShop
 {
@@ -22,17 +23,14 @@ namespace myBestShop
         private AdminRepository repository;
         private TableViewHolder tableView;
 
+        ReturnAUF auf;
         private Form parent;
-
-        private void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
-        }
 
         public MainAdmin(Form parent, ReturnAUF auf)
         {
             InitializeComponent();
             this.parent = parent;
+            this.auf = auf;
 
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
             repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
@@ -41,11 +39,49 @@ namespace myBestShop
             tableView = new TableViewHolder(727, 533, 117, 8);
 
             Task.Run(async () => {
-                await (new IPAdminDelegate()).SetIPAdmin(auf.id);
+                await (repository.dbManager.IPadmin.SetIPAdmin(auf.id));
             });
+        }
 
+        public class ComputerStatusObserver : Observer
+        {
+            Func<ComputerWrapper, object> onComputerStatusUpdate;
+            public ComputerStatusObserver(Func<ComputerWrapper, object> onComputerStatusUpdate)
+            {
+                this.onComputerStatusUpdate = onComputerStatusUpdate;
+            }
 
-            updateComputerStatusGrid();
+            public void handleResult<ResultT>(Result<ResultT> result) where ResultT : class
+            {
+                if (result == null)
+                {
+                    Logger.println("Admin screen: main observable caught null result from repository");
+                    return;
+                }
+
+                if (result.isLoading)
+                {
+                    // Init progress bar or circle
+                    Logger.println("Admin screen: waiting for computer status");
+                    return;
+                }
+
+                if (result.isError)
+                {
+                    Logger.println("Admin screen: error caught: " + result.exception.ToString());
+                    return;
+                }
+
+                if (result.data != null)
+                {
+                    var computerStatus = (ComputerWrapper)Convert.ChangeType(result.data, typeof(ComputerWrapper));
+                    onComputerStatusUpdate(computerStatus);
+                }
+                else
+                {
+                    Logger.println("Admin screen: invalid result state from admin main repository");
+                }
+            }
         }
 
         private async void updateComputerStatusGrid()
@@ -97,81 +133,15 @@ namespace myBestShop
             return null;
         }
 
-        private void deliveryInWork_Click(object sender, EventArgs e)
-        {
-            updateComputerStatusGrid();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void deliveryClosed_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tables_box_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MainAdmin_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void computerStatusGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
-
-        public class ComputerStatusObserver : Observer
-        {
-            Func<ComputerWrapper, object> onComputerStatusUpdate;
-            public ComputerStatusObserver(Func<ComputerWrapper, object> onComputerStatusUpdate)
-            {
-                this.onComputerStatusUpdate = onComputerStatusUpdate;
-            }
-
-            public void handleResult<ResultT>(Result<ResultT> result) where ResultT : class
-            {
-                if (result == null)
-                {
-                    Logger.println("Admin screen: main observable caught null result from repository");
-                    return;
-                }
-
-                if (result.isLoading)
-                {
-                    // Init progress bar or circle
-                    Logger.println("Admin screen: waiting for computer status");
-                    return;
-                }
-
-                if (result.isError)
-                {
-                    Logger.println("Admin screen: error caught: " + result.exception.ToString());
-                    return;
-                }
-
-                if (result.data != null)
-                {
-                    var computerStatus = (ComputerWrapper)Convert.ChangeType(result.data, typeof(ComputerWrapper));
-                    onComputerStatusUpdate(computerStatus);
-                }
-                else
-                {
-                    Logger.println("Admin screen: invalid result state from admin main repository");
-                }
-            }
-        }
-
-        private void button_exit_Click(object sender, EventArgs e)
+        private void MainAdmin_FormClosing(object sender, FormClosingEventArgs e)
         {
             parent.Show();
             Program.isLogined = false;
+        }
+
+        private void deliveryInWork_Click(object sender, EventArgs e)
+        {
+            updateComputerStatusGrid();
         }
 
         private void add_User_Click(object sender, EventArgs e)
@@ -187,6 +157,19 @@ namespace myBestShop
             using (Form forms = new CreateComp())
             {
                 forms.ShowDialog();
+            }
+        }
+
+        private async void add_session_Click(object sender, EventArgs e)
+        {
+            List<User> users = await repository.dbManager.Main.getAllUsers();
+            using (CreateSession forms = new CreateSession(users))
+            {
+                forms.ShowDialog();
+                Session resultSeesion = forms.MyReturnValue;
+                resultSeesion.id_admin = auf.id;
+
+                await repository.dbManager.Main.addSessionInDB(resultSeesion);
             }
         }
     }
