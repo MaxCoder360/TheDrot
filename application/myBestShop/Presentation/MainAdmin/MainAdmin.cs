@@ -87,15 +87,18 @@ namespace myBestShop
         private async void updateComputerStatusGrid()
         {
             List<Computer> computers = await repository.dbManager.Main.getAllComputers();
+            string prefix = TableViewHolder.controlItemNamePrefix;
             foreach (Control item in this.Controls.OfType<Control>())
             {
-                foreach (var label in tableView.getReducedCells())
+                if (item.Name.Length < prefix.Length)
                 {
-                    if (item.Name.Equals(label.Name))
-                    {
-                        this.Controls.Remove(item);
-                        item.Dispose();
-                    }
+                    continue;
+                }
+
+                if (item.Name.Substring(0, prefix.Length).Equals(prefix))
+                {
+                    this.Controls.Remove(item);
+                    item.Dispose();
                 }
             }
 
@@ -104,7 +107,6 @@ namespace myBestShop
             {
                 cw.Add(new ComputerWrapper (computers[i].id, ComputerStatus.UNKNOWN));
             }
-
 
             var cells = tableView.clear().appendCellsWithStatuses(cw).getCells();
             foreach (var cell in cells)
