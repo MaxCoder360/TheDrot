@@ -113,21 +113,25 @@ namespace myBestShop
             {
                 this.Controls.Add(cell);
             }
-            await repository.fetchUserStatuses(computers);
+            // await repository.fetchUserStatuses(computers);
         }
 
         private object onComputerStatusUpdate(ComputerWrapper computer)
         {
             Pair<Color, string> cc = computer.convertStatusToTableViewFormat();
-            foreach (Label control in this.Controls.OfType<Label>())
+            var statusPrefix = TableViewHolder.statusItemNamePrefix;
+            var hintPrefix = TableViewHolder.hintItemNamePrefix;
+            foreach (Control item in this.Controls.OfType<Control>())
             {
-                if (control.Name == "Computer id(" + computer.computerId + ")")
+
+                if (item.Name.Length >= statusPrefix.Length && item.Name.Substring(0, statusPrefix.Length).Equals(statusPrefix))
                 {
-                    this.Invoke(new Action<object>((obj) => { control.BackColor = cc.first; }), new object[] { null });
+                    this.Invoke(new Action<object>((obj) => { item.BackColor = cc.first; }), new object[] { null });
                 }
 
-                if (control.Name == "Computer id(" + computer.computerId + ")1") {
-                    this.Invoke(new Action<object>((obj) => { control.Text = cc.second; }), new object[] { null });
+                if (item.Name.Length >= hintPrefix.Length && item.Name.Substring(0, hintPrefix.Length).Equals(hintPrefix))
+                {
+                    this.Invoke(new Action<object>((obj) => { item.Text = cc.second; }), new object[] { null });
                 }
             }
             return null;

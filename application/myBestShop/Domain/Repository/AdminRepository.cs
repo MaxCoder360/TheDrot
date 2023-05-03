@@ -31,6 +31,7 @@ namespace myBestShop.Domain.Repository
 
         public async Task fetchUserStatuses(List<Computer> computers)
         {
+            Utils.Logger.println("fetch User Status" + computers.Count);
             webService.updateWebSockets();
             for (int i = 0; i < computers.Count; i++)
             {

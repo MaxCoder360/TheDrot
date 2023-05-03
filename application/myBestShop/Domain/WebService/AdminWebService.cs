@@ -103,9 +103,11 @@ namespace myBestShop.Domain.WebService
         {
             for (int i = 0; i < wsPool.Count; i++)
             {
+                Utils.Logger.println("updateWebSockets: wsPool" + i.ToString());
                 Pair<Computer, WebSocket> ws = wsPool[i];
                 if (ws.second.IsAlive)
                 {
+                    Utils.Logger.println("websocket" + i.ToString() + " is alive");
                     continue;
                 }
                 Utils.Logger.println("Trying to connect to " + ws.first.ip_adress);
