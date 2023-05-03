@@ -13,6 +13,10 @@ namespace myBestShop.Presentation.Common
     {
 
         public static string controlItemNamePrefix = "status_element_";
+        public static string statusItemNamePrefix = controlItemNamePrefix + "statusBox_";
+        public static string infoItemNamePrefix = controlItemNamePrefix + "infoBox_";
+        public static string cancelItemNamePrefix = controlItemNamePrefix + "cancelBox_";
+        public static string hintItemNamePrefix = controlItemNamePrefix + "hintBox_";
         public int cellCount
         {
             get
