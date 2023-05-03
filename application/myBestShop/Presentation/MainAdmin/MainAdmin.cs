@@ -167,9 +167,11 @@ namespace myBestShop
             {
                 forms.ShowDialog();
                 Session resultSeesion = forms.MyReturnValue;
-                resultSeesion.id_admin = auf.id;
-
-                await repository.dbManager.Main.addSessionInDB(resultSeesion);
+                if (resultSeesion != null)
+                {
+                    resultSeesion.id_admin = auf.id;
+                    await repository.dbManager.Main.addSessionInDB(resultSeesion);
+                }
             }
         }
     }

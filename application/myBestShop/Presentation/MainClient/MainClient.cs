@@ -60,7 +60,7 @@ namespace myBestShop
 
         void tm_Tick(object sender, EventArgs e)
         {
-            if (Value_time != 0)
+            if (Value_time >= 0)
             {
                 label_pass_time.Text = Int2StringTime(Value_time);
                 Value_time--;
@@ -69,6 +69,9 @@ namespace myBestShop
             {
                 (sender as Timer).Stop();
                 (sender as Timer).Dispose();
+                Program.isLogined = false;
+                this.Close();
+                
             }
         }
 
