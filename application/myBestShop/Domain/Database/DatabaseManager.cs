@@ -42,7 +42,7 @@ namespace myBestShop.Domain.Database
             {
                 try
                 {
-                    mySqlConnection = new MySqlConnection("Server=DESKTOP-MU21P6Q;Port=3306;Database=thedrot;Uid=test;Pwd=password;SslMode=Preferred;ConnectionTimeout=2000");
+                    mySqlConnection = new MySqlConnection("Server=DESKTOP-MU21P6Q;Port=3306;Database=thedrot;Uid=test;Pwd=password;SslMode=Preferred;ConnectionTimeout=4000");
                     mySqlConnection.Open();
                 }
                 catch(Exception ex)

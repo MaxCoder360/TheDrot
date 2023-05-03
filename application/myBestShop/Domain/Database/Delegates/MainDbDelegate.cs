@@ -21,8 +21,16 @@ namespace myBestShop.Domain.Database.Delegates
             List<Computer> computers = new List<Computer>();
             try
             {
+                if (DatabaseManager.mySqlConnection == null)
+                {
+                    throw new Exception("nnvnvnvnnv");
+                }
                 DatabaseManager.mySqlConnection.Open();
                 MySqlCommand mySqlCommand = new MySqlCommand("SELECT id_computer, ip_adress FROM thedrot.computers;", DatabaseManager.mySqlConnection);
+                if (mySqlCommand == null)
+                {
+                    throw new Exception("UUroewurefow");
+                }
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();
                 while (myReader.Read())
                 {

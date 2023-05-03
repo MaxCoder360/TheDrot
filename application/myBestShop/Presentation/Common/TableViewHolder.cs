@@ -5,11 +5,14 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using myBestShop.Utils;
+using myBestShop.Domain.Database.Delegates;
 
 namespace myBestShop.Presentation.Common
 {
     public class TableViewHolder
     {
+
+        public static string controlItemNamePrefix = "status_element_";
         public int cellCount
         {
             get
@@ -41,7 +44,6 @@ namespace myBestShop.Presentation.Common
         {
             get
             {
-
                 return height / ((cellCount + columnCount - 1) / columnCount);
             }
         }
@@ -194,15 +196,16 @@ namespace myBestShop.Presentation.Common
             infoBox.TextAlign = ContentAlignment.MiddleCenter;
             // infoBox.Height = (cellHeight+1) / 2;
             infoBox.Text = information;
-            infoBox.Location = new System.Drawing.Point(begX, begY);
+            infoBox.Location = new Point(begX, begY);
             infoBox.BorderStyle = BorderStyle.FixedSingle;
+            infoBox.Name = controlItemNamePrefix + "infoBox_" + information;
 
             statusBox.Width = cellWidth;
             statusBox.Height = (cellHeight+1) / 2;
             statusBox.BackColor = backColor;
             statusBox.Location = new System.Drawing.Point(begX, begY + infoBox.Height);
             statusBox.BorderStyle = BorderStyle.FixedSingle;
-            statusBox.Name = information;
+            statusBox.Name = controlItemNamePrefix + "statusBox_" + information;
 
             cancelBox.Width = (int)(cellWidth * (1 - infoCancelRatio));
             cancelBox.TextAlign = ContentAlignment.MiddleCenter;
@@ -210,6 +213,7 @@ namespace myBestShop.Presentation.Common
             cancelBox.Location = new System.Drawing.Point(begX + (int)(cellWidth * infoCancelRatio), begY);
             cancelBox.BackColor = Color.Black;
             cancelBox.ForeColor = Color.Black;
+            cancelBox.Name = controlItemNamePrefix + "cancelBox_" + information;
 
             hintBox.Width = statusBox.Width;
             hintBox.Height = cancelBox.Height;
@@ -217,7 +221,7 @@ namespace myBestShop.Presentation.Common
             hintBox.Location = new Point(begX, begY + statusBox.Height + hintBox.Height);
             hintBox.Text = statusHint;
             hintBox.BorderStyle = BorderStyle.FixedSingle;
-            hintBox.Name = information + "1";
+            hintBox.Name = controlItemNamePrefix + "hintBox_" + information;
 
             return new List<Control> { infoBox, hintBox, statusBox, cancelBox };
         }
