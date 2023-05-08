@@ -35,9 +35,9 @@ namespace myBestShop
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
             repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
             repository.observable.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
-
+             
             tableView = new TableViewHolder(727, 533, 117, 8);
-
+            
             Task.Run(async () => {
                 await (repository.dbManager.IPadmin.SetIPAdmin(auf.id));
             });
@@ -113,7 +113,7 @@ namespace myBestShop
             {
                 this.Controls.Add(cell);
             }
-            // await repository.fetchUserStatuses(computers);
+            await repository.fetchUserStatuses(computers);
         }
 
         private object onComputerStatusUpdate(ComputerWrapper computer)

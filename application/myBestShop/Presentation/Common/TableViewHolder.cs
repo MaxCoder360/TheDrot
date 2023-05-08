@@ -127,11 +127,11 @@ namespace myBestShop.Presentation.Common
         public List<Control> getCells()
         {
             var result = new List<Control>();
-            int rowsCount = 0;
+            int rowsCount = -1;
 
             for (int i = 0; i < cells.Count; i++)
             {
-                if (i % (columnCount + 1) == columnCount)
+                if (i % columnCount == 0)
                 {
                     rowsCount++;
                 }
