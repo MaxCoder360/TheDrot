@@ -20,6 +20,9 @@ namespace myBestShop.Domain.WebService
 
         public static AdminWebService Instance;
 
+        // fields for running jobs checking
+        bool isFetchingAvailableComputersRunning = false;
+
         public static AdminWebService getInstance(DatabaseManager dbManager)
         {
             if (Instance == null)
@@ -124,8 +127,14 @@ namespace myBestShop.Domain.WebService
 
         private async void getAllAvailableComputers()
         {
+            if (isFetchingAvailableComputersRunning)
+            {
+                return;
+            }
+            isFetchingAvailableComputersRunning = true;
             var computers = await dbManager.Main.getAllComputers();
             initializeWebSockets(computers);
+            isFetchingAvailableComputersRunning = false;
         }
 
         private void onMessageWS(Object sender, MessageEventArgs e)
