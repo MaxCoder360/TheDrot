@@ -23,6 +23,8 @@ namespace myBestShop
             repository = (UserRepository)DomainModule.createRepository(config);
 
             addObservers();
+
+            
         }
 
         private void addObservers()
@@ -55,16 +57,6 @@ namespace myBestShop
             // Close();
 
             return null;
-        }
-
-        private void login_Click(object sender, EventArgs e)
-        {
-            // cannot remove it
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-            // cannot remove it
         }
 
         private async void loginButton_Click(object sender, EventArgs e)
