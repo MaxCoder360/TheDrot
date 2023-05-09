@@ -13,7 +13,21 @@ namespace myBestShop.Domain.Database
 {
     public class DatabaseManager
     {
-        public static MySqlConnection mySqlConnection = null;
+        private static MySqlConnection _mySqlConnection;
+        public static MySqlConnection mySqlConnection { 
+            get {
+                if (_mySqlConnection.State != System.Data.ConnectionState.Closed)
+                {
+                    return (MySqlConnection)_mySqlConnection.Clone();
+                }
+
+                return _mySqlConnection;
+            }
+            set
+            {
+                _mySqlConnection = value;
+            }
+        }
         public static DatabaseManager instance { get; private set; }
         public static void createInstance()
         {
