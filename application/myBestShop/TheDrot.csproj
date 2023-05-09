@@ -274,6 +274,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Presentation\Common\cancel.png" />
+    <None Include="Resources\Снимок экрана 2023-05-09 162939.png" />
+    <None Include="Resources\1675445012_foni-club-p-fon-zadnii-shreka-1.png" />
     <None Include="Resources\NHjm.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

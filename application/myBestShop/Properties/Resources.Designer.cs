@@ -63,9 +63,29 @@ namespace myBestShop.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1675445012_foni_club_p_fon_zadnii_shreka_1 {
+            get {
+                object obj = ResourceManager.GetObject("1675445012_foni-club-p-fon-zadnii-shreka-1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NHjm {
             get {
                 object obj = ResourceManager.GetObject("NHjm", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Снимок_экрана_2023_05_09_162939 {
+            get {
+                object obj = ResourceManager.GetObject("Снимок экрана 2023-05-09 162939", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

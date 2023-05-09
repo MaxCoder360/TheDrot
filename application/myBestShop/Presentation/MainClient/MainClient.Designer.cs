@@ -40,42 +40,44 @@
             // labelName
             // 
             this.labelName.AutoSize = true;
+            this.labelName.BackColor = System.Drawing.Color.Transparent;
             this.labelName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.labelName.Location = new System.Drawing.Point(11, 25);
-            this.labelName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelName.ForeColor = System.Drawing.SystemColors.Control;
+            this.labelName.Location = new System.Drawing.Point(16, 38);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(126, 20);
+            this.labelName.Size = new System.Drawing.Size(183, 29);
             this.labelName.TabIndex = 14;
             this.labelName.Text = "Здравствуйте, ";
             // 
             // label_on_time
             // 
             this.label_on_time.AutoSize = true;
+            this.label_on_time.BackColor = System.Drawing.Color.Transparent;
             this.label_on_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label_on_time.Location = new System.Drawing.Point(131, 25);
-            this.label_on_time.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_on_time.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_on_time.Location = new System.Drawing.Point(16, 80);
             this.label_on_time.Name = "label_on_time";
-            this.label_on_time.Size = new System.Drawing.Size(153, 20);
+            this.label_on_time.Size = new System.Drawing.Size(238, 29);
             this.label_on_time.TabIndex = 15;
-            this.label_on_time.Text = "осталось времени:";
+            this.label_on_time.Text = "Осталось времени:";
             // 
             // label_pass_time
             // 
             this.label_pass_time.AutoSize = true;
+            this.label_pass_time.BackColor = System.Drawing.Color.Transparent;
             this.label_pass_time.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label_pass_time.Location = new System.Drawing.Point(301, 25);
-            this.label_pass_time.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label_pass_time.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_pass_time.Location = new System.Drawing.Point(255, 80);
             this.label_pass_time.Name = "label_pass_time";
-            this.label_pass_time.Size = new System.Drawing.Size(59, 20);
+            this.label_pass_time.Size = new System.Drawing.Size(88, 29);
             this.label_pass_time.TabIndex = 16;
             this.label_pass_time.Text = "TIMER";
             // 
             // button_pause
             // 
-            this.button_pause.Location = new System.Drawing.Point(11, 89);
-            this.button_pause.Margin = new System.Windows.Forms.Padding(2);
+            this.button_pause.Location = new System.Drawing.Point(16, 137);
             this.button_pause.Name = "button_pause";
-            this.button_pause.Size = new System.Drawing.Size(184, 58);
+            this.button_pause.Size = new System.Drawing.Size(276, 89);
             this.button_pause.TabIndex = 17;
             this.button_pause.Text = "Поставить на паузу";
             this.button_pause.UseVisualStyleBackColor = true;
@@ -83,10 +85,9 @@
             // 
             // button_call_admin
             // 
-            this.button_call_admin.Location = new System.Drawing.Point(360, 89);
-            this.button_call_admin.Margin = new System.Windows.Forms.Padding(2);
+            this.button_call_admin.Location = new System.Drawing.Point(540, 137);
             this.button_call_admin.Name = "button_call_admin";
-            this.button_call_admin.Size = new System.Drawing.Size(184, 58);
+            this.button_call_admin.Size = new System.Drawing.Size(276, 89);
             this.button_call_admin.TabIndex = 18;
             this.button_call_admin.Text = "Вызвать админа";
             this.button_call_admin.UseVisualStyleBackColor = true;
@@ -94,18 +95,22 @@
             // 
             // MainClient
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 180);
+            this.BackgroundImage = global::myBestShop.Properties.Resources.Снимок_экрана_2023_05_09_162939;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(832, 277);
             this.Controls.Add(this.button_call_admin);
             this.Controls.Add(this.button_pause);
             this.Controls.Add(this.label_pass_time);
             this.Controls.Add(this.label_on_time);
             this.Controls.Add(this.labelName);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "MainClient";
             this.Text = "MainClient";
             this.Load += new System.EventHandler(this.MainClient_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.button_exit_Click);
             this.ResumeLayout(false);
             this.PerformLayout();
 
