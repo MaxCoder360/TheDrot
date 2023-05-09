@@ -8,6 +8,7 @@ using WebSocketSharp.Server;
 using static myBestShop.Utils.Utils;
 using myBestShop.Domain.Entities;
 using myBestShop.Domain.Database.Delegates;
+using System.Windows.Input;
 
 namespace myBestShop
 {
@@ -106,6 +107,14 @@ namespace myBestShop
                     MessageBox.Show("Данные введены нЕ веррно.");
                     Logger.println("Login screen: invalid result data");
                 }
+            }
+        }
+
+        private void LoginScreen_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                this.Close();
             }
         }
     }

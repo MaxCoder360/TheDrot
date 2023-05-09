@@ -83,6 +83,7 @@ namespace myBestShop
             this.loginField.Name = "loginField";
             this.loginField.Size = new System.Drawing.Size(320, 35);
             this.loginField.TabIndex = 4;
+            this.loginField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LoginScreen_KeyPress);
             // 
             // passwordField
             // 
@@ -94,6 +95,7 @@ namespace myBestShop
             this.passwordField.PasswordChar = '*';
             this.passwordField.Size = new System.Drawing.Size(320, 35);
             this.passwordField.TabIndex = 5;
+            this.passwordField.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LoginScreen_KeyPress);
             // 
             // loginButton
             // 
@@ -108,6 +110,7 @@ namespace myBestShop
             this.loginButton.Text = "Войти";
             this.loginButton.UseVisualStyleBackColor = true;
             this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
+            this.loginButton.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LoginScreen_KeyPress);
             // 
             // pictureBox
             // 
@@ -136,11 +139,12 @@ namespace myBestShop
             this.Controls.Add(this.loginLabel);
             this.Controls.Add(this.TheDrotTitle);
             this.Controls.Add(this.pictureBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LoginScreen";
             this.Text = "АВТОРИЗАЦИЯ";
             this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LoginScreen_KeyPress);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
