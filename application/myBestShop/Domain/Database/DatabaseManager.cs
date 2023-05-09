@@ -21,7 +21,9 @@ namespace myBestShop.Domain.Database
                 {
                     return null;
                 }
-                if (_mySqlConnection.State != System.Data.ConnectionState.Closed)
+                if (_mySqlConnection.State == System.Data.ConnectionState.Fetching ||
+                    _mySqlConnection.State == System.Data.ConnectionState.Executing ||
+                    _mySqlConnection.State == System.Data.ConnectionState.Connecting)
                 {
                     return (MySqlConnection)_mySqlConnection.Clone();
                 }
