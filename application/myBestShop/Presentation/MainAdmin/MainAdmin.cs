@@ -15,6 +15,8 @@ using System.Windows.Media.Animation;
 using myBestShop.Domain.Database.Delegates;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.IO;
+using System.Text;
 
 namespace myBestShop
 {
@@ -103,10 +105,31 @@ namespace myBestShop
             }
 
             List<ComputerWrapper> cw = new List<ComputerWrapper>();
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.RedirectStandardOutput = true;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.UseShellExecute = false;
             for (int i = 0; i < computers.Count; i++)
             {
-                cw.Add(new ComputerWrapper (computers[i].id, ComputerStatus.UNKNOWN));
+                //говно которого тут не должно быть
+                cmd.Start();
+                cmd.StandardInput.WriteLine("ping " + computers[i].ip_adress + " -n 1 -w 500");
+                cmd.StandardInput.Close();
+                cmd.WaitForExit();
+                Logger.println(cmd.StandardOutput.ReadToEnd().IndexOf("(100%").ToString());
+                if (cmd.StandardOutput.ReadToEnd().IndexOf("(100%") == -1)
+                {
+                    cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.UNKNOWN));
+                }
+                else
+                {
+                    cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.IN_DANGER));
+                }
+                
             }
+            
 
             var cells = tableView.clear().appendCellsWithStatuses(cw).getCells();
             foreach (var cell in cells)
