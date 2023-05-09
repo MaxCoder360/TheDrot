@@ -47,10 +47,18 @@ namespace myBestShop.Domain.Database.Delegates
         public async Task SetIPAdmin(int id_admin)
         {
             string ip_adress = null;
+            MySqlConnection connection = DatabaseManager.mySqlConnection;
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            } else
+            {
+                connection = (MySqlConnection)DatabaseManager.mySqlConnection.Clone();
+                connection.Open();
+            }
             try
             {
-                DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("UPDATE `thedrot`.`ipadmin` SET `ip_adress_admin` = @ip_adresss, `last_in` = @DATAS WHERE (`id_Admin` = @id_admin);", DatabaseManager.mySqlConnection);
+                MySqlCommand mySqlCommand = new MySqlCommand("UPDATE `thedrot`.`ipadmin` SET `ip_adress_admin` = @ip_adresss, `last_in` = @DATAS WHERE (`id_Admin` = @id_admin);", connection);
                 mySqlCommand.Parameters.Add("@id_admin", MySqlDbType.Int32).Value = id_admin;
                 mySqlCommand.Parameters.Add("@DATAS", MySqlDbType.DateTime).Value = DateTime.Now;
                 mySqlCommand.Parameters.Add("@ip_adresss", MySqlDbType.VarString).Value = Utils.Utils.GetLocalIPAddress();
@@ -62,7 +70,7 @@ namespace myBestShop.Domain.Database.Delegates
             }
             finally
             {
-                DatabaseManager.mySqlConnection.Close();
+                //connection.Close();
             }
         }
     }

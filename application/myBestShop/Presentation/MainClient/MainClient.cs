@@ -22,6 +22,7 @@ namespace myBestShop
         public MainClient(Form parent, Session sess)
         {
             InitializeComponent();
+            //addRoundedButtons();
             this.parent = parent;
             this.computerId = sess.id_computer;
             this.adminId = sess.id_admin;
@@ -56,6 +57,16 @@ namespace myBestShop
         {
 
             return null;
+        }
+
+        private void addRoundedButtons()
+        {
+            var stopButton = new RoundedButton();
+            stopButton.Text = "Поставить на паузу";
+            stopButton.Location = new System.Drawing.Point(30, this.Height / 3);
+            stopButton.Width = this.Width / 3;
+            stopButton.Click += this.button_pause_Click;
+            this.Controls.Add(stopButton);
         }
 
         void tm_Tick(object sender, EventArgs e)

@@ -123,15 +123,22 @@ namespace myBestShop
             var hintPrefix = TableViewHolder.hintItemNamePrefix;
             foreach (Control item in this.Controls.OfType<Control>())
             {
-
+                var computerName = "Computer id(" + computer.computerId + ")";
+                Logger.println(item.Name);
                 if (item.Name.Length >= statusPrefix.Length && item.Name.Substring(0, statusPrefix.Length).Equals(statusPrefix))
                 {
-                    this.Invoke(new Action<object>((obj) => { item.BackColor = cc.first; }), new object[] { null });
+                    if (item.Name.Substring(statusPrefix.Length, computerName.Length) == computerName)
+                    {
+                        this.Invoke(new Action<object>((obj) => { item.BackColor = cc.first; }), new object[] { null });
+                    }
                 }
 
                 if (item.Name.Length >= hintPrefix.Length && item.Name.Substring(0, hintPrefix.Length).Equals(hintPrefix))
                 {
-                    this.Invoke(new Action<object>((obj) => { item.Text = cc.second; }), new object[] { null });
+                    if (item.Name.Substring(statusPrefix.Length, computerName.Length) == computerName)
+                    {
+                        this.Invoke(new Action<object>((obj) => { item.Text = cc.second; }), new object[] { null });
+                    }
                 }
             }
             return null;
