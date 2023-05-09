@@ -23,7 +23,7 @@ namespace myBestShop
         private AdminRepository repository;
         private TableViewHolder tableView;
 
-        ReturnAUF auf;
+        private ReturnAUF auf;
         private Form parent;
 
         public MainAdmin(Form parent, ReturnAUF auf)
