@@ -76,6 +76,7 @@ namespace myBestShop.Domain.WebService
         private void initializeWebSockets(List<Computer> availableComputers)
         {
             wsPool.Clear();
+            Utils.Logger.println("ws pool inititalize ");
             for (int i = 0; i < availableComputers.Count; i++)
             {
                 Computer computer = availableComputers[i];

@@ -214,6 +214,9 @@
     <Compile Include="Utils\Observable.cs" />
     <Compile Include="Utils\Result.cs" />
     <Compile Include="Utils\LoginHolder.cs" />
+    <Compile Include="Utils\RoundedButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Utils\TestWebSocketObject.cs" />
     <Compile Include="Utils\UserStatus.cs" />
     <Compile Include="Utils\Utils.cs" />

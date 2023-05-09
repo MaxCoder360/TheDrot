@@ -35,6 +35,7 @@ namespace myBestShop.Domain.Repository
             webService.updateWebSockets();
             for (int i = 0; i < computers.Count; i++)
             {
+                Utils.Logger.println("Trying to fetch status from " + computers[i].ip_adress);
                 Computer comp = computers[i];
                 webService.fetchUserStatus(comp);
             }
