@@ -37,6 +37,7 @@ namespace myBestShop
             this.passwordField = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.ShowInTaskbar = false;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 

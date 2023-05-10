@@ -119,7 +119,7 @@ namespace myBestShop
                 cmd.StandardInput.Close();
                 cmd.WaitForExit();
                 string ass = cmd.StandardOutput.ReadToEnd();
-                Logger.println(ass);
+                //Logger.println(ass);
                 if (ass.LastIndexOf("(0%") != -1)
                 {
                     cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.IN_DANGER));
