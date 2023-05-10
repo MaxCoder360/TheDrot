@@ -145,8 +145,9 @@ namespace myBestShop
             Pair<Color, string> cc = computer.convertStatusToTableViewFormat();
             var statusPrefix = TableViewHolder.statusItemNamePrefix;
             var hintPrefix = TableViewHolder.hintItemNamePrefix;
-            foreach (Control item in this.Controls.OfType<Control>())
+            for (int i = 0; i < this.Controls.Count; i++)
             {
+                Control item = Controls[i];
                 var computerName = "Computer id(" + computer.computerId + ")";
                 Logger.println(item.Name);
                 if (item.Name.Length >= statusPrefix.Length && item.Name.Substring(0, statusPrefix.Length).Equals(statusPrefix))
