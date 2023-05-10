@@ -215,7 +215,8 @@ namespace myBestShop.Presentation.Common
             cancelBox.TextAlign = ContentAlignment.MiddleCenter;
             cancelBox.Height = infoBox.Height;
             cancelBox.Location = new System.Drawing.Point(begX + (int)(cellWidth * infoCancelRatio), begY);
-            cancelBox.Image = global::myBestShop.Properties.Resources.cancel;
+            cancelBox.BackgroundImage = global::myBestShop.Properties.Resources.cancel;
+            cancelBox.BackgroundImageLayout = ImageLayout.Stretch;
             cancelBox.Name = controlItemNamePrefix + "cancelBox_" + information;
 
             hintBox.Width = statusBox.Width;
