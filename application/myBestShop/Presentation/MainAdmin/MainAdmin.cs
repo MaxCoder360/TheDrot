@@ -115,17 +115,18 @@ namespace myBestShop
             {
                 //говно которого тут не должно быть
                 cmd.Start();
-                cmd.StandardInput.WriteLine("ping " + computers[i].ip_adress + " -n 1 -w 500");
+                cmd.StandardInput.WriteLine("ping " + computers[i].ip_adress + " -n 1 -w 300");
                 cmd.StandardInput.Close();
                 cmd.WaitForExit();
-                Logger.println(cmd.StandardOutput.ReadToEnd().IndexOf("(100%").ToString());
-                if (cmd.StandardOutput.ReadToEnd().IndexOf("(100%") == -1)
+                string ass = cmd.StandardOutput.ReadToEnd();
+                Logger.println(ass);
+                if (ass.LastIndexOf("(0%") != -1)
                 {
-                    cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.UNKNOWN));
+                    cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.IN_DANGER));
                 }
                 else
                 {
-                    cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.IN_DANGER));
+                    cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.UNKNOWN));
                 }
                 
             }
