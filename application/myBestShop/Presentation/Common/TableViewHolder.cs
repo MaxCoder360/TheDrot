@@ -80,7 +80,6 @@ namespace myBestShop.Presentation.Common
             int colInd = cellCount % columnCount;
             while (count != 0)
             {
-                Logger.println(rowInd.ToString() + " : " + colInd.ToString());
                 addCell(rowInd, colInd);
 
                 if (++colInd == columnCount)
