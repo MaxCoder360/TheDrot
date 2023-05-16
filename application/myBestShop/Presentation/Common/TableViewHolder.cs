@@ -53,6 +53,8 @@ namespace myBestShop.Presentation.Common
         }
         private List<Label> cells = new List<Label>();
         private List<ComputerWrapper> computerStatuses;
+        private EventHandler cancelCallback;
+
         public TableViewHolder(int width, int height, int locX, int locY)
         {
             this.width = width;
@@ -120,6 +122,12 @@ namespace myBestShop.Presentation.Common
         {
             cells.Clear();
 
+            return this;
+        }
+
+        public TableViewHolder addOnCloseCallbacks(EventHandler lambda)
+        {
+            this.cancelCallback = lambda;
             return this;
         }
 
@@ -217,6 +225,7 @@ namespace myBestShop.Presentation.Common
             cancelBox.BackgroundImage = global::myBestShop.Properties.Resources.cancel;
             cancelBox.BackgroundImageLayout = ImageLayout.Stretch;
             cancelBox.Name = controlItemNamePrefix + "cancelBox_" + information;
+            cancelBox.Click += this.cancelCallback;
 
             hintBox.Width = statusBox.Width;
             hintBox.Height = cancelBox.Height;

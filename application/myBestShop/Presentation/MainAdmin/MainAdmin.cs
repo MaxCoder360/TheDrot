@@ -115,7 +115,7 @@ namespace myBestShop
             {
                 //говно которого тут не должно быть
                 cmd.Start();
-                cmd.StandardInput.WriteLine("ping " + computers[i].ip_adress + " -n 1 -w 300");
+                cmd.StandardInput.WriteLine("ping " + computers[i].ip_adress + " -n 1 -w 500");
                 cmd.StandardInput.Close();
                 cmd.WaitForExit();
                 string ass = cmd.StandardOutput.ReadToEnd();
@@ -131,8 +131,7 @@ namespace myBestShop
                 
             }
             
-
-            var cells = tableView.clear().appendCellsWithStatuses(cw).getCells();
+            var cells = tableView.clear().addOnCloseCallbacks(add_session_Click).appendCellsWithStatuses(cw).getCells();
             foreach (var cell in cells)
             {
                 this.Controls.Add(cell);
@@ -142,6 +141,7 @@ namespace myBestShop
 
         private object onComputerStatusUpdate(ComputerWrapper computer)
         {
+            Logger.print(computer.status.ToString());
             Pair<Color, string> cc = computer.convertStatusToTableViewFormat();
             var statusPrefix = TableViewHolder.statusItemNamePrefix;
             var hintPrefix = TableViewHolder.hintItemNamePrefix;
@@ -150,21 +150,39 @@ namespace myBestShop
                 Control item = Controls[i];
                 var computerName = "Computer id(" + computer.computerId + ")";
                 Logger.println(item.Name);
+                Action<object> firstAction = null;
+                Action<object> secondAction = null;
                 if (item.Name.Length >= statusPrefix.Length && item.Name.Substring(0, statusPrefix.Length).Equals(statusPrefix))
                 {
-                    if (item.Name.Substring(statusPrefix.Length, computerName.Length) == computerName)
+                    if (item.Name.Length <= statusPrefix.Length || item.Name.Length < statusPrefix.Length + computerName.Length)
                     {
-                        this.Invoke(new Action<object>((obj) => { item.BackColor = cc.first; }), new object[] { null });
+                        // pass
+                    } else if (item.Name.Substring(statusPrefix.Length, computerName.Length) == computerName)
+                    {
+                        firstAction = new Action<object>((obj) => { item.BackColor = cc.first; });
                     }
                 }
 
                 if (item.Name.Length >= hintPrefix.Length && item.Name.Substring(0, hintPrefix.Length).Equals(hintPrefix))
                 {
-                    if (item.Name.Substring(statusPrefix.Length, computerName.Length) == computerName)
+                    var nameIndex = item.Name.IndexOf(computerName);
+                    if (nameIndex == -1)
                     {
-                        this.Invoke(new Action<object>((obj) => { item.Text = cc.second; }), new object[] { null });
+                        continue;
                     }
+                    secondAction = new Action<object>((obj) => { item.Text = cc.second; });
                 }
+
+                this.Invoke(new Action<object>((o) => {
+                    if (firstAction != null)
+                    {
+                        firstAction(o);
+                    }
+                    if (secondAction != null)
+                    {
+                        secondAction(o);
+                    }
+                }), new object[] { new object() });
             }
             return null;
         }
@@ -199,7 +217,10 @@ namespace myBestShop
         private async void add_session_Click(object sender, EventArgs e)
         {
             List<User> users = await repository.dbManager.Main.getAllUsers();
-            using (CreateSession forms = new CreateSession(users))
+            var name = ((Control)sender).Name;
+            var stringId = name.Substring(name.IndexOf("(")+1, name.IndexOf(")") - name.IndexOf("(") - 1);
+            int computerId = Convert.ToInt32(stringId);
+            using (CreateSession forms = new CreateSession(users, computerId))
             {
                 forms.ShowDialog();
                 Session resultSeesion = forms.MyReturnValue;

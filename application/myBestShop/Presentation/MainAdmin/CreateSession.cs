@@ -16,8 +16,9 @@ namespace myBestShop.Presentation.MainAdmin
     public partial class CreateSession : Form
     {
         public Session MyReturnValue { get; set; } = null;
+        public int computerId;
 
-        public CreateSession(List<User> users)
+        public CreateSession(List<User> users, int computerId)
         {
             InitializeComponent();
             dataGridView.DataSource = users.ToArray();
@@ -28,6 +29,9 @@ namespace myBestShop.Presentation.MainAdmin
 
             dataGridView.ClearSelection(); // почемуто не работает)
             dataGridView.CurrentCell = null;
+
+            this.computerId = computerId;
+            textBox4.Text = computerId.ToString();
         }
 
         private void find_Click(object sender, EventArgs e)
@@ -67,7 +71,7 @@ namespace myBestShop.Presentation.MainAdmin
             DateTime start_datetime = DateTime.Now;
             DateTime end_datetime = start_datetime.AddMinutes(Convert.ToDouble(textBox3.Text)).AddHours(Convert.ToDouble(textBox2.Text));
             int ass = Convert.ToInt32(dataGridView[0, dataGridView.CurrentCell.RowIndex].Value);
-            int assss = Convert.ToInt32(textBox4.Text);
+            int assss = computerId;
             MyReturnValue = new Session(start_datetime, end_datetime, -1, assss, ass);
             this.Close();
         }

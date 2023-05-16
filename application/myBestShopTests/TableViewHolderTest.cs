@@ -83,11 +83,6 @@ namespace myBestShopTests
                     cancelCount++;
                 } else
                 {
-                    Logger.println("_" + splittedCellName[2] + "_");
-                    Logger.println("_" + TableViewHolder.infoItemNamePrefix.Split("_")[2] + "_");
-                    Logger.println("_" + TableViewHolder.hintItemNamePrefix.Split("_")[2] + "_");
-                    Logger.println("_" + TableViewHolder.cancelItemNamePrefix.Split("_")[2] + "_");
-                    Logger.println("_" + TableViewHolder.statusItemNamePrefix.Split("_")[2] + "_");
                     otherCount++;
                 }
             }
