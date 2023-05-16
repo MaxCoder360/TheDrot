@@ -47,7 +47,9 @@ namespace myBestShop.Presentation.MainClient
                     this.Invoke(new Action(() => { this.Close(); }));
                 }
                 else
-                { MessageBox.Show("Не правельный пароль", "НеДо ошибка",MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }
+                {
+                    this.Invoke(new Action(() => { MessageBox.Show("Не правельный пароль", "НеДо ошибка", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); }));
+                }
             });
 
         }
