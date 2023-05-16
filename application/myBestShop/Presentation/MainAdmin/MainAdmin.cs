@@ -37,9 +37,9 @@ namespace myBestShop
             var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(BUILD_CONFIG, UserTypeExt.UserType.ADMIN);
             repository = (AdminRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
             repository.observable.addObserver(new ComputerStatusObserver(onComputerStatusUpdate), AdminRepository.userStatusTag);
-             
+
             tableView = new TableViewHolder(727, 533, 117, 8);
-            
+
             Task.Run(async () => {
                 await (repository.dbManager.IPadmin.SetIPAdmin(auf.id));
             });
@@ -90,17 +90,18 @@ namespace myBestShop
         {
             List<Computer> computers = await repository.dbManager.Main.getAllComputers();
             string prefix = TableViewHolder.controlItemNamePrefix;
+            bool isTableViewHolderInitialized = false;
+
             foreach (Control item in this.Controls.OfType<Control>())
             {
                 if (item.Name.Length < prefix.Length)
                 {
                     continue;
                 }
-
                 if (item.Name.Substring(0, prefix.Length).Equals(prefix))
                 {
-                    this.Controls.Remove(item);
-                    item.Dispose();
+                    isTableViewHolderInitialized = true;
+                    break;
                 }
             }
 
@@ -131,17 +132,30 @@ namespace myBestShop
                 
             }
             
-            var cells = tableView.clear().addOnCloseCallbacks(add_session_Click).appendCellsWithStatuses(cw).getCells();
-            foreach (var cell in cells)
-            {
-                this.Controls.Add(cell);
-            }
+            this.Invoke(new Action<object>((o) => {
+                if (isTableViewHolderInitialized)
+                {
+                    for (int i = 0; i < cw.Count; i++)
+                    {
+                        onComputerStatusUpdate(cw[i]);
+                    }
+                }
+                else
+                {
+                    var cells = tableView.clear().addOnCloseCallbacks(add_session_Click).appendCellsWithStatuses(cw).getCells();
+
+                    foreach (var cell in cells)
+                    {
+                        this.Controls.Add(cell);
+                    }
+                }
+            }), new object[] { new object() });
             await repository.fetchUserStatuses(computers);
         }
 
         private object onComputerStatusUpdate(ComputerWrapper computer)
         {
-            Logger.print(computer.status.ToString());
+            Logger.print(computer.status.ToString() + " ass nigger");
             Pair<Color, string> cc = computer.convertStatusToTableViewFormat();
             var statusPrefix = TableViewHolder.statusItemNamePrefix;
             var hintPrefix = TableViewHolder.hintItemNamePrefix;
@@ -160,6 +174,7 @@ namespace myBestShop
                     } else if (item.Name.Substring(statusPrefix.Length, computerName.Length) == computerName)
                     {
                         firstAction = new Action<object>((obj) => { item.BackColor = cc.first; });
+                        Logger.println("--------------------------------------------------------");
                     }
                 }
 
@@ -171,6 +186,8 @@ namespace myBestShop
                         continue;
                     }
                     secondAction = new Action<object>((obj) => { item.Text = cc.second; });
+
+                    Logger.println("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
                 }
 
                 this.Invoke(new Action<object>((o) => {
@@ -195,7 +212,10 @@ namespace myBestShop
 
         private void deliveryInWork_Click(object sender, EventArgs e)
         {
-            updateComputerStatusGrid();
+            Task.Run(async () =>
+            {
+                updateComputerStatusGrid();
+            });
         }
 
         private void add_User_Click(object sender, EventArgs e)

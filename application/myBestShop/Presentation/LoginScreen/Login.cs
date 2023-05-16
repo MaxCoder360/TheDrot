@@ -9,6 +9,7 @@ using static myBestShop.Utils.Utils;
 using myBestShop.Domain.Entities;
 using myBestShop.Domain.Database.Delegates;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace myBestShop
 {
@@ -35,35 +36,42 @@ namespace myBestShop
 
         private object onLoginSuccessful(ReturnAUF auth)
         {
+
             Session sess = repository.dbManager.Main.GetClientSession(auth);
-            if (!auth.is_admin && sess != null)
-            {
-                Program.isLogined = true;
-                MainClient clientScreen = new MainClient(this, sess);
-                clientScreen.Show();
-                this.Hide();
-            } else if (auth.is_admin)
-            {
-                Program.isLogined = true;
-                MainAdmin adminScreen = new MainAdmin(this, auth);
-                adminScreen.Show();
-                this.Hide();
-            } else
-            {
-                MessageBox.Show("Что-то пошло не так. Проверьте введенные данные и повторите попытку.");
-            }
-            loginField.Text = "";
-            passwordField.Text = "";
+
+            this.Invoke(new Action<object>((o) => {
+                if (!auth.is_admin && sess != null)
+                {
+                    Program.isLogined = true;
+                    MainClient clientScreen = new MainClient(this, sess);
+                    clientScreen.Show();
+                    this.Hide();
+                } else if (auth.is_admin)
+                {
+                    Program.isLogined = true;
+                    MainAdmin adminScreen = new MainAdmin(this, auth);
+                    adminScreen.Show();
+                    this.Hide();
+                } else
+                {
+                    MessageBox.Show("Что-то пошло не так. Проверьте введенные данные и повторите попытку.");
+                }
+                loginField.Text = "";
+                passwordField.Text = "";
+            }), new object[] { new object() });
 
             // Close();
 
             return null;
         }
 
-        private async void loginButton_Click(object sender, EventArgs e)
+        private void loginButton_Click(object sender, EventArgs e)
         {
             var loginHandler = new LoginHolder(loginField.Text, passwordField.Text);
-            await repository.logInUser(loginHandler);
+            Task.Run(async () =>
+            {
+                await repository.logInUser(loginHandler);
+            });
         }
 
         public class LoginObserver : Observer
