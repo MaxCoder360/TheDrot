@@ -14,7 +14,7 @@ namespace myBestShop
 {
     public partial class LoginScreen : Form
     {
-        private UserRepository repository;
+        public UserRepository repository;
 
         public LoginScreen()
         {

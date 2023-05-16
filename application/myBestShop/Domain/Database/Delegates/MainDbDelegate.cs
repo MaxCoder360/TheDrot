@@ -141,13 +141,13 @@ namespace myBestShop.Domain.Database.Delegates
             try
             {
                 DatabaseManager.mySqlConnection.Open();
-                MySqlCommand mySqlCommand = new MySqlCommand("SELECT sess.*, users.name, users.surname FROM thedrot.sessions AS sess, thedrot.users AS users WHERE sess.id_user = @id_user AND sess.end_time_rent >= @data_time AND sess.start_time_rent <= @data_time and users.id_user = @id_user ORDER BY sess.id_sessions DESC LIMIT 1;", DatabaseManager.mySqlConnection);
+                MySqlCommand mySqlCommand = new MySqlCommand("SELECT sess.*, users.name, users.surname, users.mail FROM thedrot.sessions AS sess, thedrot.users AS users WHERE sess.id_user = @id_user AND sess.end_time_rent >= @data_time AND sess.start_time_rent <= @data_time and users.id_user = @id_user ORDER BY sess.id_sessions DESC LIMIT 1;", DatabaseManager.mySqlConnection);
                 mySqlCommand.Parameters.Add("@id_user", MySqlDbType.VarString).Value = user.id;
                 mySqlCommand.Parameters.Add("@data_time", MySqlDbType.DateTime).Value = DateTime.Now;
                 MySqlDataReader myReader = mySqlCommand.ExecuteReader();
                 if (myReader.Read())
                 {
-                    sess = new Session(myReader.GetInt32(0), myReader.GetDateTime(4), myReader.GetDateTime(5), myReader.GetInt32(1), myReader.GetInt32(3), myReader.GetInt32(2), myReader.GetString(6), myReader.GetString(7));
+                    sess = new Session(myReader.GetInt32(0), myReader.GetDateTime(4), myReader.GetDateTime(5), myReader.GetInt32(1), myReader.GetInt32(3), myReader.GetInt32(2), myReader.GetString(6), myReader.GetString(7), myReader.GetString(8));
                 }
                 myReader.Close();
             }

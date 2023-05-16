@@ -17,8 +17,9 @@ namespace myBestShop.Domain.Entities
         public int id_computer { get; }
         public string name { get; }
         public string surname { get; }
-        
-        public Session (int id_session, DateTime start_time_rent, DateTime end_time_rent, int id_admin, int id_computer, int id_user, string name, string surname )
+        public string login { get; }
+
+        public Session (int id_session, DateTime start_time_rent, DateTime end_time_rent, int id_admin, int id_computer, int id_user, string name, string surname, string login )
         {
             this.id_session = id_session;
             this.name = name;
@@ -28,6 +29,7 @@ namespace myBestShop.Domain.Entities
             this.start_time_rent = start_time_rent;
             this.id_user = id_user;
             this.id_computer = id_computer;
+            this.login = login;
         }
         public Session(DateTime start_time_rent, DateTime end_time_rent, int id_admin, int id_computer, int id_user)
         {

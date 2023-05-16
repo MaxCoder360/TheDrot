@@ -13,22 +13,24 @@ namespace myBestShop
     public partial class MainClient : Form
     {
         private Form parent;
+        private WaitingWindows waiting_form = null;
         private UserRepository repository;
         private int computerId;
         private int adminId;
+        private Session sess;
 
         // observers
         private SessionKeyObserver sessionKeyObserver;
         public MainClient(Form parent, Session sess)
         {
             InitializeComponent();
-            //addRoundedButtons();
             this.parent = parent;
             this.computerId = sess.id_computer;
             this.adminId = sess.id_admin;
             labelName.Text += sess.name + " " + sess.surname;
+            this.sess = sess;
 
-            var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
+           var repositoryConfig = DependencyBuilders.DomainModule.createRepositoryConfig(AppConfig.BUILD_CONFIG, UserTypeExt.UserType.USER);
             repository = (UserRepository)DependencyBuilders.DomainModule.createRepository(repositoryConfig);
 
             Task.Run(async () => {
@@ -51,12 +53,6 @@ namespace myBestShop
             long minutes = (time - time % 60) / 60 - hours * 60;
             long seconds = time % 60;
             return String.Format("{0:00} ч. {1:00} м. {2:00} с.", hours, minutes, seconds);
-        }
-
-        private object onSessionKeyObtained(int sessionKey)
-        {
-
-            return null;
         }
 
         private void addRoundedButtons()
@@ -82,19 +78,13 @@ namespace myBestShop
                 (sender as Timer).Dispose();
                 Program.isLogined = false;
                 this.Close();
-                
             }
         }
 
         private void button_pause_Click(object sender, EventArgs e)
         {
-            if (this.timer_pass_time.Enabled)
-            {
-                this.timer_pass_time.Stop();
-            } else
-            {
-                this.timer_pass_time.Start();
-            }
+            waiting_form = new WaitingWindows(parent, sess);
+            waiting_form.Show();
         }
 
         private void button_call_admin_Click(object sender, EventArgs e)
@@ -111,8 +101,10 @@ namespace myBestShop
             Task.Run(async () => {
                 await repository.updateStatusOnAdminSide(computerId, ComputerStatus.AVAILABLE);
             });
+            waiting_form.Dispose();
             parent.Show();
             Program.isLogined = false;
+
         }
 
         private void MainClient_Load(object sender, EventArgs e)

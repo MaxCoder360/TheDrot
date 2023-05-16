@@ -83,6 +83,16 @@ namespace myBestShop.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap tualet {
+            get {
+                object obj = ResourceManager.GetObject("tualet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Снимок_экрана_2023_05_09_162939 {
             get {
                 object obj = ResourceManager.GetObject("Снимок экрана 2023-05-09 162939", resourceCulture);
