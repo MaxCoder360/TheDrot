@@ -119,9 +119,9 @@ namespace myBestShop
                 cmd.StandardInput.WriteLine("ping " + computers[i].ip_adress + " -n 1 -w 500");
                 cmd.StandardInput.Close();
                 cmd.WaitForExit();
-                string ass = cmd.StandardOutput.ReadToEnd();
+                string str = cmd.StandardOutput.ReadToEnd();
                 //Logger.println(ass);
-                if (ass.LastIndexOf("(0%") != -1)
+                if (str.LastIndexOf("(0%") != -1)
                 {
                     cw.Add(new ComputerWrapper(computers[i].id, ComputerStatus.IN_DANGER));
                 }
@@ -155,7 +155,6 @@ namespace myBestShop
 
         private object onComputerStatusUpdate(ComputerWrapper computer)
         {
-            Logger.print(computer.status.ToString() + " ass nigger");
             Pair<Color, string> cc = computer.convertStatusToTableViewFormat();
             var statusPrefix = TableViewHolder.statusItemNamePrefix;
             var hintPrefix = TableViewHolder.hintItemNamePrefix;

@@ -36,7 +36,7 @@ namespace myBestShop.Presentation.MainAdmin
 
         private void find_Click(object sender, EventArgs e)
         {
-            bool assssssssssssssssssssssss = false;
+            bool temp = false;
             if (textBox1.Text == "")
             {
                 dataGridView.ClearSelection();
@@ -52,10 +52,10 @@ namespace myBestShop.Presentation.MainAdmin
                         {
                             dataGridView.Rows[i].Selected = true;
                             dataGridView.CurrentCell = dataGridView.Rows[i].Cells[j];
-                            assssssssssssssssssssssss = true;
+                            temp = true;
                             break;
                         }
-                if (assssssssssssssssssssssss) break;
+                if (temp) break;
                 dataGridView.ClearSelection();
                 dataGridView.CurrentCell = null;
             }
@@ -70,9 +70,8 @@ namespace myBestShop.Presentation.MainAdmin
             } 
             DateTime start_datetime = DateTime.Now;
             DateTime end_datetime = start_datetime.AddMinutes(Convert.ToDouble(textBox3.Text)).AddHours(Convert.ToDouble(textBox2.Text));
-            int ass = Convert.ToInt32(dataGridView[0, dataGridView.CurrentCell.RowIndex].Value);
-            int assss = computerId;
-            MyReturnValue = new Session(start_datetime, end_datetime, -1, assss, ass);
+            int id_user = Convert.ToInt32(dataGridView[0, dataGridView.CurrentCell.RowIndex].Value);
+            MyReturnValue = new Session(start_datetime, end_datetime, -1, computerId, id_user);
             this.Close();
         }
     }
